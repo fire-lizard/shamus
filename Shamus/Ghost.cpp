@@ -1,0 +1,28 @@
+// Ghost.cpp: implementation of the CGhost class.
+//
+//////////////////////////////////////////////////////////////////////
+
+#include "Shamus.h"
+#include "Ghost.h"
+
+//////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
+
+CGhost::CGhost()
+{
+    px = 0;
+    py = 0;
+}
+
+CGhost::~CGhost()
+{
+
+}
+
+bool CGhost::Move(signed char& nx, signed char& ny, unsigned char value)
+{
+    px = nx;
+    py = ny;
+	return true;
+}
