@@ -17,7 +17,7 @@ public:
 	virtual ~CMazeBuilder();
 	void BuildMaze(unsigned char data[MAX_ROOM_X][MAX_ROOM_Y][XCOUNT][YCOUNT]);
 	//void BuildMaze(unsigned char *data);
-	CMaze* GetMaze();
+	CMaze* GetMaze() const;
 };
 
 #endif // !defined(AFX_MAZEBUILDER_H__DBF2D4C1_804A_11D9_815D_E811484BFB1C__INCLUDED_)

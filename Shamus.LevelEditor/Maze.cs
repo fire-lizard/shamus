@@ -6,14 +6,10 @@ namespace Shamus.LevelEditor
     public enum Item
     {
         NONE = 0,
-        BRICK_WALL = 1,
-        STONE_WALL = 2,
-        BRICK_WALL2 = 3,
-        STONE_WALL2 = 4,
-        DOOR = 5,
-        LIFE = 6,
-        KEY = 7,
-        AWARD = 8
+        LIFE = 1,
+        KEY = 2,
+        DOOR = 3,
+        AWARD = 4
     }
 
     public class Maze
@@ -24,9 +20,9 @@ namespace Shamus.LevelEditor
         private int _rx;
         private int _ry;
 
-        public int RX { get { return _rx; } }
+        public int RX => _rx;
 
-        public int RY { get { return _ry; } }
+        public int RY => _ry;
 
         public Maze()
         {
@@ -196,9 +192,6 @@ namespace Shamus.LevelEditor
             _rooms[rx][ry] = room;
         }
 
-        public Room CurrentRoom
-        {
-            get { return _rooms[_rx][_ry]; }
-        }
+        public Room CurrentRoom => _rooms[_rx][_ry];
     }
 }

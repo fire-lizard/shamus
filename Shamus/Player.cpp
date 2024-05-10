@@ -19,11 +19,6 @@ CPlayer::CPlayer()
     keys = 0;
 }
 
-CPlayer::~CPlayer()
-{
-
-}
-
 bool CPlayer::CheckPlayerMovement(unsigned char& value)
 {
     bool movement = true;
@@ -128,7 +123,7 @@ bool CPlayer::CheckRoom(signed char& x, signed char& y)
 
 bool CPlayer::Move(signed char& nx, signed char& ny, unsigned char value)
 {
-    bool on_border = (nx > XCOUNT - 1 || nx < 0 || ny > YCOUNT - 1 || ny < 0);
+	const bool on_border = (nx > XCOUNT - 1 || nx < 0 || ny > YCOUNT - 1 || ny < 0);
     bool result = false;
 	if (!on_border)
     {

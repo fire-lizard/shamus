@@ -31,8 +31,8 @@ public:
 	virtual ~CMaze();
 	void Wave(signed char& x1, signed char& y1, signed char x2, signed char y2);
 	void SelectRoom(signed char rx, signed char ry);
-	void AddRoom(unsigned char x, unsigned char y, CRoom* room);
-	CRoom* RoomNo(unsigned char x, unsigned char y);
+	void AddRoom(unsigned char x, unsigned char y, CRoom* room) const;
+	CRoom* RoomNo(unsigned char x, unsigned char y) const;
 };
 
 #endif // !defined(AFX_MAZE_H__29275B61_6293_11D9_A07B_F33E791D5046__INCLUDED_)

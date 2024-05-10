@@ -28,8 +28,7 @@ public:
 	bool room_changed;
 
 	CPlayer();
-	virtual ~CPlayer();
-	bool Move(signed char& nx, signed char& ny, unsigned char value);
+	bool Move(signed char& nx, signed char& ny, unsigned char value) override;
 };
 
 #endif // !defined(AFX_PLAYER_H__29275B63_6293_11D9_A07B_F33E791D5046__INCLUDED_)

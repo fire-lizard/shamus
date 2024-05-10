@@ -15,12 +15,7 @@ CMonster::CMonster()
     py = 0;
 }
 
-CMonster::~CMonster()
-{
-
-}
-
-bool CMonster::CheckMonsterMovement(unsigned char value, signed char x, signed char y)
+bool CMonster::CheckMonsterMovement(unsigned char value, signed char x, signed char y) const
 {
     if (value >= 1 && value <= 5)
     {
@@ -41,7 +36,7 @@ bool CMonster::CheckMonsterMovement(unsigned char value, signed char x, signed c
         
 bool CMonster::Move(signed char& nx, signed char& ny, unsigned char value)
 {
-    bool result = CheckMonsterMovement(value, nx, ny);
+	const bool result = CheckMonsterMovement(value, nx, ny);
 	if (result)
     {
         px = nx;

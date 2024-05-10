@@ -101,11 +101,10 @@ void CMaze::GetPaths(signed char& x1, signed char& y1, signed char x2, signed ch
             {
        	        if (_pathFind[index1][index2] == ni)
                	{
-                    unsigned char c1, c2, c3, c4;
-                    c1 = _pathFind[index1 - 1][index2];
-                    c2 = _pathFind[index1 + 1][index2];
-                    c3 = _pathFind[index1][index2 - 1];
-       	            c4 = _pathFind[index1][index2 + 1];
+	                unsigned char c1 = _pathFind[index1 - 1][index2];
+                    unsigned char c2 = _pathFind[index1 + 1][index2];
+                    unsigned char c3 = _pathFind[index1][index2 - 1];
+       	            unsigned char c4 = _pathFind[index1][index2 + 1];
                	    if (c1 == 254)
                     {
                         _pathFind[index1 - 1][index2] = ni + 1;
@@ -177,12 +176,12 @@ void CMaze::SelectRoom(signed char rx, signed char ry)
     SetPaths();
 }        
 
-void CMaze::AddRoom(unsigned char x, unsigned char y, CRoom* room)
+void CMaze::AddRoom(unsigned char x, unsigned char y, CRoom* room) const
 {
 	_rooms[x * MAX_ROOM_Y + y] = room;
 }
 
-CRoom* CMaze::RoomNo(unsigned char x, unsigned char y)
+CRoom* CMaze::RoomNo(unsigned char x, unsigned char y) const
 {
 	return _rooms[x * MAX_ROOM_Y + y];
 }

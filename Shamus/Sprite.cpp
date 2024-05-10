@@ -9,23 +9,13 @@
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-CSprite::CSprite()
-{
-
-}
-
-CSprite::~CSprite()
-{
-
-}
-
-void CSprite::GetCoords(signed char& X, signed char& Y)
+void CSprite::GetCoords(signed char& X, signed char& Y) const
 {
     X = px;
     Y = py;
 }
 
-void CSprite::Show(unsigned long* array, double x, double y)
+void CSprite::Show(const unsigned long* array, double x, double y)
 {
     glPixelStorei(GL_UNPACK_ALIGNMENT,1);
 	glRasterPos2d(x, y);

@@ -11,10 +11,6 @@
 
 class CWall  
 {
-	CWall();
-	CWall(const CWall &wall);
-	virtual ~CWall();
-	CWall& operator= (const CWall &wall);
 	static void Wall1(double x1, double y1, double x2, double y2);
 	static void Wall2(double x1, double y1, double x2, double y2);
 	static void Wall3(double x1, double y1, double x2, double y2);

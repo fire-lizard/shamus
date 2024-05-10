@@ -27,7 +27,7 @@ namespace Shamus.LevelEditor
 
             blackPen = new Pen(Color.Black);
 
-            byte[] data = new byte[50000];
+            byte[] data = new byte[Config.DATA_SIZE];
             CreateNewMaze(data);
         }
 
@@ -38,7 +38,7 @@ namespace Shamus.LevelEditor
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            byte[] data = new byte[50000];
+            byte[] data = new byte[Config.DATA_SIZE];
             CreateNewMaze(data);
             Refresh();
         }

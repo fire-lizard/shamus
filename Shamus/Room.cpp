@@ -9,11 +9,6 @@
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-CRoom::CRoom()
-{
-
-}
-
 CRoom::CRoom(unsigned char width, unsigned char height)
 {
 	_width = width;
@@ -26,12 +21,12 @@ CRoom::~CRoom()
 	delete[] _data;
 }
 
-unsigned char CRoom::GetObject(signed char x, signed char y)
+unsigned char CRoom::GetObject(signed char x, signed char y) const
 {
 	return _data[x * _height + y];
 }
 
-void CRoom::SetObject(signed char x, signed char y, unsigned char value)
+void CRoom::SetObject(signed char x, signed char y, unsigned char value) const
 {
 	_data[x * 20 + y] = value;
 }

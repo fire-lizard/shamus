@@ -8,7 +8,7 @@ namespace Shamus.LevelEditor
 
         public byte[] Data(Maze maze)
         {
-            const int length = Config.MAX_ROOM_X*Config.MAX_ROOM_Y*Config.XCOUNT*Config.YCOUNT;
+            const int length = Config.DATA_SIZE;
             byte[] data = new byte[length];
             int position = 0;
             for (int index1 = 0; index1 < Config.MAX_ROOM_X; index1++)
@@ -33,7 +33,7 @@ namespace Shamus.LevelEditor
             return data;
         }
 
-        public Maze CurrentMaze { get { return _currentMaze; } }
+        public Maze CurrentMaze => _currentMaze;
 
         public void BuildMaze(byte[] data)
         {

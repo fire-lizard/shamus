@@ -86,14 +86,10 @@
             // 
             this.images.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("images.ImageStream")));
             this.images.TransparentColor = System.Drawing.Color.Transparent;
-            this.images.Images.SetKeyName(0, "brick_wall.jpg");
-            this.images.Images.SetKeyName(1, "stone_wall.jpg");
-            this.images.Images.SetKeyName(2, "brick_wall2.jpg");
-            this.images.Images.SetKeyName(3, "stone_wall2.jpg");
-            this.images.Images.SetKeyName(4, "Door.png");
-            this.images.Images.SetKeyName(5, "Alchemy.png");
-            this.images.Images.SetKeyName(6, "Key.png");
-            this.images.Images.SetKeyName(7, "Award.png");
+            this.images.Images.SetKeyName(0, "extra1.png");
+            this.images.Images.SetKeyName(1, "key.png");
+            this.images.Images.SetKeyName(2, "lock.png");
+            this.images.Images.SetKeyName(3, "mistery.png");
             // 
             // toolStrip
             // 

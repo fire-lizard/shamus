@@ -15,11 +15,6 @@ CGhost::CGhost()
     py = 0;
 }
 
-CGhost::~CGhost()
-{
-
-}
-
 bool CGhost::Move(signed char& nx, signed char& ny, unsigned char value)
 {
     px = nx;

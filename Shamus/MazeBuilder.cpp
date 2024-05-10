@@ -16,10 +16,7 @@ CMazeBuilder::CMazeBuilder()
 
 CMazeBuilder::~CMazeBuilder()
 {
-	if (_currentMaze)
-	{
-		delete _currentMaze;
-	}
+	delete _currentMaze;
 }
 
 void CMazeBuilder::BuildMaze(unsigned char data[MAX_ROOM_X][MAX_ROOM_Y][XCOUNT][YCOUNT])
@@ -32,7 +29,7 @@ void CMazeBuilder::BuildMaze(unsigned char data[MAX_ROOM_X][MAX_ROOM_Y][XCOUNT][
 	{
 		for (unsigned char index2 = 0;index2 < MAX_ROOM_Y;index2++)
 		{
-			CRoom* room = new CRoom(XCOUNT, YCOUNT);
+			const auto room = new CRoom(XCOUNT, YCOUNT);
 			for (unsigned char i = 0;i < XCOUNT;i++)
 			{
 				for (unsigned char j = 0;j < YCOUNT;j++)
@@ -46,7 +43,7 @@ void CMazeBuilder::BuildMaze(unsigned char data[MAX_ROOM_X][MAX_ROOM_Y][XCOUNT][
 	}
 }
 
-CMaze* CMazeBuilder::GetMaze()
+CMaze* CMazeBuilder::GetMaze() const
 {
 	return _currentMaze;
 }

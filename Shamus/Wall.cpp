@@ -9,16 +9,6 @@
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-CWall::CWall()
-{
-
-}
-
-CWall::~CWall()
-{
-
-}
-
 void CWall::Wall1(double x1, double y1, double x2, double y2)
 {
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -127,6 +117,6 @@ void CWall::Door(double x1, double y1, double x2, double y2)
 void CWall::Show(unsigned char kind, double x1, double y1, double x2, double y2)
 {
     typedef void(*obj_func)(double x1, double y1, double x2, double y2);
-    obj_func objects[] = {Wall1,Wall2,Wall3,Wall4,Door};
+    constexpr obj_func objects[] = {Wall1,Wall2,Wall3,Wall4,Door};
 	objects[kind](x1, y1, x2, y2);
 }

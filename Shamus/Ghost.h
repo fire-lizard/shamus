@@ -13,8 +13,7 @@ class CGhost : public CSprite
 {
 public:
 	CGhost();
-	virtual ~CGhost();
-	bool Move(signed char& nx, signed char& ny, unsigned char value);
+	bool Move(signed char& nx, signed char& ny, unsigned char value) override;
 };
 
 #endif // !defined(AFX_GHOST_H__8A97C842_62A1_11D9_A07B_EC387BC62146__INCLUDED_)

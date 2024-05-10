@@ -26,7 +26,7 @@ void Display()
 {
     unsigned char i, j;
     double I, J;
-    const double stepx = 1 / (double)XCOUNT, stepy = 1 / (double)YCOUNT; //ширина и высота €чейки
+    constexpr double stepx = 1 / (double)XCOUNT, stepy = 1 / (double)YCOUNT; //ширина и высота €чейки
     glClearColor(0, 0, 0, 0); //”становка чЄрного цвета очистки экрана
     glClear(GL_COLOR_BUFFER_BIT); //ќчистка экрана
     unsigned long* items[3] = { kolba, key, ask };
