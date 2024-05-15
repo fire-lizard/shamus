@@ -85,12 +85,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Shamus.Logic\Shamus.Logic.csproj">
-      <Project>{7F8634EE-74FB-475E-AAAE-CA07E21EEA88}</Project>
-      <Name>Shamus.Logic</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
