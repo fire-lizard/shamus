@@ -26,7 +26,7 @@ void Display()
 {
     unsigned char i, j;
     double I, J;
-    constexpr double stepx = 1 / (double)XCOUNT, stepy = 1 / (double)YCOUNT; //ширина и высота ячейки
+    constexpr double stepx = 1 / static_cast<double>(XCOUNT), stepy = 1 / static_cast<double>(YCOUNT); //ширина и высота ячейки
     glClearColor(0, 0, 0, 0); //Установка чёрного цвета очистки экрана
     glClear(GL_COLOR_BUFFER_BIT); //Очистка экрана
     unsigned long* items[3] = { kolba, key, ask };
@@ -43,7 +43,7 @@ void Display()
         {
             I = i * stepx;
             J = j * stepy;
-            unsigned char obj = Maze->RoomNo(Player.rx, Player.ry)->GetObject(i, j);
+            const unsigned char obj = Maze->RoomNo(Player.rx, Player.ry)->GetObject(i, j);
             if (obj > 0)
             {
                 if (obj < 6)
@@ -62,7 +62,7 @@ void Display()
     static unsigned char img_idx = 0;
     unsigned char i1, i2;
     static unsigned long ticks_s = SDL_GetTicks();
-    unsigned long ticks_e = SDL_GetTicks();
+    const unsigned long ticks_e = SDL_GetTicks();
     if (ticks_e - ticks_s > 250)
     {
         ticks_s = ticks_e;
@@ -127,10 +127,10 @@ void Keyboard(SDL_Keycode key)
         X[1] = XCOUNT - 1;Y[1] = 1;
         X[2] = 1;Y[2] = YCOUNT - 1;
         X[3] = XCOUNT - 2;Y[3] = YCOUNT - 1;
-        unsigned char temp = 0;
         for (unsigned char index = 1;index <= MONSTER_COUNT;index++)
         {
-            monsters[index]->Move(X[index], Y[index], temp);
+	        constexpr unsigned char temp = 0;
+	        monsters[index]->Move(X[index], Y[index], temp);
         }
     }
 }
@@ -138,7 +138,7 @@ void Keyboard(SDL_Keycode key)
 //Функция обработки изменения размеров окна
 void Reshape(int width, int height)
 {
-    const double minx = 0, maxx = 1, miny = 0, maxy = 1;
+    constexpr double minx = 0, maxx = 1, miny = 0, maxy = 1;
     glViewport(0, 0, width, height);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -234,7 +234,7 @@ int main(int argc, char* argv[])
         fprintf_s(stderr, "Context could not be created! SDL_Error: %s\n", SDL_GetError());
         return -1;
     }
-    SDL_TimerID timer = SDL_AddTimer(1000, Timer, NULL);
+    const SDL_TimerID timer = SDL_AddTimer(1000, Timer, nullptr);
     SDL_Event event;
     SDL_Keycode key;
     Reshape(SCREEN_WIDTH, SCREEN_HEIGHT);
