@@ -90,6 +90,31 @@
             this.images.Images.SetKeyName(1, "key.png");
             this.images.Images.SetKeyName(2, "lock.png");
             this.images.Images.SetKeyName(3, "mistery.png");
+            this.images.Images.SetKeyName(4, "door.png");
+            this.images.Images.SetKeyName(5, "line1.png");
+            this.images.Images.SetKeyName(6, "line2.png");
+            this.images.Images.SetKeyName(7, "line3.png");
+            this.images.Images.SetKeyName(8, "line4.png");
+            this.images.Images.SetKeyName(9, "line5.png");
+            this.images.Images.SetKeyName(10, "wall1.png");
+            this.images.Images.SetKeyName(11, "wall2.png");
+            this.images.Images.SetKeyName(12, "wall3.png");
+            this.images.Images.SetKeyName(13, "wall4.png");
+            this.images.Images.SetKeyName(14, "wall5.png");
+            this.images.Images.SetKeyName(15, "wall6.png");
+            this.images.Images.SetKeyName(16, "wall7.png");
+            this.images.Images.SetKeyName(17, "wall8.png");
+            this.images.Images.SetKeyName(18, "wall9.png");
+            this.images.Images.SetKeyName(19, "0.png");
+            this.images.Images.SetKeyName(20, "1.png");
+            this.images.Images.SetKeyName(21, "2.png");
+            this.images.Images.SetKeyName(22, "3.png");
+            this.images.Images.SetKeyName(23, "4.png");
+            this.images.Images.SetKeyName(24, "5.png");
+            this.images.Images.SetKeyName(25, "6.png");
+            this.images.Images.SetKeyName(26, "7.png");
+            this.images.Images.SetKeyName(27, "8.png");
+            this.images.Images.SetKeyName(28, "9.png");
             // 
             // toolStrip
             // 

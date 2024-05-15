@@ -8,8 +8,23 @@ namespace Shamus.LevelEditor
         NONE = 0,
         LIFE = 1,
         KEY = 2,
-        DOOR = 3,
-        AWARD = 4
+        LOCK = 3,
+        AWARD = 4,
+        DOOR = 5,
+        LINE1 = 6,
+        LINE2 = 7,
+        LINE3 = 8,
+        LINE4 = 9,
+        LINE5 = 10,
+        WALL1 = 11,
+        WALL2 = 12,
+        WALL3 = 13,
+        WALL4 = 14,
+        WALL5 = 15,
+        WALL6 = 16,
+        WALL7 = 17,
+        WALL8 = 18,
+        WALL9 = 19
     }
 
     public class Maze
