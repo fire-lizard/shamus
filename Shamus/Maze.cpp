@@ -12,7 +12,7 @@
 CMaze::CMaze()
 {
 	_rooms = new CRoom*[MAX_ROOM_X * MAX_ROOM_Y];
-	for (unsigned char index = 0;index < MAX_ROOM_X * MAX_ROOM_Y;index++)
+	for (unsigned short index = 0;index < MAX_ROOM_X * MAX_ROOM_Y;index++)
 	{
 		_rooms[index] = 0;
 	}
@@ -20,7 +20,7 @@ CMaze::CMaze()
 
 CMaze::~CMaze()
 {
-	for (unsigned char index = 0;index < MAX_ROOM_X * MAX_ROOM_Y;index++)
+	for (unsigned short index = 0;index < MAX_ROOM_X * MAX_ROOM_Y;index++)
 	{
 		if (_rooms[index])
 		{
@@ -38,7 +38,7 @@ void CMaze::SetPaths()
         {
             if (index1 > 0 && index1 < XCOUNT + 1 && index2 > 0 && index2 < YCOUNT + 1)			
 			{
-				unsigned char point = _rooms[_rx * MAX_ROOM_Y + _ry]->GetObject(index1 - 1, index2 - 1);
+				unsigned char point = _rooms[_rx * MAX_ROOM_Y + _ry]->GetItem(index1 - 1, index2 - 1);
                 if (point >= 1 && point <= 5)
                 {
                     _path[index1][index2] = 255;

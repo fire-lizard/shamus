@@ -43,7 +43,7 @@ void Display()
         {
             I = i * stepx;
             J = j * stepy;
-            const unsigned char obj = Maze->RoomNo(Player.rx, Player.ry)->GetObject(i, j);
+            const unsigned char obj = Maze->RoomNo(Player.rx, Player.ry)->GetItem(i, j);
             if (obj > 0)
             {
                 if (obj < 6)
@@ -52,7 +52,8 @@ void Display()
                 }
                 if (obj >= 6)
                 {
-                    CSprite::Show(items[obj - 6], I, J);
+                    if (obj != 205)
+                	CSprite::Show(items[obj - 6], I, J);
                 }
             }
         }
@@ -107,9 +108,9 @@ void Keyboard(SDL_Keycode key)
     if (key == SDLK_RIGHT) X[0]++;
     if (key == SDLK_UP) Y[0]++;
     if (key == SDLK_DOWN) Y[0]--;
-    if (Player.Move(X[0], Y[0], Maze->RoomNo(Player.rx, Player.ry)->GetObject(X[0], Y[0])))
+    if (Player.Move(X[0], Y[0], Maze->RoomNo(Player.rx, Player.ry)->GetItem(X[0], Y[0])))
     {
-        Maze->RoomNo(Player.rx, Player.ry)->SetObject(X[0], Y[0], 0);
+        Maze->RoomNo(Player.rx, Player.ry)->SetItem(X[0], Y[0], 0);
         SDL_Delay(100);
     }
     for (unsigned char index = 1;index <= MONSTER_COUNT;index++)
@@ -152,7 +153,7 @@ unsigned Timer(unsigned interval, void* param)
     for (unsigned char index = 1;index <= MONSTER_COUNT;index++)
     {
         Maze->Wave(X[index], Y[index], X[0], Y[0]);
-        monsters[index]->Move(X[index], Y[index], Maze->RoomNo(Player.rx, Player.ry)->GetObject(X[index], Y[index]));
+        monsters[index]->Move(X[index], Y[index], Maze->RoomNo(Player.rx, Player.ry)->GetItem(X[index], Y[index]));
         if (X[0] == X[index] && Y[0] == Y[index])
         {
             Player.lives--;
@@ -169,7 +170,7 @@ unsigned Timer(unsigned interval, void* param)
         if (X[0] > X[MONSTER_COUNT + 1]) X[MONSTER_COUNT + 1]++;
         if (Y[0] > Y[MONSTER_COUNT + 1]) Y[MONSTER_COUNT + 1]++;
         if (Y[0] < Y[MONSTER_COUNT + 1]) Y[MONSTER_COUNT + 1]--;
-        Ghost.Move(X[MONSTER_COUNT + 1], Y[MONSTER_COUNT + 1], Maze->RoomNo(Player.rx, Player.ry)->GetObject(X[MONSTER_COUNT + 1], Y[MONSTER_COUNT + 1]));
+        Ghost.Move(X[MONSTER_COUNT + 1], Y[MONSTER_COUNT + 1], Maze->RoomNo(Player.rx, Player.ry)->GetItem(X[MONSTER_COUNT + 1], Y[MONSTER_COUNT + 1]));
         if (X[0] == X[MONSTER_COUNT + 1] && Y[0] == Y[MONSTER_COUNT + 1])
         {
             Player.lives--;

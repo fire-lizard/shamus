@@ -34,8 +34,8 @@ void CMazeBuilder::BuildMaze(unsigned char data[MAX_ROOM_X][MAX_ROOM_Y][XCOUNT][
 			{
 				for (unsigned char j = 0;j < YCOUNT;j++)
 				{
-					room->SetObject(i, j, data[index1][index2][i][j]);
-					//room->SetObject(i, j, data[((index1 * MAX_ROOM_Y) + index2) * XCOUNT + i * YCOUNT + j]);
+					room->SetItem(i, j, data[index1][index2][i][j]);
+					//room->SetItem(i, j, data[((index1 * MAX_ROOM_Y) + index2) * XCOUNT + i * YCOUNT + j]);
 				}
 			}
 			_currentMaze->AddRoom(index1, index2, room);

@@ -21,12 +21,12 @@ CRoom::~CRoom()
 	delete[] _data;
 }
 
-unsigned char CRoom::GetObject(signed char x, signed char y) const
+unsigned char CRoom::GetItem(signed char x, signed char y) const
 {
 	return _data[x * _height + y];
 }
 
-void CRoom::SetObject(signed char x, signed char y, unsigned char value) const
+void CRoom::SetItem(signed char x, signed char y, unsigned char value) const
 {
 	_data[x * 20 + y] = value;
 }

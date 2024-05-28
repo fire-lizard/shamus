@@ -9,10 +9,10 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-#define XCOUNT 25//–азмер игрового пол€ по горизонтали
-#define YCOUNT 20//–азмер игрового пол€ по вертикали
-#define MAX_ROOM_X 8// оличество комнат по горизонтали
-#define MAX_ROOM_Y 8// оличество комнат по вертикали
+#define XCOUNT 40//–азмер игрового пол€ по горизонтали
+#define YCOUNT 25//–азмер игрового пол€ по вертикали
+#define MAX_ROOM_X 45// оличество комнат по горизонтали
+#define MAX_ROOM_Y 12// оличество комнат по вертикали
 #define MONSTER_COUNT 3//количество монстров
 
 class CMaze  

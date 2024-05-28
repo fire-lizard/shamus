@@ -27,6 +27,8 @@ namespace Shamus.LevelEditor
 
             blackPen = new Pen(Color.Black);
 
+            coordLabel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+
             byte[] data = new byte[Config.DATA_SIZE];
             CreateNewMaze(data);
         }
@@ -214,10 +216,11 @@ namespace Shamus.LevelEditor
 
         private void editorBox_MouseMove(object sender, MouseEventArgs e)
         {
+            int i = (e.X * Config.XCOUNT) / editorBox.Width;
+            int j = (e.Y * Config.YCOUNT) / editorBox.Height;
+            coordLabel.Text = $"X = {i}; Y = {j}";
             if (e.Button == MouseButtons.Left)
             {
-                int i = (e.X * Config.XCOUNT) / editorBox.Width;
-                int j = (e.Y * Config.YCOUNT) / editorBox.Height;
                 room.SetObject(i, j, (Item)objects.SelectedIndex);
                 Refresh();
             }
