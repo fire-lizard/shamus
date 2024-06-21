@@ -37,7 +37,7 @@ void Display()
     unsigned long* ghost[3] = { ghost1, ghost2, ghost3 };
     unsigned long** sprites[MONSTER_COUNT + 2] = { hero,goblin,droid,spider,ghost };
     //Рисование неподвижных объектов
-    for (i = 0;i < XCOUNT;i++)
+	for (i = 0;i < XCOUNT;i++)
     {
         for (j = 0;j < YCOUNT;j++)
         {
@@ -53,7 +53,7 @@ void Display()
                 if (obj >= 6)
                 {
                     if (obj != 205)
-                	CSprite::Show(items[obj - 6], I, J);
+                        CSprite::Show(items[obj - 6], I, J);
                 }
             }
         }

@@ -81,6 +81,7 @@
             this.previewBox.Size = new System.Drawing.Size(125, 100);
             this.previewBox.TabIndex = 1;
             this.previewBox.TabStop = false;
+            this.previewBox.Click += new System.EventHandler(this.previewBox_Click);
             this.previewBox.Paint += new System.Windows.Forms.PaintEventHandler(this.previewBox_Paint);
             // 
             // images
@@ -245,13 +246,13 @@
             // 
             // saveFileDialog
             // 
-            this.saveFileDialog.DefaultExt = "xml";
-            this.saveFileDialog.Filter = "XML files|*.xml";
+            this.saveFileDialog.DefaultExt = "dat";
+            this.saveFileDialog.Filter = "DAT files|*.dat";
             // 
             // openFileDialog
             // 
-            this.openFileDialog.DefaultExt = "xml";
-            this.openFileDialog.Filter = "XML files|*.xml";
+            this.openFileDialog.DefaultExt = "dat";
+            this.openFileDialog.Filter = "DAT files|*.dat";
             // 
             // button1
             // 

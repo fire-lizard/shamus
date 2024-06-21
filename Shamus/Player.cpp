@@ -17,6 +17,7 @@ CPlayer::CPlayer()
     py = 0;
     lives = 3;
     keys = 0;
+    room_changed = false;
 }
 
 bool CPlayer::CheckPlayerMovement(unsigned char& value)
@@ -25,14 +26,8 @@ bool CPlayer::CheckPlayerMovement(unsigned char& value)
     switch (value)
     {
         case RED_BRICK:
-            movement = false;
-            break;
         case COLOR_BRICK:
-            movement = false;
-            break;
         case SOLID_BRICK:
-            movement = false;
-            break;
         case GRAY_BRICK:
             movement = false;
             break;

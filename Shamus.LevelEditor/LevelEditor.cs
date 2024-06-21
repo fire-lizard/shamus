@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
-using System.Text;
 using System.Windows.Forms;
-using System.Xml;
 
 namespace Shamus.LevelEditor
 {
@@ -40,8 +38,7 @@ namespace Shamus.LevelEditor
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            byte[] data = new byte[Config.DATA_SIZE];
-            CreateNewMaze(data);
+            CreateNewMaze(new byte[Config.DATA_SIZE]);
             Refresh();
         }
 
@@ -59,19 +56,12 @@ namespace Shamus.LevelEditor
         {
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                byte[] data;
-                using (XmlTextReader xmlTextReader = new XmlTextReader(openFileDialog.FileName))
+                if (new FileInfo(openFileDialog.FileName).Length != Config.DATA_SIZE)
                 {
-                    xmlTextReader.ReadStartElement();
-                    xmlTextReader.ReadStartElement();
-                    char[] chars = xmlTextReader.ReadString().ToCharArray();
-                    data = new byte[chars.Length];
-                    for (int index = 0; index < chars.Length; index++)
-                    {
-                        data[index] = (byte) (chars[index] - 48);
-                    }
+                    MessageBox.Show("Invalid file size!");
+                    return;
                 }
-                CreateNewMaze(data);
+                CreateNewMaze(File.ReadAllBytes(openFileDialog.FileName));
                 Refresh();
             }
         }
@@ -80,23 +70,7 @@ namespace Shamus.LevelEditor
         {
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                using (TextWriter textWriter = File.CreateText(saveFileDialog.FileName))
-                {
-                    XmlTextWriter xmlTextWriter = new XmlTextWriter(textWriter);
-                    xmlTextWriter.WriteStartElement("XnaContent");
-                    xmlTextWriter.WriteStartElement("Asset");
-                    xmlTextWriter.WriteAttributeString("Type", "System.String");
-                    StringBuilder str = new StringBuilder();
-                    byte[] data = mazeBuilder.Data(maze);
-                    foreach (byte t in data)
-                    {
-                        str.Append(t);
-                    }
-                    xmlTextWriter.WriteString(str.ToString());
-                    xmlTextWriter.WriteEndElement();
-                    xmlTextWriter.WriteEndElement();
-                    xmlTextWriter.Close();
-                }
+                File.WriteAllBytes(saveFileDialog.FileName, mazeBuilder.Data(maze));
             }
         }
 
@@ -168,6 +142,10 @@ namespace Shamus.LevelEditor
             {
                 itemBox.Image = images.Images[objects.SelectedIndex - 1];
             }
+            else
+            {
+                itemBox.Image = null;
+            }
         }
 
         private void numericX_ValueChanged(object sender, EventArgs e)
@@ -192,18 +170,12 @@ namespace Shamus.LevelEditor
 
         private void button4_Click(object sender, EventArgs e)
         {
-            if (numericY.Value < Config.MAX_ROOM_Y)
-            {
-                numericY.Value++;
-            }
+            if (numericY.Value < Config.MAX_ROOM_Y) numericY.Value++;
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (numericX.Value < Config.MAX_ROOM_X)
-            {
-                numericX.Value++;
-            }
+            if (numericX.Value < Config.MAX_ROOM_X) numericX.Value++;
         }
 
         private void editorBox_MouseClick(object sender, MouseEventArgs e)
@@ -224,6 +196,11 @@ namespace Shamus.LevelEditor
                 room.SetObject(i, j, (Item)objects.SelectedIndex);
                 Refresh();
             }
+        }
+
+        private void previewBox_Click(object sender, EventArgs e)
+        {
+            new PreviewMap().ShowDialog();
         }
     }
 }

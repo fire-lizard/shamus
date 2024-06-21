@@ -47,10 +47,6 @@ namespace Shamus.LevelEditor
         private int _rx;
         private int _ry;
 
-        public int RX => _rx;
-
-        public int RY => _ry;
-
         public Maze()
         {
             _path = new int[Config.XCOUNT + 2][];

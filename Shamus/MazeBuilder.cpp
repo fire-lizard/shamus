@@ -22,8 +22,6 @@ CMazeBuilder::~CMazeBuilder()
 void CMazeBuilder::BuildMaze(unsigned char data[MAX_ROOM_X][MAX_ROOM_Y][XCOUNT][YCOUNT])
 //void CMazeBuilder::BuildMaze(unsigned char *data)
 {
-	unsigned char* start = &data[0][0][0][0];
-	//unsigned char* start = &data[0];
 	_currentMaze = new CMaze;
 	for (unsigned char index1 = 0;index1 < MAX_ROOM_X;index1++)
 	{
