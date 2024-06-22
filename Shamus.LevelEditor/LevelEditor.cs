@@ -11,7 +11,6 @@ namespace Shamus.LevelEditor
 
         private readonly MazeBuilder mazeBuilder = new MazeBuilder();
         private Maze maze;
-        private Room room;
 
         public LevelEditor()
         {
@@ -47,7 +46,6 @@ namespace Shamus.LevelEditor
             mazeBuilder.BuildMaze(data);
             maze = mazeBuilder.CurrentMaze;
             maze.SelectRoom(0, 0);
-            room = maze.CurrentRoom;
             numericX.Value = 1;
             numericY.Value = 1;
         }
@@ -96,7 +94,7 @@ namespace Shamus.LevelEditor
             {
                 for (int j = 0; j < Config.YCOUNT; j++)
                 {
-                    Item item = room.GetObject(i, j);
+                    Item item = maze.GetObject((int)numericX.Value - 1, (int)numericY.Value - 1, i, j);
                     int imageIndex = (int) item;
                     if (imageIndex > 0 && imageIndex <= images.Images.Count)
                     {
@@ -110,7 +108,6 @@ namespace Shamus.LevelEditor
         private void ChangeRoom()
         {
             maze.SelectRoom((int) numericX.Value - 1, (int) numericY.Value - 1);
-            room = maze.CurrentRoom;
             Refresh();
         }
 
@@ -138,14 +135,7 @@ namespace Shamus.LevelEditor
 
         private void objects_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (objects.SelectedIndex > 0)
-            {
-                itemBox.Image = images.Images[objects.SelectedIndex - 1];
-            }
-            else
-            {
-                itemBox.Image = null;
-            }
+            itemBox.Image = objects.SelectedIndex > 0 ? images.Images[objects.SelectedIndex - 1] : null;
         }
 
         private void numericX_ValueChanged(object sender, EventArgs e)
@@ -182,7 +172,7 @@ namespace Shamus.LevelEditor
         {
             int i = (e.X * Config.XCOUNT) / editorBox.Width;
             int j = (e.Y * Config.YCOUNT) / editorBox.Height;
-            room.SetObject(i, j, (Item)objects.SelectedIndex);
+            maze.SetObject((int)numericX.Value - 1, (int)numericY.Value - 1, i, j, (Item)objects.SelectedIndex);
             Refresh();
         }
 
@@ -193,14 +183,14 @@ namespace Shamus.LevelEditor
             coordLabel.Text = $"X = {i}; Y = {j}";
             if (e.Button == MouseButtons.Left)
             {
-                room.SetObject(i, j, (Item)objects.SelectedIndex);
+                maze.SetObject((int)numericX.Value - 1, (int)numericY.Value - 1, i, j, (Item)objects.SelectedIndex);
                 Refresh();
             }
         }
 
         private void previewBox_Click(object sender, EventArgs e)
         {
-            new PreviewMap().ShowDialog();
+            new PreviewMap { Maze = maze }.ShowDialog();
         }
     }
 }

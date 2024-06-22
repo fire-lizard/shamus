@@ -15,21 +15,17 @@ namespace Shamus.LevelEditor
             {
                 for (int index2 = 0; index2 < Config.MAX_ROOM_Y; index2++)
                 {
-                    maze.SelectRoom(index1, index2);
-                    Room room = maze.CurrentRoom;
-                    if (room != null)
+                    for (int i = 0; i < Config.XCOUNT; i++)
                     {
-                        for (int i = 0; i < Config.XCOUNT; i++)
+                        for (int j = 0; j < Config.YCOUNT; j++)
                         {
-                            for (int j = 0; j < Config.YCOUNT; j++)
-                            {
-                                data[position] = (byte) room.GetObject(i, j);
-                                position++;
-                            }
+                            data[position] = (byte)maze.GetObject(index1, index2, i, j);
+                            position++;
                         }
                     }
                 }
             }
+
             return data;
         }
 
@@ -43,16 +39,14 @@ namespace Shamus.LevelEditor
             {
                 for (int index2 = 0; index2 < Config.MAX_ROOM_Y; index2++)
                 {
-                    Room room = new Room(Config.XCOUNT, Config.YCOUNT);
                     for (int i = 0; i < Config.XCOUNT; i++)
                     {
                         for (int j = 0; j < Config.YCOUNT; j++)
                         {
-                            room.SetObject(i, j, (Item)data[position]);
+                            _currentMaze.SetObject(index1, index2, i, j, (Item)data[position]);
                             position++;
                         }
                     }
-                    _currentMaze.AddRoom(index1, index2, room);
                 }
             }
         }

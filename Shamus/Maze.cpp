@@ -14,7 +14,7 @@ CMaze::CMaze()
 	_rooms = new CRoom*[MAX_ROOM_X * MAX_ROOM_Y];
 	for (unsigned short index = 0;index < MAX_ROOM_X * MAX_ROOM_Y;index++)
 	{
-		_rooms[index] = 0;
+		_rooms[index] = nullptr;
 	}
 }
 
@@ -38,7 +38,7 @@ void CMaze::SetPaths()
         {
             if (index1 > 0 && index1 < XCOUNT + 1 && index2 > 0 && index2 < YCOUNT + 1)			
 			{
-				unsigned char point = _rooms[_rx * MAX_ROOM_Y + _ry]->GetItem(index1 - 1, index2 - 1);
+				const unsigned char point = _rooms[_rx * MAX_ROOM_Y + _ry]->GetItem(index1 - 1, index2 - 1);
                 if (point >= 1 && point <= 5)
                 {
                     _path[index1][index2] = 255;
@@ -92,7 +92,7 @@ void CMaze::MinValue(signed char x1, signed char y1, signed char& x, signed char
 void CMaze::GetPaths(signed char& x1, signed char& y1, signed char x2, signed char y2)
 {
     unsigned char ni = 0;
-    const unsigned char nk = 64;
+    constexpr unsigned char nk = 64;
     do
     {
         for (unsigned char index1 = 1;index1 < XCOUNT + 1;index1++)
@@ -101,10 +101,10 @@ void CMaze::GetPaths(signed char& x1, signed char& y1, signed char x2, signed ch
             {
        	        if (_pathFind[index1][index2] == ni)
                	{
-	                unsigned char c1 = _pathFind[index1 - 1][index2];
-                    unsigned char c2 = _pathFind[index1 + 1][index2];
-                    unsigned char c3 = _pathFind[index1][index2 - 1];
-       	            unsigned char c4 = _pathFind[index1][index2 + 1];
+	                const unsigned char c1 = _pathFind[index1 - 1][index2];
+	                const unsigned char c2 = _pathFind[index1 + 1][index2];
+	                const unsigned char c3 = _pathFind[index1][index2 - 1];
+	                const unsigned char c4 = _pathFind[index1][index2 + 1];
                	    if (c1 == 254)
                     {
                         _pathFind[index1 - 1][index2] = ni + 1;

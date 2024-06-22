@@ -25,13 +25,35 @@ bool CPlayer::CheckPlayerMovement(unsigned char& value)
     bool movement = true;
     switch (value)
     {
-        case RED_BRICK:
-        case COLOR_BRICK:
-        case SOLID_BRICK:
-        case GRAY_BRICK:
+        case LINE1:
+        case LINE2:
+        case LINE3:
+        case LINE4:
+        case LINE5:
+        case DOOR:
             movement = false;
             break;
-        case DOOR:
+        case LIFE:
+            lives++;
+            value = 0;
+            break;
+        case BLUE_KEY:
+        case BROWN_KEY:
+        case CYAN_KEY:
+        case GREEN_KEY:
+        case ORANGE_KEY:
+        case PURPLE_KEY:
+        case RED_KEY:
+            keys++;
+            value = 0;
+            break;
+        case BLUE_LOCK:
+        case BROWN_LOCK:
+        case CYAN_LOCK:
+        case GREEN_LOCK:
+        case ORANGE_LOCK:
+        case PURPLE_LOCK:
+        case RED_LOCK:
             movement = (keys > 0);
             if (movement)
             {
@@ -39,15 +61,7 @@ bool CPlayer::CheckPlayerMovement(unsigned char& value)
                 value = 0;
             }
             break;
-        case LIFE:
-            lives++;
-            value = 0;
-            break;
-        case KEY:
-            keys++;
-            value = 0;
-            break;
-        case QUESTION_MARK:
+        case AWARD:
             value = 0;
             break;
         default:;

@@ -41,7 +41,7 @@ namespace Shamus.LevelEditor
 
     public class Maze
     {
-	    private readonly Room[][] _rooms;
+	    private readonly byte[,,,] _data;
 	    private readonly int[][] _path;
 	    private readonly int[][] _pathFind;
         private int _rx;
@@ -49,18 +49,13 @@ namespace Shamus.LevelEditor
 
         public Maze()
         {
+            _data = new byte[Config.MAX_ROOM_X, Config.MAX_ROOM_Y, Config.XCOUNT, Config.YCOUNT];
             _path = new int[Config.XCOUNT + 2][];
             _pathFind = new int[Config.XCOUNT + 2][];
             for (int index = 0; index < Config.XCOUNT + 2; index++)
             {
                 _path[index] = new int[Config.YCOUNT + 2];
                 _pathFind[index] = new int[Config.YCOUNT + 2];
-            }
-
-            _rooms = new Room[Config.MAX_ROOM_X][];
-            for (int index = 0; index < Config.MAX_ROOM_X; index++)
-            {
-                _rooms[index] = new Room[Config.MAX_ROOM_Y];
             }
         }
 
@@ -72,7 +67,7 @@ namespace Shamus.LevelEditor
                 {
                     if (index1 > 0 && index1 < Config.XCOUNT + 1 && index2 > 0 && index2 < Config.YCOUNT + 1)
                     {
-                        Item item = _rooms[_rx][_ry].GetObject(index1 - 1, index2 - 1);
+                        Item item = GetObject(_rx, _ry, index1 - 1, index2 - 1);
                         if (item != Item.NONE)
                         {
                             _path[index1][index2] = 255;
@@ -210,11 +205,30 @@ namespace Shamus.LevelEditor
             SetPaths();
         }
 
-        public void AddRoom(int rx, int ry, Room room)
+        public bool IsEmptyRoom(int rx, int ry)
         {
-            _rooms[rx][ry] = room;
+            for (int i = 0; i < Config.XCOUNT; i++)
+            {
+                for (int j = 0; j < Config.YCOUNT; j++)
+                {
+                    if (GetObject(rx, ry, i, j) != Item.NONE)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
         }
 
-        public Room CurrentRoom => _rooms[_rx][_ry];
+        public Item GetObject(int rx, int ry, int x, int y)
+        {
+            return (Item)_data[rx, ry, x, y];
+        }
+        
+        public void SetObject(int rx, int ry, int x, int y, Item item)
+        {
+            _data[rx, ry, x, y] = (byte)item;
+        }
     }
 }

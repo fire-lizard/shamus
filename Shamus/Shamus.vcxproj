@@ -138,7 +138,6 @@
     <ClInclude Include="Objects.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Room.h" />
-    <ClInclude Include="rooms.h" />
     <ClInclude Include="Shamus.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="sprites.h" />

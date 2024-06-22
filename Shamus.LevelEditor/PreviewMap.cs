@@ -5,6 +5,11 @@ namespace Shamus.LevelEditor
 {
     public partial class PreviewMap : Form
     {
+        private readonly Pen _pen = new Pen(Color.Black);
+        private readonly Brush _brush = new SolidBrush(Color.Blue);
+
+        public Maze Maze { get; set; }
+        
         public PreviewMap()
         {
             InitializeComponent();
@@ -34,12 +39,10 @@ namespace Shamus.LevelEditor
             {
                 for (int j = 0; j < Config.MAX_ROOM_Y; j++)
                 {
-                    //Item item = room.GetObject(i, j);
-                    //int imageIndex = (int)item;
-                    //if (imageIndex > 0 && imageIndex <= images.Images.Count)
+                    if (!Maze.IsEmptyRoom(i, j))
                     {
                         RectangleF rectangle = new RectangleF(i * w + 1, j * h + 1, w - 2, h - 2);
-                        //graphics.DrawImage(images.Images[(int)item - 1], rectangle);
+                        graphics.FillRectangle(_brush, rectangle);
                     }
                 }
             }
@@ -48,7 +51,7 @@ namespace Shamus.LevelEditor
 
         private void previewBox_Paint(object sender, PaintEventArgs e)
         {
-            DrawGrid(previewBox, e.Graphics, new Pen(Color.Black));
+            DrawGrid(previewBox, e.Graphics, _pen);
             DrawMaze(previewBox, e.Graphics);
         }
     }

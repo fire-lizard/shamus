@@ -4,7 +4,6 @@
 #include "Shamus.h"
 #include "Objects.h"
 #include "sprites.h"
-#include "rooms.h"
 
 #define SCREEN_WIDTH    640
 #define SCREEN_HEIGHT   480
@@ -24,9 +23,7 @@ SDL_GLContext context;
 //Функция рисования
 void Display()
 {
-    unsigned char i, j;
-    double I, J;
-    constexpr double stepx = 1 / static_cast<double>(XCOUNT), stepy = 1 / static_cast<double>(YCOUNT); //ширина и высота ячейки
+	constexpr double stepx = 1 / static_cast<double>(XCOUNT), stepy = 1 / static_cast<double>(YCOUNT); //ширина и высота ячейки
     glClearColor(0, 0, 0, 0); //Установка чёрного цвета очистки экрана
     glClear(GL_COLOR_BUFFER_BIT); //Очистка экрана
     unsigned long* items[3] = { kolba, key, ask };
@@ -37,12 +34,12 @@ void Display()
     unsigned long* ghost[3] = { ghost1, ghost2, ghost3 };
     unsigned long** sprites[MONSTER_COUNT + 2] = { hero,goblin,droid,spider,ghost };
     //Рисование неподвижных объектов
-	for (i = 0;i < XCOUNT;i++)
+	for (unsigned char i = 0;i < XCOUNT;i++)
     {
-        for (j = 0;j < YCOUNT;j++)
+        for (unsigned char j = 0;j < YCOUNT;j++)
         {
-            I = i * stepx;
-            J = j * stepy;
+	        const double I = i * stepx;
+	        const double J = j * stepy;
             const unsigned char obj = Maze->RoomNo(Player.rx, Player.ry)->GetItem(i, j);
             if (obj > 0)
             {
@@ -102,12 +99,12 @@ void Display()
 }
 //---------------------------------------------------------------------------
 //Функция обработки нажатий клавиш
-void Keyboard(SDL_Keycode key)
+void Keyboard(SDL_Keycode keycode)
 {
-    if (key == SDLK_LEFT) X[0]--;
-    if (key == SDLK_RIGHT) X[0]++;
-    if (key == SDLK_UP) Y[0]++;
-    if (key == SDLK_DOWN) Y[0]--;
+    if (keycode == SDLK_LEFT) X[0]--;
+    if (keycode == SDLK_RIGHT) X[0]++;
+    if (keycode == SDLK_UP) Y[0]++;
+    if (keycode == SDLK_DOWN) Y[0]--;
     if (Player.Move(X[0], Y[0], Maze->RoomNo(Player.rx, Player.ry)->GetItem(X[0], Y[0])))
     {
         Maze->RoomNo(Player.rx, Player.ry)->SetItem(X[0], Y[0], 0);
@@ -187,6 +184,17 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 int main(int argc, char* argv[])
 #endif
 {
+    unsigned char maze_data[MAX_ROOM_X * MAX_ROOM_Y * XCOUNT * YCOUNT];
+    for (unsigned char& index : maze_data)
+    {
+	    index = 0;
+    }
+	//unsigned char maze_data[MAX_ROOM_X][MAX_ROOM_Y][XCOUNT][YCOUNT];
+    //const char *fileName = "maze.dat";
+	//FILE* file;
+    //errno_t err;
+    //err = fopen_s(&file, fileName, "rb");
+    //err = fclose(file);
     CMazeBuilder MazeBuilder;
     MazeBuilder.BuildMaze(maze_data);
     Maze = MazeBuilder.GetMaze();
@@ -194,7 +202,7 @@ int main(int argc, char* argv[])
     monsters[1] = &Monster1;
     monsters[2] = &Monster2;
     monsters[3] = &Monster3;
-    unsigned char temp = 0;
+    constexpr unsigned char temp = 0;
     Player.Move(X[0], Y[0], temp);
     for (unsigned char index = 1;index <= MONSTER_COUNT;index++)
     {

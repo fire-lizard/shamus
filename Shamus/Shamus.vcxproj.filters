@@ -44,9 +44,6 @@
     <ClInclude Include="sprites.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="rooms.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Shamus.cpp">

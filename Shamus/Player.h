@@ -9,14 +9,41 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-#define RED_BRICK 1
-#define COLOR_BRICK 2
-#define SOLID_BRICK 3
-#define GRAY_BRICK 4
-#define DOOR 5
-#define LIFE 6
-#define KEY 7
-#define QUESTION_MARK 8
+enum Item
+{
+    NONE = 0,
+    LIFE = 1,
+    AWARD = 2,
+    DOOR = 3,
+    LINE1 = 4,
+    LINE2 = 5,
+    LINE3 = 6,
+    LINE4 = 7,
+    LINE5 = 8,
+    WALL1 = 9,
+    WALL2 = 10,
+    WALL3 = 11,
+    WALL4 = 12,
+    WALL5 = 13,
+    WALL6 = 14,
+    WALL7 = 15,
+    WALL8 = 16,
+    WALL9 = 17,
+    BLUE_KEY = 18,
+    BROWN_KEY = 19,
+    CYAN_KEY = 20,
+    GREEN_KEY = 21,
+    ORANGE_KEY = 22,
+    PURPLE_KEY = 23,
+    RED_KEY = 24,
+    BLUE_LOCK = 25,
+    BROWN_LOCK = 26,
+    CYAN_LOCK = 27,
+    GREEN_LOCK = 28,
+    ORANGE_LOCK = 29,
+    PURPLE_LOCK = 30,
+    RED_LOCK = 31
+};
 
 class CPlayer : public CSprite  
 {
