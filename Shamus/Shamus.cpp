@@ -26,7 +26,6 @@ void Display()
 	constexpr double stepx = 1 / static_cast<double>(XCOUNT), stepy = 1 / static_cast<double>(YCOUNT); //ширина и высота ячейки
     glClearColor(0, 0, 0, 0); //Установка чёрного цвета очистки экрана
     glClear(GL_COLOR_BUFFER_BIT); //Очистка экрана
-    unsigned long* items[3] = { kolba, key, ask };
     unsigned long* hero[1] = { hero1 };
     unsigned long* goblin[3] = { goblin1, goblin2, goblin3 };
     unsigned long* droid[3] = { droid1, droid2, droid3 };
@@ -41,17 +40,59 @@ void Display()
 	        const double I = i * stepx;
 	        const double J = j * stepy;
             const unsigned char obj = Maze->RoomNo(Player.rx, Player.ry)->GetItem(i, j);
-            if (obj > 0)
+            switch (obj)
             {
-                if (obj < 6)
-                {
-                    CWall::Show(obj - 1, I, J, I + stepx, J + stepy);
-                }
-                if (obj >= 6)
-                {
-                    if (obj != 205)
-                        CSprite::Show(items[obj - 6], I, J);
-                }
+            case LIFE:
+                CSprite::Show(kolba, I, J);
+                break;
+            case AWARD:
+                CSprite::Show(ask, I, J);
+                break;
+            case DOOR:
+                CWall::Show(4, I, J, I + stepx, J + stepy);
+                break;
+            case BLUE_KEY:
+            case BROWN_KEY:
+            case CYAN_KEY:
+            case GREEN_KEY:
+            case ORANGE_KEY:
+            case PURPLE_KEY:
+            case RED_KEY:
+                CSprite::Show(key, I, J);
+                break;
+            case BLUE_LOCK:
+            case BROWN_LOCK:
+            case CYAN_LOCK:
+            case GREEN_LOCK:
+            case ORANGE_LOCK:
+            case PURPLE_LOCK:
+            case RED_LOCK:
+                CSprite::Show(keyhole, I, J);
+                break;
+            case LINE1:
+                CWall::Show(0, I, J, I + stepx, J + stepy);
+                break;
+            case LINE2:
+                CWall::Show(1, I, J, I + stepx, J + stepy);
+                break;
+            case LINE3:
+                CWall::Show(2, I, J, I + stepx, J + stepy);
+                break;
+            case LINE4:
+                CWall::Show(3, I, J, I + stepx, J + stepy);
+                break;
+            case LINE5:
+            case WALL1:
+            case WALL2:
+            case WALL3:
+            case WALL4:
+            case WALL5:
+            case WALL6:
+            case WALL7:
+            case WALL8:
+            case WALL9:
+            default:
+                break;
             }
         }
     }
@@ -189,12 +230,11 @@ int main(int argc, char* argv[])
     {
 	    index = 0;
     }
-	//unsigned char maze_data[MAX_ROOM_X][MAX_ROOM_Y][XCOUNT][YCOUNT];
-    //const char *fileName = "maze.dat";
-	//FILE* file;
-    //errno_t err;
-    //err = fopen_s(&file, fileName, "rb");
-    //err = fclose(file);
+    const char *fileName = "C:/Code/shamus/Shamus/x64/Debug/maze.dat";
+	FILE* file;
+    errno_t err = fopen_s(&file, fileName, "rb");
+    int cnt = fread(maze_data, 1, MAX_ROOM_X * MAX_ROOM_Y * XCOUNT * YCOUNT, file);
+    err = fclose(file);
     CMazeBuilder MazeBuilder;
     MazeBuilder.BuildMaze(maze_data);
     Maze = MazeBuilder.GetMaze();

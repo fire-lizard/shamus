@@ -15,8 +15,7 @@ class CMazeBuilder
 public:
 	CMazeBuilder();
 	virtual ~CMazeBuilder();
-	//void BuildMaze(unsigned char data[MAX_ROOM_X][MAX_ROOM_Y][XCOUNT][YCOUNT]);
-	void BuildMaze(unsigned char *data);
+	void BuildMaze(const unsigned char *data);
 	CMaze* GetMaze() const;
 };
 

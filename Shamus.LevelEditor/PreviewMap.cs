@@ -6,7 +6,10 @@ namespace Shamus.LevelEditor
     public partial class PreviewMap : Form
     {
         private readonly Pen _pen = new Pen(Color.Black);
-        private readonly Brush _brush = new SolidBrush(Color.Blue);
+        private readonly Brush _blackBrush = new SolidBrush(Color.Black);
+        private readonly Brush _blueBrush = new SolidBrush(Color.Blue);
+        private readonly Brush _greenBrush = new SolidBrush(Color.Green);
+        private readonly Brush _redBrush = new SolidBrush(Color.Red);
 
         public Maze Maze { get; set; }
         
@@ -42,7 +45,22 @@ namespace Shamus.LevelEditor
                     if (!Maze.IsEmptyRoom(i, j))
                     {
                         RectangleF rectangle = new RectangleF(i * w + 1, j * h + 1, w - 2, h - 2);
-                        graphics.FillRectangle(_brush, rectangle);
+                        if (i <= 13 && j <= 4)
+                        {
+                            graphics.FillRectangle(_blackBrush, rectangle);
+                        }
+                        else if (i <= 22 && j <= 6)
+                        {
+                            graphics.FillRectangle(_blueBrush, rectangle);
+                        }
+                        else if (i <= 31 && j <= 10)
+                        {
+                            graphics.FillRectangle(_greenBrush, rectangle);
+                        }
+                        else
+                        {
+                            graphics.FillRectangle(_redBrush, rectangle);
+                        }
                     }
                 }
             }

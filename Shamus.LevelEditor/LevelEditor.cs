@@ -45,7 +45,6 @@ namespace Shamus.LevelEditor
         {
             mazeBuilder.BuildMaze(data);
             maze = mazeBuilder.CurrentMaze;
-            maze.SelectRoom(0, 0);
             numericX.Value = 1;
             numericY.Value = 1;
         }
@@ -107,7 +106,6 @@ namespace Shamus.LevelEditor
 
         private void ChangeRoom()
         {
-            maze.SelectRoom((int) numericX.Value - 1, (int) numericY.Value - 1);
             Refresh();
         }
 

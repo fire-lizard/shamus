@@ -101,10 +101,10 @@ bool CPlayer::CheckRoom(signed char& x, signed char& y)
     }
     if (y > YCOUNT - 1)
     {
-        if (ry < MAX_ROOM_Y - 1)
+        if (ry > 0)
         {
 			y = 0;
-			ry++;
+			ry--;
 			return true;
         }
         else
@@ -115,10 +115,10 @@ bool CPlayer::CheckRoom(signed char& x, signed char& y)
     }
     if (y < 0)
     {
-        if (ry > 0)
+        if (ry < MAX_ROOM_Y - 1)
         {
 			y = YCOUNT - 1;
-			ry--;
+			ry++;
 			return true;
         }
         else

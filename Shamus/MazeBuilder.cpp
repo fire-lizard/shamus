@@ -19,10 +19,10 @@ CMazeBuilder::~CMazeBuilder()
 	delete _currentMaze;
 }
 
-//void CMazeBuilder::BuildMaze(unsigned char data[MAX_ROOM_X][MAX_ROOM_Y][XCOUNT][YCOUNT])
-void CMazeBuilder::BuildMaze(unsigned char *data)
+void CMazeBuilder::BuildMaze(const unsigned char *data)
 {
 	_currentMaze = new CMaze;
+	int idx = 0;
 	for (unsigned char index1 = 0;index1 < MAX_ROOM_X;index1++)
 	{
 		for (unsigned char index2 = 0;index2 < MAX_ROOM_Y;index2++)
@@ -32,8 +32,12 @@ void CMazeBuilder::BuildMaze(unsigned char *data)
 			{
 				for (unsigned char j = 0;j < YCOUNT;j++)
 				{
-					//room->SetItem(i, j, data[index1][index2][i][j]);
-					room->SetItem(i, j, data[((index1 * MAX_ROOM_Y) + index2) * XCOUNT + i * YCOUNT + j]);
+					const unsigned char item = data[idx];
+					if (item > 0)
+					{
+						room->SetItem(i, j, item);
+					}
+					idx++;
 				}
 			}
 			_currentMaze->AddRoom(index1, index2, room);
