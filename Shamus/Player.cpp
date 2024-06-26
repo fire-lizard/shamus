@@ -16,7 +16,13 @@ CPlayer::CPlayer()
     px = 0;
     py = 0;
     lives = 3;
-    keys = 0;
+    blue_keys = 0;
+    brown_keys = 0;
+    cyan_keys = 0;
+    green_keys = 0;
+    orange_keys = 0;
+    purple_keys = 0;
+	red_keys = 0;
     room_changed = false;
 }
 
@@ -38,26 +44,86 @@ bool CPlayer::CheckPlayerMovement(unsigned char& value)
             value = 0;
             break;
         case BLUE_KEY:
+            blue_keys++;
+            value = 0;
+            break;
         case BROWN_KEY:
+            brown_keys++;
+            value = 0;
+            break;
         case CYAN_KEY:
+            cyan_keys++;
+            value = 0;
+            break;
         case GREEN_KEY:
+            green_keys++;
+            value = 0;
+            break;
         case ORANGE_KEY:
+            orange_keys++;
+            value = 0;
+            break;
         case PURPLE_KEY:
+            purple_keys++;
+            value = 0;
+            break;
         case RED_KEY:
-            keys++;
+            red_keys++;
             value = 0;
             break;
         case BLUE_LOCK:
-        case BROWN_LOCK:
-        case CYAN_LOCK:
-        case GREEN_LOCK:
-        case ORANGE_LOCK:
-        case PURPLE_LOCK:
-        case RED_LOCK:
-            movement = (keys > 0);
+            movement = blue_keys > 0;
             if (movement)
             {
-                keys--;
+                blue_keys--;
+                value = 0;
+            }
+            break;
+        case BROWN_LOCK:
+            movement = brown_keys > 0;
+            if (movement)
+            {
+                brown_keys--;
+                value = 0;
+            }
+            break;
+        case CYAN_LOCK:
+            movement = cyan_keys > 0;
+            if (movement)
+            {
+                cyan_keys--;
+                value = 0;
+            }
+            break;
+        case GREEN_LOCK:
+            movement = green_keys > 0;
+            if (movement)
+            {
+                green_keys--;
+                value = 0;
+            }
+            break;
+        case ORANGE_LOCK:
+            movement = orange_keys > 0;
+            if (movement)
+            {
+                orange_keys--;
+                value = 0;
+            }
+            break;
+        case PURPLE_LOCK:
+            movement = purple_keys > 0;
+            if (movement)
+            {
+                purple_keys--;
+                value = 0;
+            }
+            break;
+        case RED_LOCK:
+            movement = red_keys > 0;
+            if (movement)
+            {
+                red_keys--;
                 value = 0;
             }
             break;

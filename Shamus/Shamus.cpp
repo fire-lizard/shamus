@@ -99,7 +99,7 @@ void Display()
     //Рисование подвижных объектов
     CSprite::Show(sprites[0][0], Player.px * stepx, Player.py * stepy);
     static unsigned char img_idx = 0;
-    unsigned char i1, i2;
+    unsigned char i1 = 0, i2 = 0;
     static unsigned long ticks_s = SDL_GetTicks();
     const unsigned long ticks_e = SDL_GetTicks();
     if (ticks_e - ticks_s > 250)
@@ -285,7 +285,6 @@ int main(int argc, char* argv[])
     }
     const SDL_TimerID timer = SDL_AddTimer(1000, Timer, nullptr);
     SDL_Event event;
-    SDL_Keycode key;
     Reshape(SCREEN_WIDTH, SCREEN_HEIGHT);
     bool done = false;
     while (!done)
@@ -295,12 +294,12 @@ int main(int argc, char* argv[])
         if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_RESIZED) Reshape(event.window.data1, event.window.data2);
         if (event.key.state == SDL_PRESSED)
         {
-            key = event.key.keysym.sym;
-            if (key == SDLK_LEFT || key == SDLK_RIGHT || key == SDLK_UP || key == SDLK_DOWN)
+            SDL_Keycode keycode = event.key.keysym.sym;
+            if (keycode == SDLK_LEFT || keycode == SDLK_RIGHT || keycode == SDLK_UP || keycode == SDLK_DOWN)
             {
-                Keyboard(key);
+                Keyboard(keycode);
             }
-            else if (key == SDLK_ESCAPE)
+            else if (keycode == SDLK_ESCAPE)
             {
                 done = true;
             }

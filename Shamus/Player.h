@@ -50,7 +50,7 @@ class CPlayer : public CSprite
 	bool CheckPlayerMovement(unsigned char& value);
 	bool CheckRoom(signed char& x, signed char& y);
 public:
-    unsigned char lives, keys;
+    unsigned char lives, blue_keys, brown_keys, cyan_keys, green_keys, orange_keys, purple_keys, red_keys;
 	signed char rx, ry;
 	bool room_changed;
 
