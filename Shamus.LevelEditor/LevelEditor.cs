@@ -10,6 +10,7 @@ namespace Shamus.LevelEditor
         private readonly Pen blackPen;
 
         private readonly MazeBuilder mazeBuilder = new MazeBuilder();
+        private readonly Item[,] copyArray = new Item[Config.XCOUNT, Config.YCOUNT];
         private Maze maze;
 
         public LevelEditor()
@@ -168,16 +169,16 @@ namespace Shamus.LevelEditor
 
         private void editorBox_MouseClick(object sender, MouseEventArgs e)
         {
-            int i = (e.X * Config.XCOUNT) / editorBox.Width;
-            int j = (e.Y * Config.YCOUNT) / editorBox.Height;
+            int i = e.X * Config.XCOUNT / editorBox.Width;
+            int j = e.Y * Config.YCOUNT / editorBox.Height;
             maze.SetObject((int)numericX.Value - 1, (int)numericY.Value - 1, i, j, (Item)objects.SelectedIndex);
             Refresh();
         }
 
         private void editorBox_MouseMove(object sender, MouseEventArgs e)
         {
-            int i = (e.X * Config.XCOUNT) / editorBox.Width;
-            int j = (e.Y * Config.YCOUNT) / editorBox.Height;
+            int i = e.X * Config.XCOUNT / editorBox.Width;
+            int j = e.Y * Config.YCOUNT / editorBox.Height;
             coordLabel.Text = $"X = {i}; Y = {j}";
             if (e.Button == MouseButtons.Left)
             {
@@ -189,6 +190,30 @@ namespace Shamus.LevelEditor
         private void previewBox_Click(object sender, EventArgs e)
         {
             new PreviewMap { Maze = maze }.ShowDialog();
+        }
+
+        private void toolStripButton5_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < Config.XCOUNT; i++)
+            {
+                for (int j = 0; j < Config.YCOUNT; j++)
+                {
+                    var item = maze.GetObject((int)numericX.Value - 1, (int)numericY.Value - 1, i, j);
+                    copyArray[i,j] = item;
+                }
+            }
+        }
+
+        private void toolStripButton6_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < Config.XCOUNT; i++)
+            {
+                for (int j = 0; j < Config.YCOUNT; j++)
+                {
+                    maze.SetObject((int)numericX.Value - 1, (int)numericY.Value - 1, i, j, copyArray[i, j]);
+                }
+            }
+            Refresh();
         }
     }
 }
