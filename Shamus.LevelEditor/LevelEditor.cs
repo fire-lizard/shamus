@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Shamus.LevelEditor
@@ -115,9 +116,9 @@ namespace Shamus.LevelEditor
             Array memberInfos = typeof (Item).GetEnumValues();
             foreach (var memberInfo in memberInfos)
             {
-                objects.Items.Add(memberInfo);
+                objectlist.Items.Add(memberInfo);
             }
-            objects.SelectedIndex = 0;
+            objectlist.SelectedIndex = 0;
         }
 
         private void editorBox_Paint(object sender, PaintEventArgs e)
@@ -130,11 +131,6 @@ namespace Shamus.LevelEditor
         {
             DrawGrid(previewBox, e.Graphics, blackPen);
             DrawMaze(previewBox, e.Graphics);
-        }
-
-        private void objects_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            itemBox.Image = objects.SelectedIndex > 0 ? images.Images[objects.SelectedIndex - 1] : null;
         }
 
         private void numericX_ValueChanged(object sender, EventArgs e)
@@ -171,7 +167,7 @@ namespace Shamus.LevelEditor
         {
             int i = e.X * Config.XCOUNT / editorBox.Width;
             int j = e.Y * Config.YCOUNT / editorBox.Height;
-            maze.SetObject((int)numericX.Value - 1, (int)numericY.Value - 1, i, j, (Item)objects.SelectedIndex);
+            maze.SetObject((int)numericX.Value - 1, (int)numericY.Value - 1, i, j, (Item)objectlist.SelectedIndex);
             Refresh();
         }
 
@@ -182,7 +178,7 @@ namespace Shamus.LevelEditor
             coordLabel.Text = $"X = {i}; Y = {j}";
             if (e.Button == MouseButtons.Left)
             {
-                maze.SetObject((int)numericX.Value - 1, (int)numericY.Value - 1, i, j, (Item)objects.SelectedIndex);
+                maze.SetObject((int)numericX.Value - 1, (int)numericY.Value - 1, i, j, (Item)objectlist.SelectedIndex);
                 Refresh();
             }
         }
@@ -214,6 +210,36 @@ namespace Shamus.LevelEditor
                 }
             }
             Refresh();
+        }
+
+        private void toolStripButton7_Click(object sender, EventArgs e)
+        {
+            var walls = new[]
+            {
+                Item.WALL1, Item.WALL2, Item.WALL3,
+                Item.WALL4, Item.WALL5, Item.WALL6,
+                Item.WALL7, Item.WALL8, Item.WALL9
+            };
+            if (walls.Contains((Item)objectlist.SelectedIndex))
+            {
+                for (int i = 0; i < Config.XCOUNT; i++)
+                {
+                    for (int j = 0; j < Config.YCOUNT; j++)
+                    {
+                        var item = maze.GetObject((int)numericX.Value - 1, (int)numericY.Value - 1, i, j);
+                        if (walls.Contains(item))
+                        {
+                            maze.SetObject((int)numericX.Value - 1, (int)numericY.Value - 1, i, j, (Item)objectlist.SelectedIndex);
+                        }
+                    }
+                }
+                Refresh();
+            }
+        }
+
+        private void objectlist_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            itemBox.Image = objectlist.SelectedIndex > 0 ? images.Images[objectlist.SelectedIndex - 1] : null;
         }
     }
 }

@@ -38,7 +38,11 @@
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
-            this.objects = new System.Windows.Forms.ComboBox();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
             this.numericX = new System.Windows.Forms.NumericUpDown();
             this.numericY = new System.Windows.Forms.NumericUpDown();
             this.itemBox = new System.Windows.Forms.PictureBox();
@@ -49,9 +53,7 @@
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.coordLabel = new System.Windows.Forms.Label();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
+            this.objectlist = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.editorBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.previewBox)).BeginInit();
             this.toolStrip.SuspendLayout();
@@ -68,7 +70,7 @@
             this.editorBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.editorBox.Location = new System.Drawing.Point(12, 28);
             this.editorBox.Name = "editorBox";
-            this.editorBox.Size = new System.Drawing.Size(337, 354);
+            this.editorBox.Size = new System.Drawing.Size(629, 521);
             this.editorBox.TabIndex = 0;
             this.editorBox.TabStop = false;
             this.editorBox.Paint += new System.Windows.Forms.PaintEventHandler(this.editorBox_Paint);
@@ -79,7 +81,7 @@
             // 
             this.previewBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.previewBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.previewBox.Location = new System.Drawing.Point(355, 28);
+            this.previewBox.Location = new System.Drawing.Point(647, 28);
             this.previewBox.Name = "previewBox";
             this.previewBox.Size = new System.Drawing.Size(125, 100);
             this.previewBox.TabIndex = 1;
@@ -132,10 +134,12 @@
             this.toolStripButton4,
             this.toolStripSeparator1,
             this.toolStripButton5,
-            this.toolStripButton6});
+            this.toolStripButton6,
+            this.toolStripSeparator2,
+            this.toolStripButton7});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Size = new System.Drawing.Size(492, 25);
+            this.toolStrip.Size = new System.Drawing.Size(784, 25);
             this.toolStrip.TabIndex = 2;
             this.toolStrip.Text = "toolStrip1";
             // 
@@ -179,20 +183,50 @@
             this.toolStripButton4.Text = "Exit";
             this.toolStripButton4.Click += new System.EventHandler(this.toolStripButton4_Click);
             // 
-            // objects
+            // toolStripSeparator1
             // 
-            this.objects.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.objects.FormattingEnabled = true;
-            this.objects.Location = new System.Drawing.Point(355, 134);
-            this.objects.Name = "objects";
-            this.objects.Size = new System.Drawing.Size(125, 21);
-            this.objects.TabIndex = 3;
-            this.objects.SelectedIndexChanged += new System.EventHandler(this.objects_SelectedIndexChanged);
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButton5
+            // 
+            this.toolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton5.Image")));
+            this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton5.Name = "toolStripButton5";
+            this.toolStripButton5.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton5.Text = "Copy";
+            this.toolStripButton5.Click += new System.EventHandler(this.toolStripButton5_Click);
+            // 
+            // toolStripButton6
+            // 
+            this.toolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton6.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton6.Image")));
+            this.toolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton6.Name = "toolStripButton6";
+            this.toolStripButton6.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton6.Text = "Paste";
+            this.toolStripButton6.Click += new System.EventHandler(this.toolStripButton6_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButton7
+            // 
+            this.toolStripButton7.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton7.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton7.Image")));
+            this.toolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton7.Name = "toolStripButton7";
+            this.toolStripButton7.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton7.Text = "Fill";
+            this.toolStripButton7.Click += new System.EventHandler(this.toolStripButton7_Click);
             // 
             // numericX
             // 
             this.numericX.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericX.Location = new System.Drawing.Point(355, 336);
+            this.numericX.Location = new System.Drawing.Point(647, 503);
             this.numericX.Maximum = new decimal(new int[] {
             10,
             0,
@@ -217,7 +251,7 @@
             // numericY
             // 
             this.numericY.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericY.Location = new System.Drawing.Point(355, 362);
+            this.numericY.Location = new System.Drawing.Point(647, 529);
             this.numericY.Maximum = new decimal(new int[] {
             10,
             0,
@@ -243,7 +277,7 @@
             // 
             this.itemBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.itemBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.itemBox.Location = new System.Drawing.Point(355, 161);
+            this.itemBox.Location = new System.Drawing.Point(647, 349);
             this.itemBox.Name = "itemBox";
             this.itemBox.Size = new System.Drawing.Size(125, 119);
             this.itemBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -264,7 +298,7 @@
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
-            this.button1.Location = new System.Drawing.Point(355, 307);
+            this.button1.Location = new System.Drawing.Point(647, 474);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(25, 23);
             this.button1.TabIndex = 8;
@@ -275,7 +309,7 @@
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button2.Image = ((System.Drawing.Image)(resources.GetObject("button2.Image")));
-            this.button2.Location = new System.Drawing.Point(448, 307);
+            this.button2.Location = new System.Drawing.Point(740, 474);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(25, 23);
             this.button2.TabIndex = 9;
@@ -286,7 +320,7 @@
             // 
             this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button3.Image = ((System.Drawing.Image)(resources.GetObject("button3.Image")));
-            this.button3.Location = new System.Drawing.Point(386, 307);
+            this.button3.Location = new System.Drawing.Point(678, 474);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(25, 23);
             this.button3.TabIndex = 10;
@@ -297,7 +331,7 @@
             // 
             this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button4.Image = ((System.Drawing.Image)(resources.GetObject("button4.Image")));
-            this.button4.Location = new System.Drawing.Point(417, 307);
+            this.button4.Location = new System.Drawing.Point(709, 474);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(25, 23);
             this.button4.TabIndex = 11;
@@ -307,41 +341,27 @@
             // coordLabel
             // 
             this.coordLabel.AutoSize = true;
-            this.coordLabel.Location = new System.Drawing.Point(356, 287);
+            this.coordLabel.Location = new System.Drawing.Point(658, 145);
             this.coordLabel.Name = "coordLabel";
             this.coordLabel.Size = new System.Drawing.Size(0, 13);
             this.coordLabel.TabIndex = 12;
             // 
-            // toolStripSeparator1
+            // objectlist
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripButton5
-            // 
-            this.toolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton5.Image")));
-            this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton5.Name = "toolStripButton5";
-            this.toolStripButton5.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton5.Text = "toolStripButton5";
-            this.toolStripButton5.Click += new System.EventHandler(this.toolStripButton5_Click);
-            // 
-            // toolStripButton6
-            // 
-            this.toolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton6.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton6.Image")));
-            this.toolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton6.Name = "toolStripButton6";
-            this.toolStripButton6.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton6.Text = "toolStripButton6";
-            this.toolStripButton6.Click += new System.EventHandler(this.toolStripButton6_Click);
+            this.objectlist.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.objectlist.FormattingEnabled = true;
+            this.objectlist.Location = new System.Drawing.Point(647, 161);
+            this.objectlist.Name = "objectlist";
+            this.objectlist.Size = new System.Drawing.Size(125, 173);
+            this.objectlist.TabIndex = 13;
+            this.objectlist.SelectedIndexChanged += new System.EventHandler(this.objectlist_SelectedIndexChanged);
             // 
             // LevelEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(492, 394);
+            this.ClientSize = new System.Drawing.Size(784, 561);
+            this.Controls.Add(this.objectlist);
             this.Controls.Add(this.coordLabel);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
@@ -350,7 +370,6 @@
             this.Controls.Add(this.itemBox);
             this.Controls.Add(this.numericY);
             this.Controls.Add(this.numericX);
-            this.Controls.Add(this.objects);
             this.Controls.Add(this.toolStrip);
             this.Controls.Add(this.previewBox);
             this.Controls.Add(this.editorBox);
@@ -380,7 +399,6 @@
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.ToolStripButton toolStripButton3;
         private System.Windows.Forms.ToolStripButton toolStripButton4;
-        private System.Windows.Forms.ComboBox objects;
         private System.Windows.Forms.NumericUpDown numericX;
         private System.Windows.Forms.NumericUpDown numericY;
         private System.Windows.Forms.PictureBox itemBox;
@@ -394,6 +412,9 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton toolStripButton5;
         private System.Windows.Forms.ToolStripButton toolStripButton6;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripButton toolStripButton7;
+        private System.Windows.Forms.ListBox objectlist;
     }
 }
 
