@@ -216,9 +216,9 @@ namespace Shamus.LevelEditor
         {
             var walls = new[]
             {
-                Item.WALL1, Item.WALL2, Item.WALL3,
-                Item.WALL4, Item.WALL5, Item.WALL6,
-                Item.WALL7, Item.WALL8, Item.WALL9
+                Item.WALL1, Item.WALL2, Item.WALL3, Item.WALL4,
+                Item.WALL5, Item.WALL6, Item.WALL7,
+                Item.WALL8, Item.WALL9, Item.WALL10
             };
             if (walls.Contains((Item)objectlist.SelectedIndex))
             {
@@ -240,6 +240,58 @@ namespace Shamus.LevelEditor
         private void objectlist_SelectedIndexChanged(object sender, EventArgs e)
         {
             itemBox.Image = objectlist.SelectedIndex > 0 ? images.Images[objectlist.SelectedIndex - 1] : null;
+        }
+
+        private void toolStripButton8_Click(object sender, EventArgs e)
+        {
+            var lines = new[]
+            {
+                Item.LINE1, Item.LINE2, Item.LINE3,
+                Item.LINE4, Item.LINE5
+            };
+            if (lines.Contains((Item)objectlist.SelectedIndex))
+            {
+                for (int i = 0; i < Config.XCOUNT; i++)
+                {
+                    for (int j = 0; j < Config.YCOUNT; j++)
+                    {
+                        var item = maze.GetObject((int)numericX.Value - 1, (int)numericY.Value - 1, i, j);
+                        if (lines.Contains(item))
+                        {
+                            maze.SetObject((int)numericX.Value - 1, (int)numericY.Value - 1, i, j, (Item)objectlist.SelectedIndex);
+                        }
+                    }
+                }
+                Refresh();
+            }
+        }
+
+        private void toolStripButton9_Click(object sender, EventArgs e)
+        {
+            numericX.Value = 4;
+            numericY.Value = 2;
+            ChangeRoom();
+        }
+
+        private void toolStripButton10_Click(object sender, EventArgs e)
+        {
+            numericX.Value = 17;
+            numericY.Value = 3;
+            ChangeRoom();
+        }
+
+        private void toolStripButton11_Click(object sender, EventArgs e)
+        {
+            numericX.Value = 24;
+            numericY.Value = 6;
+            ChangeRoom();
+        }
+
+        private void toolStripButton12_Click(object sender, EventArgs e)
+        {
+            numericX.Value = 36;
+            numericY.Value = 10;
+            ChangeRoom();
         }
     }
 }

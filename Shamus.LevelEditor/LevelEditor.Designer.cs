@@ -43,6 +43,12 @@
             this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton9 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton10 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton11 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton12 = new System.Windows.Forms.ToolStripButton();
             this.numericX = new System.Windows.Forms.NumericUpDown();
             this.numericY = new System.Windows.Forms.NumericUpDown();
             this.itemBox = new System.Windows.Forms.PictureBox();
@@ -110,20 +116,21 @@
             this.images.Images.SetKeyName(14, "wall7.png");
             this.images.Images.SetKeyName(15, "wall8.png");
             this.images.Images.SetKeyName(16, "wall9.png");
-            this.images.Images.SetKeyName(17, "blue_key.png");
-            this.images.Images.SetKeyName(18, "blue_lock.png");
-            this.images.Images.SetKeyName(19, "brown_key.png");
-            this.images.Images.SetKeyName(20, "brown_lock.png");
-            this.images.Images.SetKeyName(21, "cyan_key.png");
-            this.images.Images.SetKeyName(22, "cyan_lock.png");
-            this.images.Images.SetKeyName(23, "green_key.png");
-            this.images.Images.SetKeyName(24, "green_lock.png");
-            this.images.Images.SetKeyName(25, "orange_key.png");
-            this.images.Images.SetKeyName(26, "orange_lock.png");
-            this.images.Images.SetKeyName(27, "purple_key.png");
-            this.images.Images.SetKeyName(28, "purple_lock.png");
-            this.images.Images.SetKeyName(29, "red_key.png");
-            this.images.Images.SetKeyName(30, "red_lock.png");
+            this.images.Images.SetKeyName(17, "wall10.png");
+            this.images.Images.SetKeyName(18, "blue_key.png");
+            this.images.Images.SetKeyName(19, "blue_lock.png");
+            this.images.Images.SetKeyName(20, "brown_key.png");
+            this.images.Images.SetKeyName(21, "brown_lock.png");
+            this.images.Images.SetKeyName(22, "cyan_key.png");
+            this.images.Images.SetKeyName(23, "cyan_lock.png");
+            this.images.Images.SetKeyName(24, "green_key.png");
+            this.images.Images.SetKeyName(25, "green_lock.png");
+            this.images.Images.SetKeyName(26, "orange_key.png");
+            this.images.Images.SetKeyName(27, "orange_lock.png");
+            this.images.Images.SetKeyName(28, "purple_key.png");
+            this.images.Images.SetKeyName(29, "purple_lock.png");
+            this.images.Images.SetKeyName(30, "red_key.png");
+            this.images.Images.SetKeyName(31, "red_lock.png");
             // 
             // toolStrip
             // 
@@ -136,7 +143,13 @@
             this.toolStripButton5,
             this.toolStripButton6,
             this.toolStripSeparator2,
-            this.toolStripButton7});
+            this.toolStripButton7,
+            this.toolStripButton8,
+            this.toolStripSeparator3,
+            this.toolStripButton9,
+            this.toolStripButton10,
+            this.toolStripButton11,
+            this.toolStripButton12});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Size = new System.Drawing.Size(784, 25);
@@ -220,8 +233,63 @@
             this.toolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton7.Name = "toolStripButton7";
             this.toolStripButton7.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton7.Text = "Fill";
+            this.toolStripButton7.Text = "Fill background";
             this.toolStripButton7.Click += new System.EventHandler(this.toolStripButton7_Click);
+            // 
+            // toolStripButton8
+            // 
+            this.toolStripButton8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton8.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton8.Image")));
+            this.toolStripButton8.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton8.Name = "toolStripButton8";
+            this.toolStripButton8.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton8.Text = "Fill wall";
+            this.toolStripButton8.Click += new System.EventHandler(this.toolStripButton8_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButton9
+            // 
+            this.toolStripButton9.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton9.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton9.Image")));
+            this.toolStripButton9.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton9.Name = "toolStripButton9";
+            this.toolStripButton9.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton9.Text = "Go to level 1";
+            this.toolStripButton9.Click += new System.EventHandler(this.toolStripButton9_Click);
+            // 
+            // toolStripButton10
+            // 
+            this.toolStripButton10.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton10.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton10.Image")));
+            this.toolStripButton10.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton10.Name = "toolStripButton10";
+            this.toolStripButton10.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton10.Text = "Go to level 2";
+            this.toolStripButton10.Click += new System.EventHandler(this.toolStripButton10_Click);
+            // 
+            // toolStripButton11
+            // 
+            this.toolStripButton11.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton11.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton11.Image")));
+            this.toolStripButton11.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton11.Name = "toolStripButton11";
+            this.toolStripButton11.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton11.Text = "Go to level 3";
+            this.toolStripButton11.Click += new System.EventHandler(this.toolStripButton11_Click);
+            // 
+            // toolStripButton12
+            // 
+            this.toolStripButton12.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton12.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton12.Image")));
+            this.toolStripButton12.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton12.Name = "toolStripButton12";
+            this.toolStripButton12.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton12.Text = "Go to level 4";
+            this.toolStripButton12.Click += new System.EventHandler(this.toolStripButton12_Click);
             // 
             // numericX
             // 
@@ -399,8 +467,6 @@
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.ToolStripButton toolStripButton3;
         private System.Windows.Forms.ToolStripButton toolStripButton4;
-        private System.Windows.Forms.NumericUpDown numericX;
-        private System.Windows.Forms.NumericUpDown numericY;
         private System.Windows.Forms.PictureBox itemBox;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
@@ -415,6 +481,14 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton toolStripButton7;
         private System.Windows.Forms.ListBox objectlist;
+        private System.Windows.Forms.ToolStripButton toolStripButton8;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripButton toolStripButton9;
+        private System.Windows.Forms.ToolStripButton toolStripButton10;
+        private System.Windows.Forms.ToolStripButton toolStripButton11;
+        private System.Windows.Forms.ToolStripButton toolStripButton12;
+        public System.Windows.Forms.NumericUpDown numericX;
+        public System.Windows.Forms.NumericUpDown numericY;
     }
 }
 
