@@ -72,5 +72,13 @@ namespace Shamus.LevelEditor
             DrawGrid(previewBox, e.Graphics, _pen);
             DrawMaze(previewBox, e.Graphics);
         }
+
+        private void previewBox_MouseClick(object sender, MouseEventArgs e)
+        {
+            var levelEditor = Application.OpenForms["LevelEditor"] as LevelEditor;
+            levelEditor.numericX.Value = e.X * Config.MAX_ROOM_X / previewBox.Width + 1;
+            levelEditor.numericY.Value = e.Y * Config.MAX_ROOM_Y / previewBox.Height + 1;
+            Close();
+        }
     }
 }

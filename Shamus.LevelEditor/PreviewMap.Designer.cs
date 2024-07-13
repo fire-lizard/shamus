@@ -43,6 +43,7 @@
             this.previewBox.TabIndex = 0;
             this.previewBox.TabStop = false;
             this.previewBox.Paint += new System.Windows.Forms.PaintEventHandler(this.previewBox_Paint);
+            this.previewBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.previewBox_MouseClick);
             // 
             // PreviewMap
             // 
