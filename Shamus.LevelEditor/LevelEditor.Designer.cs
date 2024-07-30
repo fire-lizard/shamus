@@ -131,6 +131,8 @@
             this.images.Images.SetKeyName(29, "purple_lock.png");
             this.images.Images.SetKeyName(30, "red_key.png");
             this.images.Images.SetKeyName(31, "red_lock.png");
+            this.images.Images.SetKeyName(32, "left_arrow.png");
+            this.images.Images.SetKeyName(33, "right_arrow.png");
             // 
             // toolStrip
             // 

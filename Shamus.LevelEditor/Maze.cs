@@ -36,7 +36,9 @@ namespace Shamus.LevelEditor
         PURPLE_KEY,
         PURPLE_LOCK,
         RED_KEY,
-        RED_LOCK
+        RED_LOCK,
+        LEFT_ARROW,
+        RIGHT_ARROW
     }
 
     public class Maze
