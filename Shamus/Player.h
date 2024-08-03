@@ -42,7 +42,9 @@ enum Item
     GREEN_LOCK = 28,
     ORANGE_LOCK = 29,
     PURPLE_LOCK = 30,
-    RED_LOCK = 31
+    RED_LOCK = 31,
+    LEFT_ARROW = 32,
+    RIGHT_ARROW = 33
 };
 
 class CPlayer : public CSprite  
