@@ -11,8 +11,8 @@
 
 CPlayer::CPlayer()
 {
-    rx = 0;
-    ry = 0;
+    rx = 3;
+    ry = 1;
     px = 0;
     py = 0;
     lives = 3;

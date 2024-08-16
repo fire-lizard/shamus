@@ -28,5 +28,5 @@ unsigned char CRoom::GetItem(signed char x, signed char y) const
 
 void CRoom::SetItem(signed char x, signed char y, unsigned char value) const
 {
-	_data[x * 20 + y] = value;
+	_data[x * _height + y] = value;
 }

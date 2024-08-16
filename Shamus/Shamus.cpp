@@ -9,8 +9,8 @@
 #define SCREEN_HEIGHT   480
 
 map <unsigned char, CMonster*> monsters;
-signed char X[5] = { 1,XCOUNT - 1,1,XCOUNT - 2,XCOUNT - 1 }; //Координаты X движущихся объектов
-signed char Y[5] = { 1,1,YCOUNT - 1,YCOUNT - 1,YCOUNT - 1 }; //Координаты Y движущихся объектов
+signed char X[5] = { 25,XCOUNT - 10,8,XCOUNT - 10,XCOUNT - 1 }; //Координаты X движущихся объектов
+signed char Y[5] = { 10,1,YCOUNT - 2,YCOUNT - 2,YCOUNT - 1 }; //Координаты Y движущихся объектов
 CMaze* Maze;
 CPlayer Player;
 CMonster Monster1, Monster2, Monster3;
@@ -163,9 +163,9 @@ void Keyboard(SDL_Keycode keycode)
     {
         Maze->SelectRoom(Player.rx, Player.ry);
         counter = 0;
-        X[1] = XCOUNT - 1;Y[1] = 1;
-        X[2] = 1;Y[2] = YCOUNT - 1;
-        X[3] = XCOUNT - 2;Y[3] = YCOUNT - 1;
+        X[1] = XCOUNT - 10;Y[1] = 2;
+        X[2] = 8;Y[2] = YCOUNT - 2;
+        X[3] = XCOUNT - 10;Y[3] = YCOUNT - 2;
         for (unsigned char index = 1;index <= MONSTER_COUNT;index++)
         {
 	        constexpr unsigned char temp = 0;
@@ -225,20 +225,35 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 int main(int argc, char* argv[])
 #endif
 {
-    unsigned char maze_data[MAX_ROOM_X * MAX_ROOM_Y * XCOUNT * YCOUNT];
-    for (unsigned char& index : maze_data)
+    unsigned char *maze_data = new unsigned char[MAX_ROOM_X * MAX_ROOM_Y * XCOUNT * YCOUNT];
+    for (int index = 0; index < MAX_ROOM_X * MAX_ROOM_Y * XCOUNT * YCOUNT; index++)
     {
-	    index = 0;
+        maze_data[index] = 0;
     }
-    const char *fileName = "C:/Code/shamus/Shamus/x64/Debug/maze.dat";
+    const char *fileName = "maze.dat";
 	FILE* file;
     errno_t err = fopen_s(&file, fileName, "rb");
+    if (err != 0)
+    {
+        delete[] maze_data;
+        exit(err);
+    }
     int cnt = fread(maze_data, 1, MAX_ROOM_X * MAX_ROOM_Y * XCOUNT * YCOUNT, file);
+    if (cnt != MAX_ROOM_X * MAX_ROOM_Y * XCOUNT * YCOUNT)
+    {
+        delete[] maze_data;
+        exit(-1);
+    }
     err = fclose(file);
+    if (err != 0)
+    {
+        delete[] maze_data;
+        exit(err);
+    }
     CMazeBuilder MazeBuilder;
     MazeBuilder.BuildMaze(maze_data);
     Maze = MazeBuilder.GetMaze();
-    Maze->SelectRoom(0, 0);
+    Maze->SelectRoom(3, 1);
     monsters[1] = &Monster1;
     monsters[2] = &Monster2;
     monsters[3] = &Monster3;
@@ -310,5 +325,6 @@ int main(int argc, char* argv[])
     SDL_GL_DeleteContext(context);
     SDL_DestroyWindow(window);
     SDL_Quit();
+    delete[] maze_data;
     return 0;
 }
