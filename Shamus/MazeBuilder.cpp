@@ -35,7 +35,7 @@ void CMazeBuilder::BuildMaze(const unsigned char *data)
 					const unsigned char item = data[idx];
 					if (item > 0)
 					{
-						room->SetItem(i, j, item);
+						room->SetItem(i, YCOUNT - j - 1, item);
 					}
 					idx++;
 				}

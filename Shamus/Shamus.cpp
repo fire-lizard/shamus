@@ -84,6 +84,12 @@ void Display()
             case DOOR:
                 CSprite::Show(door, I, J, 16, 16);
                 break;
+            case LEFT_ARROW:
+                CSprite::Show(arrow_left, I, J, 16, 16);
+                break;
+            case RIGHT_ARROW:
+                CSprite::Show(arrow_right, I, J, 16, 16);
+                break;
             case BLUE_KEY:
                 CSprite::Show(blue_key, I, J, 24, 24);
                 break;
@@ -226,8 +232,28 @@ void Keyboard(SDL_Keycode keycode)
     if (keycode == SDLK_RIGHT) X[0]++;
     if (keycode == SDLK_UP) Y[0]++;
     if (keycode == SDLK_DOWN) Y[0]--;
-    if (Player.Move(X[0], Y[0], Maze->RoomNo(Player.rx, Player.ry)->GetItem(X[0], Y[0])))
+    auto item = Maze->RoomNo(Player.rx, Player.ry)->GetItem(X[0], Y[0]);
+    if (Player.Move(X[0], Y[0], item))
     {
+        if (item == BLUE_LOCK || item == BROWN_LOCK || item == CYAN_LOCK || item == GREEN_LOCK ||
+            item == ORANGE_LOCK || item == PURPLE_LOCK || item == RED_LOCK)
+        {
+            for (unsigned char index = 10; index <= 15; index++)
+            {
+                Maze->RoomNo(Player.rx, Player.ry)->SetItem(0, index, 0);
+                Maze->RoomNo(Player.rx, Player.ry)->SetItem(XCOUNT - 1, index, 0);
+            }
+        }
+        if (item == LEFT_ARROW)
+        {
+            X[0] -= 10;
+            Player.Move(X[0], Y[0], 0);
+        }
+        if (item == RIGHT_ARROW)
+        {
+            X[0] += 10;
+            Player.Move(X[0], Y[0], 0);
+        }
         Maze->RoomNo(Player.rx, Player.ry)->SetItem(X[0], Y[0], 0);
         SDL_Delay(100);
     }
@@ -235,7 +261,7 @@ void Keyboard(SDL_Keycode keycode)
     {
         if (X[0] == X[index] && Y[0] == Y[index])
         {
-            Player.lives--;
+            //Player.lives--;
             if (Player.lives == 0) exit(EXIT_SUCCESS);
         }
     }
@@ -274,7 +300,7 @@ unsigned Timer(unsigned interval, void* param)
         monsters[index]->Move(X[index], Y[index], Maze->RoomNo(Player.rx, Player.ry)->GetItem(X[index], Y[index]));
         if (X[0] == X[index] && Y[0] == Y[index])
         {
-            Player.lives--;
+            //Player.lives--;
             if (Player.lives == 0)
             {
                 exit(EXIT_SUCCESS);
@@ -291,7 +317,7 @@ unsigned Timer(unsigned interval, void* param)
         Ghost.Move(X[MONSTER_COUNT + 1], Y[MONSTER_COUNT + 1], Maze->RoomNo(Player.rx, Player.ry)->GetItem(X[MONSTER_COUNT + 1], Y[MONSTER_COUNT + 1]));
         if (X[0] == X[MONSTER_COUNT + 1] && Y[0] == Y[MONSTER_COUNT + 1])
         {
-            Player.lives--;
+            //Player.lives--;
             if (Player.lives == 0) exit(EXIT_SUCCESS);
         }
     }
@@ -306,7 +332,7 @@ void print_error(errno_t err)
     // strerror_s returns zero on success
     if (strerror_s(buffer, sizeof(buffer), err) == 0) {
         printf("Error code %d: %s\n", err, buffer);
-}
+    }
     else {
         printf("Unknown error code %d\n", err);
     }
@@ -324,7 +350,7 @@ int main(int argc, char* argv[])
     {
         maze_data[index] = 0;
     }
-    const char *fileName = "maze.dat";
+    const char *fileName = "C:\\Code\\shamus\\Shamus\\x64\\Debug\\test.dat";
 	FILE* file;
     errno_t err = fopen_s(&file, fileName, "rb");
     if (err != 0)
