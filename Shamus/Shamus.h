@@ -12,6 +12,7 @@
 #include <map>
 #include <valarray>
 #include <cstdio>
+#include <errno.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <SDL.h>

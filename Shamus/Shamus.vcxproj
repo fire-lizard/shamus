@@ -135,7 +135,6 @@
     <ClInclude Include="Maze.h" />
     <ClInclude Include="MazeBuilder.h" />
     <ClInclude Include="Monster.h" />
-    <ClInclude Include="Objects.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="Shamus.h" />

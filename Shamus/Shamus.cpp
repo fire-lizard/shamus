@@ -2,8 +2,41 @@
 //
 
 #include "Shamus.h"
-#include "Objects.h"
 #include "sprites.h"
+#include "newitems/arrow_left.h"
+#include "newitems/arrow_right.h"
+#include "newitems/blue_key.h"
+#include "newitems/blue_lock.h"
+#include "newitems/brown_key.h"
+#include "newitems/brown_lock.h"
+#include "newitems/cyan_key.h"
+#include "newitems/cyan_lock.h"
+#include "newitems/door.h"
+#include "newitems/extra1.h"
+#include "newitems/green_key.h"
+#include "newitems/green_lock.h"
+#include "newitems/line1.h"
+#include "newitems/line2.h"
+#include "newitems/line3.h"
+#include "newitems/line4.h"
+#include "newitems/line5.h"
+#include "newitems/mystery.h"
+#include "newitems/orange_key.h"
+#include "newitems/orange_lock.h"
+#include "newitems/purple_key.h"
+#include "newitems/purple_lock.h"
+#include "newitems/red_key.h"
+#include "newitems/red_lock.h"
+#include "newitems/wall1.h"
+#include "newitems/wall10.h"
+#include "newitems/wall2.h"
+#include "newitems/wall3.h"
+#include "newitems/wall4.h"
+#include "newitems/wall5.h"
+#include "newitems/wall6.h"
+#include "newitems/wall7.h"
+#include "newitems/wall8.h"
+#include "newitems/wall9.h"
 
 #define SCREEN_WIDTH    640
 #define SCREEN_HEIGHT   480
@@ -26,12 +59,12 @@ void Display()
 	constexpr double stepx = 1 / static_cast<double>(XCOUNT), stepy = 1 / static_cast<double>(YCOUNT); //ширина и высота ячейки
     glClearColor(0, 0, 0, 0); //Установка чёрного цвета очистки экрана
     glClear(GL_COLOR_BUFFER_BIT); //Очистка экрана
-    unsigned long* hero[1] = { hero1 };
-    unsigned long* goblin[3] = { goblin1, goblin2, goblin3 };
-    unsigned long* droid[3] = { droid1, droid2, droid3 };
-    unsigned long* spider[2] = { spider1, spider2 };
-    unsigned long* ghost[3] = { ghost1, ghost2, ghost3 };
-    unsigned long** sprites[MONSTER_COUNT + 2] = { hero,goblin,droid,spider,ghost };
+    unsigned int* hero[1] = { hero1 };
+    unsigned int* goblin[3] = { goblin1, goblin2, goblin3 };
+    unsigned int* droid[3] = { droid1, droid2, droid3 };
+    unsigned int* spider[2] = { spider1, spider2 };
+    unsigned int* ghost[3] = { ghost1, ghost2, ghost3 };
+    unsigned int** sprites[MONSTER_COUNT + 2] = { hero,goblin,droid,spider,ghost };
     //Рисование неподвижных объектов
 	for (unsigned char i = 0;i < XCOUNT;i++)
     {
@@ -43,31 +76,55 @@ void Display()
             switch (obj)
             {
             case LIFE:
-                CSprite::Show(kolba, I, J);
+                CSprite::Show(extra1, I, J, 24, 24);
                 break;
             case AWARD:
-                CSprite::Show(ask, I, J);
+                CSprite::Show(mystery, I, J, 24, 24);
                 break;
             case DOOR:
-                CWall::Show(4, I, J, I + stepx, J + stepy);
+                CSprite::Show(door, I, J, 16, 16);
                 break;
             case BLUE_KEY:
+                CSprite::Show(blue_key, I, J, 24, 24);
+                break;
             case BROWN_KEY:
+                CSprite::Show(brown_key, I, J, 24, 24);
+                break;
             case CYAN_KEY:
+                CSprite::Show(cyan_key, I, J, 24, 24);
+                break;
             case GREEN_KEY:
+                CSprite::Show(green_key, I, J, 24, 24);
+                break;
             case ORANGE_KEY:
+                CSprite::Show(orange_key, I, J, 24, 24);
+                break;
             case PURPLE_KEY:
+                CSprite::Show(purple_key, I, J, 24, 24);
+                break;
             case RED_KEY:
-                CSprite::Show(key, I, J);
+                CSprite::Show(red_key, I, J, 24, 24);
                 break;
             case BLUE_LOCK:
+                CSprite::Show(blue_lock, I, J, 24, 24);
+                break;
             case BROWN_LOCK:
+                CSprite::Show(brown_lock, I, J, 24, 24);
+                break;
             case CYAN_LOCK:
+                CSprite::Show(cyan_lock, I, J, 24, 24);
+                break;
             case GREEN_LOCK:
+                CSprite::Show(green_lock, I, J, 24, 24);
+                break;
             case ORANGE_LOCK:
+                CSprite::Show(orange_lock, I, J, 24, 24);
+                break;
             case PURPLE_LOCK:
+                CSprite::Show(purple_lock, I, J, 24, 24);
+                break;
             case RED_LOCK:
-                CSprite::Show(keyhole, I, J);
+                CSprite::Show(red_lock, I, J, 24, 24);
                 break;
             case LINE1:
                 CWall::Show(0, I, J, I + stepx, J + stepy);
@@ -82,22 +139,45 @@ void Display()
                 CWall::Show(3, I, J, I + stepx, J + stepy);
                 break;
             case LINE5:
+                CWall::Show(4, I, J, I + stepx, J + stepy);
+                break;
             case WALL1:
+                CSprite::Show(wall1, I, J, 8, 8);
+                break;
             case WALL2:
+                CSprite::Show(wall2, I, J, 8, 8);
+                break;
             case WALL3:
+                CSprite::Show(wall3, I, J, 8, 8);
+                break;
             case WALL4:
+                CSprite::Show(wall4, I, J, 8, 8);
+                break;
             case WALL5:
+                CSprite::Show(wall5, I, J, 8, 8);
+                break;
             case WALL6:
+                CSprite::Show(wall6, I, J, 8, 8);
+                break;
             case WALL7:
+                CSprite::Show(wall7, I, J, 8, 8);
+                break;
             case WALL8:
+                CSprite::Show(wall8, I, J, 8, 8);
+                break;
             case WALL9:
+                CSprite::Show(wall9, I, J, 8, 8);
+                break;
+            case WALL10:
+                CSprite::Show(wall10, I, J, 8, 8);
+                break;
             default:
                 break;
             }
         }
     }
     //Рисование подвижных объектов
-    CSprite::Show(sprites[0][0], Player.px * stepx, Player.py * stepy);
+    CSprite::Show(sprites[0][0], Player.px * stepx, Player.py * stepy, 20, 20);
     static unsigned char img_idx = 0;
     unsigned char i1 = 0, i2 = 0;
     static unsigned long ticks_s = SDL_GetTicks();
@@ -123,7 +203,7 @@ void Display()
         unsigned char idx;
         if (index < MONSTER_COUNT) idx = i1;
         else idx = i2;
-        CSprite::Show(sprites[index][idx], monsters[index]->px * stepx, monsters[index]->py * stepy);
+        CSprite::Show(sprites[index][idx], monsters[index]->px * stepx, monsters[index]->py * stepy, 20, 20);
     }
     if (counter >= 60)
     {
@@ -131,7 +211,7 @@ void Display()
         glEnable(GL_BLEND);
         glAlphaFunc(GL_ALWAYS, 0);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_COLOR);
-        CSprite::Show(sprites[MONSTER_COUNT + 1][i1], Ghost.px * stepx, Ghost.py * stepy);
+        CSprite::Show(sprites[MONSTER_COUNT + 1][i1], Ghost.px * stepx, Ghost.py * stepy, 20, 20);
         glDisable(GL_BLEND);
         glDisable(GL_ALPHA);
     }
@@ -219,6 +299,20 @@ unsigned Timer(unsigned interval, void* param)
 }
 //---------------------------------------------------------------------------
 
+void print_error(errno_t err)
+{
+    char buffer[256]; // Buffer to store the error message
+
+    // strerror_s returns zero on success
+    if (strerror_s(buffer, sizeof(buffer), err) == 0) {
+        printf("Error code %d: %s\n", err, buffer);
+}
+    else {
+        printf("Unknown error code %d\n", err);
+    }
+}
+//---------------------------------------------------------------------------
+
 #if defined WIN32
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
 #else
@@ -235,18 +329,21 @@ int main(int argc, char* argv[])
     errno_t err = fopen_s(&file, fileName, "rb");
     if (err != 0)
     {
+        print_error(err);
         delete[] maze_data;
         exit(err);
     }
-    int cnt = fread(maze_data, 1, MAX_ROOM_X * MAX_ROOM_Y * XCOUNT * YCOUNT, file);
+    size_t cnt = fread(maze_data, 1, MAX_ROOM_X * MAX_ROOM_Y * XCOUNT * YCOUNT, file);
     if (cnt != MAX_ROOM_X * MAX_ROOM_Y * XCOUNT * YCOUNT)
     {
+        printf("Invalid maze.dat file size\n");
         delete[] maze_data;
         exit(-1);
     }
     err = fclose(file);
     if (err != 0)
     {
+        print_error(err);
         delete[] maze_data;
         exit(err);
     }
