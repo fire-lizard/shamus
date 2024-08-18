@@ -28,7 +28,6 @@
 #include "newitems/red_key.h"
 #include "newitems/red_lock.h"
 #include "newitems/wall1.h"
-#include "newitems/wall10.h"
 #include "newitems/wall2.h"
 #include "newitems/wall3.h"
 #include "newitems/wall4.h"
@@ -37,6 +36,7 @@
 #include "newitems/wall7.h"
 #include "newitems/wall8.h"
 #include "newitems/wall9.h"
+#include "newitems/wall10.h"
 
 #define SCREEN_WIDTH    640
 #define SCREEN_HEIGHT   480
@@ -232,6 +232,33 @@ void Keyboard(SDL_Keycode keycode)
     if (keycode == SDLK_RIGHT) X[0]++;
     if (keycode == SDLK_UP) Y[0]++;
     if (keycode == SDLK_DOWN) Y[0]--;
+    if (keycode == SDLK_1 || keycode == SDLK_2 || keycode == SDLK_3 || keycode == SDLK_4)
+    {
+        if (keycode == SDLK_1)
+        {
+            Player.rx = 3;
+            Player.ry = 1;
+        }
+        if (keycode == SDLK_2)
+        {
+            Player.rx = 16;
+            Player.ry = 2;
+        }
+        if (keycode == SDLK_3)
+        {
+            Player.rx = 24;
+            Player.ry = 5;
+        }
+        if (keycode == SDLK_4)
+        {
+            Player.rx = 35;
+            Player.ry = 9;
+        }
+        Maze->SelectRoom(Player.rx, Player.ry);
+        X[0] = 25;
+        Y[0] = 10;
+        Player.Move(X[0], Y[0], 0);
+    }
     auto item = Maze->RoomNo(Player.rx, Player.ry)->GetItem(X[0], Y[0]);
     if (Player.Move(X[0], Y[0], item))
     {
@@ -433,7 +460,8 @@ int main(int argc, char* argv[])
         if (event.key.state == SDL_PRESSED)
         {
             SDL_Keycode keycode = event.key.keysym.sym;
-            if (keycode == SDLK_LEFT || keycode == SDLK_RIGHT || keycode == SDLK_UP || keycode == SDLK_DOWN)
+            if (keycode == SDLK_LEFT || keycode == SDLK_RIGHT || keycode == SDLK_UP || keycode == SDLK_DOWN ||
+                keycode == SDLK_1 || keycode == SDLK_2 || keycode == SDLK_3 || keycode == SDLK_4)
             {
                 Keyboard(keycode);
             }
