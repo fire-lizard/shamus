@@ -145,7 +145,7 @@ void Display()
                 CWall::Show(3, I, J, I + stepx, J + stepy);
                 break;
             case LINE5:
-                CWall::Show(4, I, J, I + stepx, J + stepy);
+                CWall::Show(1, I, J, I + stepx, J + stepy);
                 break;
             case WALL1:
                 CSprite::Show(wall1, I, J, 8, 8);
@@ -350,7 +350,7 @@ int main(int argc, char* argv[])
     {
         maze_data[index] = 0;
     }
-    const char *fileName = "C:\\Code\\shamus\\Shamus\\x64\\Debug\\test.dat";
+    const char *fileName = "maze.dat";
 	FILE* file;
     errno_t err = fopen_s(&file, fileName, "rb");
     if (err != 0)

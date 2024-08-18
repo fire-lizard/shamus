@@ -39,7 +39,7 @@ void CMaze::SetPaths()
             if (index1 > 0 && index1 < XCOUNT + 1 && index2 > 0 && index2 < YCOUNT + 1)			
 			{
 				const unsigned char point = _rooms[_rx * MAX_ROOM_Y + _ry]->GetItem(index1 - 1, index2 - 1);
-                if (point >= 1 && point <= 5)
+                if (point >= 1 && point <= 8)
                 {
                     _path[index1][index2] = 255;
                 }
