@@ -15,7 +15,7 @@ class CWall
 	static void Wall2(double x1, double y1, double x2, double y2);
 	static void Wall3(double x1, double y1, double x2, double y2);
 	static void Wall4(double x1, double y1, double x2, double y2);
-	static void Door(double x1, double y1, double x2, double y2);
+	static void Wall5(double x1, double y1, double x2, double y2);
 public:
 	static void Show(unsigned char kind, double x1, double y1, double x2, double y2);
 };

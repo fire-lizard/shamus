@@ -145,7 +145,7 @@ void Display()
                 CWall::Show(3, I, J, I + stepx, J + stepy);
                 break;
             case LINE5:
-                CWall::Show(1, I, J, I + stepx, J + stepy);
+                CWall::Show(4, I, J, I + stepx, J + stepy);
                 break;
             case WALL1:
                 CSprite::Show(wall1, I, J, 8, 8);
