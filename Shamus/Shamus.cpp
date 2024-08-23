@@ -3,30 +3,7 @@
 
 #include "Shamus.h"
 #include "sprites.h"
-#include "newitems/arrow_left.h"
-#include "newitems/arrow_right.h"
-#include "newitems/blue_key.h"
-#include "newitems/blue_lock.h"
-#include "newitems/brown_key.h"
-#include "newitems/brown_lock.h"
-#include "newitems/cyan_key.h"
-#include "newitems/cyan_lock.h"
-#include "newitems/door.h"
-#include "newitems/extra1.h"
-#include "newitems/green_key.h"
-#include "newitems/green_lock.h"
-#include "newitems/line1.h"
-#include "newitems/line2.h"
-#include "newitems/line3.h"
-#include "newitems/line4.h"
-#include "newitems/line5.h"
-#include "newitems/mystery.h"
-#include "newitems/orange_key.h"
-#include "newitems/orange_lock.h"
-#include "newitems/purple_key.h"
-#include "newitems/purple_lock.h"
-#include "newitems/red_key.h"
-#include "newitems/red_lock.h"
+#include "objects.h"
 #include "newitems/wall1.h"
 #include "newitems/wall2.h"
 #include "newitems/wall3.h"
@@ -59,12 +36,12 @@ void Display()
 	constexpr double stepx = 1 / static_cast<double>(XCOUNT), stepy = 1 / static_cast<double>(YCOUNT); //ширина и высота ячейки
     glClearColor(0, 0, 0, 0); //Установка чёрного цвета очистки экрана
     glClear(GL_COLOR_BUFFER_BIT); //Очистка экрана
-    unsigned int* hero[1] = { hero1 };
-    unsigned int* goblin[3] = { goblin1, goblin2, goblin3 };
-    unsigned int* droid[3] = { droid1, droid2, droid3 };
-    unsigned int* spider[2] = { spider1, spider2 };
-    unsigned int* ghost[3] = { ghost1, ghost2, ghost3 };
-    unsigned int** sprites[MONSTER_COUNT + 2] = { hero,goblin,droid,spider,ghost };
+    unsigned char* hero[1] = { hero1 };
+    unsigned char* goblin[4] = { snapjump1, snapjump2, snapjump3, snapjump4 };
+    unsigned char* droid[2] = { robodrod1, robodrod2 };
+    unsigned char* spider[2] = { spirdron1, spirdron2 };
+    unsigned char* ghost[4] = { shadow1, shadow2, shadow3, shadow4 };
+    unsigned char** sprites[MONSTER_COUNT + 2] = { hero,spider,droid,goblin,ghost };
     //Рисование неподвижных объектов
 	for (unsigned char i = 0;i < XCOUNT;i++)
     {
@@ -183,7 +160,7 @@ void Display()
         }
     }
     //Рисование подвижных объектов
-    CSprite::Show(sprites[0][0], Player.px * stepx, Player.py * stepy, 20, 20);
+    CSprite::Show(sprites[0][0], Player.px * stepx, Player.py * stepy, 24, 24);
     static unsigned char img_idx = 0;
     unsigned char i1 = 0, i2 = 0;
     static unsigned long ticks_s = SDL_GetTicks();
@@ -193,23 +170,25 @@ void Display()
         ticks_s = ticks_e;
         img_idx++;
     }
-    if (img_idx > 5) img_idx = 0;
+    if (img_idx > 7) img_idx = 0;
     switch (img_idx)
     {
     case 0:i1 = 0;i2 = 0;break;
     case 1:i1 = 1;i2 = 1;break;
     case 2:i1 = 2;i2 = 0;break;
-    case 3:i1 = 0;i2 = 1;break;
-    case 4:i1 = 1;i2 = 0;break;
-    case 5:i1 = 2;i2 = 1;break;
+    case 3:i1 = 3;i2 = 1;break;
+    case 4:i1 = 0;i2 = 0;break;
+    case 5:i1 = 1;i2 = 1;break;
+    case 6:i1 = 2;i2 = 0;break;
+    case 7:i1 = 3;i2 = 1;break;
     default:;
     }
     for (unsigned char index = 1;index <= MONSTER_COUNT;index++)
     {
         unsigned char idx;
-        if (index < MONSTER_COUNT) idx = i1;
-        else idx = i2;
-        CSprite::Show(sprites[index][idx], monsters[index]->px * stepx, monsters[index]->py * stepy, 20, 20);
+        if (index < MONSTER_COUNT) idx = i2;
+        else idx = i1;
+        CSprite::Show(sprites[index][idx], monsters[index]->px * stepx, monsters[index]->py * stepy, 24, 24);
     }
     if (counter >= 60)
     {
@@ -217,7 +196,7 @@ void Display()
         glEnable(GL_BLEND);
         glAlphaFunc(GL_ALWAYS, 0);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_COLOR);
-        CSprite::Show(sprites[MONSTER_COUNT + 1][i1], Ghost.px * stepx, Ghost.py * stepy, 20, 20);
+        CSprite::Show(sprites[MONSTER_COUNT + 1][i1], Ghost.px * stepx, Ghost.py * stepy, 24, 24);
         glDisable(GL_BLEND);
         glDisable(GL_ALPHA);
     }
@@ -419,9 +398,10 @@ int main(int argc, char* argv[])
     Ghost.Move(X[MONSTER_COUNT + 1], Y[MONSTER_COUNT + 1], temp);
     for (unsigned short index = 0;index < 400;index++)
     {
-        ghost1[index] += 0xBF000000;
-        ghost2[index] += 0xBF000000;
-        ghost3[index] += 0xBF000000;
+        //shadow1[index] += 0xBF000000;
+        //shadow2[index] += 0xBF000000;
+        //shadow3[index] += 0xBF000000;
+        //shadow4[index] += 0xBF000000;
     }
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0)
     {
