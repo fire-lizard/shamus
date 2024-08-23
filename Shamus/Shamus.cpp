@@ -19,11 +19,11 @@
 #define SCREEN_HEIGHT   480
 
 map <unsigned char, CMonster*> monsters;
-signed char X[5] = { 25,XCOUNT - 10,8,XCOUNT - 10,XCOUNT - 1 }; //Координаты X движущихся объектов
-signed char Y[5] = { 10,1,YCOUNT - 2,YCOUNT - 2,YCOUNT - 1 }; //Координаты Y движущихся объектов
+signed char X[6] = { 25,XCOUNT - 10,8,XCOUNT - 10,8,XCOUNT - 1 }; //Координаты X движущихся объектов
+signed char Y[6] = { 10,1,YCOUNT - 2,YCOUNT - 2,1,YCOUNT - 1 }; //Координаты Y движущихся объектов
 CMaze* Maze;
 CPlayer Player;
-CMonster Monster1, Monster2, Monster3;
+CMonster Monster1, Monster2, Monster3, Monster4;
 CGhost Ghost;
 unsigned char counter = 0; //счётчик секунд
 SDL_Window* window;
@@ -36,12 +36,13 @@ void Display()
 	constexpr double stepx = 1 / static_cast<double>(XCOUNT), stepy = 1 / static_cast<double>(YCOUNT); //ширина и высота ячейки
     glClearColor(0, 0, 0, 0); //Установка чёрного цвета очистки экрана
     glClear(GL_COLOR_BUFFER_BIT); //Очистка экрана
-    unsigned char* hero[1] = { hero1 };
+    unsigned char* hero[4] = { hero1, hero2, hero3, hero4 };
     unsigned char* goblin[4] = { snapjump1, snapjump2, snapjump3, snapjump4 };
     unsigned char* droid[2] = { robodrod1, robodrod2 };
     unsigned char* spider[2] = { spirdron1, spirdron2 };
+    unsigned char* soboloyd[2] = { soboloyd1, soboloyd2 };
     unsigned char* ghost[4] = { shadow1, shadow2, shadow3, shadow4 };
-    unsigned char** sprites[MONSTER_COUNT + 2] = { hero,spider,droid,goblin,ghost };
+    unsigned char** sprites[MONSTER_COUNT + 2] = { hero,spider,droid,soboloyd,goblin,ghost };
     //Рисование неподвижных объектов
 	for (unsigned char i = 0;i < XCOUNT;i++)
     {
@@ -160,7 +161,6 @@ void Display()
         }
     }
     //Рисование подвижных объектов
-    CSprite::Show(sprites[0][0], Player.px * stepx, Player.py * stepy, 24, 24);
     static unsigned char img_idx = 0;
     unsigned char i1 = 0, i2 = 0;
     static unsigned long ticks_s = SDL_GetTicks();
@@ -183,6 +183,7 @@ void Display()
     case 7:i1 = 3;i2 = 1;break;
     default:;
     }
+    CSprite::Show(sprites[0][i1], Player.px* stepx, Player.py* stepy, 24, 24);
     for (unsigned char index = 1;index <= MONSTER_COUNT;index++)
     {
         unsigned char idx;
@@ -345,7 +346,7 @@ void print_error(errno_t err)
 }
 //---------------------------------------------------------------------------
 
-#if defined WIN32
+#if defined _WIN32
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
 #else
 int main(int argc, char* argv[])
@@ -386,6 +387,7 @@ int main(int argc, char* argv[])
     monsters[1] = &Monster1;
     monsters[2] = &Monster2;
     monsters[3] = &Monster3;
+    monsters[4] = &Monster4;
     constexpr unsigned char temp = 0;
     Player.Move(X[0], Y[0], temp);
     for (unsigned char index = 1;index <= MONSTER_COUNT;index++)

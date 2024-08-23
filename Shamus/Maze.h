@@ -13,7 +13,7 @@
 #define YCOUNT 25//–азмер игрового пол€ по вертикали
 #define MAX_ROOM_X 45// оличество комнат по горизонтали
 #define MAX_ROOM_Y 12// оличество комнат по вертикали
-#define MONSTER_COUNT 3//количество монстров
+#define MONSTER_COUNT 4//количество монстров
 
 class CMaze  
 {
