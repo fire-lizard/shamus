@@ -103,9 +103,121 @@ void CWall::Wall5(double x1, double y1, double x2, double y2)
     glEnd();
 }
 
+void CWall::Wall6(double x1, double y1, double x2, double y2)
+{
+    double xdistance = (x2 - x1) / 3;
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glBegin(GL_LINES);
+        glColor3d(1, 1, 0.3);
+        glVertex2d(x1, y1);
+        glVertex2d(x1, y2);
+    glEnd();
+    glBegin(GL_LINES);
+        glColor3d(1, 1, 0.3);
+        glVertex2d(x1 + xdistance, y1);
+        glVertex2d(x1 + xdistance, y2);
+    glEnd();
+    glBegin(GL_LINES);
+        glColor3d(1, 1, 0.3);
+        glVertex2d(x1 + 2 * xdistance, y1);
+        glVertex2d(x1 + 2 * xdistance, y2);
+    glEnd();
+    glBegin(GL_LINES);
+        glColor3d(1, 1, 0.3);
+        glVertex2d(x2, y1);
+        glVertex2d(x2, y2);
+    glEnd();
+}
+
+void CWall::Back1(double x1, double y1, double x2, double y2)
+{
+}
+
+void CWall::Back2(double x1, double y1, double x2, double y2)
+{
+    double xdistance = (x2 - x1) / 2;
+    double ydistance = (y2 - y1) / 2;
+    double sxdistance = (x2 - x1) / 10;
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glBegin(GL_POLYGON);
+        glColor3d(0.25, 0.67, 0.25);
+        glVertex2d(x1 + xdistance, y1);
+        glVertex2d(x2, y1 + ydistance);
+        glVertex2d(x1 + xdistance, y2);
+        glVertex2d(x1, y1 + ydistance);
+    glEnd();
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    glBegin(GL_POLYGON);
+        glColor3d(0.3, 1, 0.3);
+        glVertex2d(x1, y1);
+        glVertex2d(x1 + sxdistance, y1);
+        glVertex2d(x1 + sxdistance, y2);
+        glVertex2d(x1, y2);
+        glEnd();
+    glBegin(GL_POLYGON);
+        glColor3d(0.3, 1, 0.3);
+        glVertex2d(x2 - sxdistance, y1);
+        glVertex2d(x2, y1);
+        glVertex2d(x2, y2);
+        glVertex2d(x2 - sxdistance, y2);
+    glEnd();
+}
+
+void CWall::Back3(double x1, double y1, double x2, double y2)
+{
+    double xdistance = (x2 - x1) / 2;
+    double ydistance = (y2 - y1) / 2;
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    glBegin(GL_QUADS);
+        glColor3d(1, 1, 0.3);
+        glVertex2d(x1 + xdistance, y1);
+        glVertex2d(x2, y1 + ydistance);
+        glVertex2d(x1 + xdistance, y2);
+        glVertex2d(x1, y1 + ydistance);
+    glEnd();
+}
+
+void CWall::Back4(double x1, double y1, double x2, double y2)
+{
+}
+
+void CWall::Back5(double x1, double y1, double x2, double y2)
+{
+}
+
+void CWall::Back6(double x1, double y1, double x2, double y2)
+{
+}
+
+void CWall::Back7(double x1, double y1, double x2, double y2)
+{
+}
+
+void CWall::Back8(double x1, double y1, double x2, double y2)
+{
+}
+
+void CWall::Back9(double x1, double y1, double x2, double y2)
+{
+}
+
+void CWall::Back10(double x1, double y1, double x2, double y2)
+{
+    double xdistance = (x2 - x1) / 2;
+    double ydistance = (y2 - y1) / 2;
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    glBegin(GL_QUADS);
+        glColor3d(0.5, 0.5, 0.25);
+        glVertex2d(x1 + xdistance, y1);
+        glVertex2d(x2, y1 + ydistance);
+        glVertex2d(x1 + xdistance, y2);
+        glVertex2d(x1, y1 + ydistance);
+    glEnd();
+}
+
 void CWall::Show(unsigned char kind, double x1, double y1, double x2, double y2)
 {
     typedef void(*obj_func)(double x1, double y1, double x2, double y2);
-    constexpr obj_func objects[] = {Wall1,Wall2,Wall3,Wall4,Wall5};
+    constexpr obj_func objects[] = {Wall1,Wall2,Wall3,Wall4,Wall5,Wall6,Back1,Back2,Back3,Back4,Back5,Back6,Back7,Back8,Back9,Back10};
 	objects[kind](x1, y1, x2, y2);
 }

@@ -5,15 +5,12 @@
 #include "sprites.h"
 #include "objects.h"
 #include "newitems/wall1.h"
-#include "newitems/wall2.h"
-#include "newitems/wall3.h"
 #include "newitems/wall4.h"
 #include "newitems/wall5.h"
 #include "newitems/wall6.h"
 #include "newitems/wall7.h"
 #include "newitems/wall8.h"
 #include "newitems/wall9.h"
-#include "newitems/wall10.h"
 
 #define SCREEN_WIDTH    640
 #define SCREEN_HEIGHT   480
@@ -60,7 +57,7 @@ void Display()
                 CSprite::Show(mystery, I, J, 24, 24);
                 break;
             case DOOR:
-                CSprite::Show(door, I, J, 16, 16);
+                CWall::Show(5, I, J, I + stepx, J + stepy);
                 break;
             case LEFT_ARROW:
                 CSprite::Show(arrow_left, I, J, 16, 16);
@@ -129,10 +126,10 @@ void Display()
                 CSprite::Show(wall1, I, J, 8, 8);
                 break;
             case WALL2:
-                CSprite::Show(wall2, I, J, 8, 8);
+                CWall::Show(7, I, J, I + stepx, J + stepy);
                 break;
             case WALL3:
-                CSprite::Show(wall3, I, J, 8, 8);
+                CWall::Show(8, I, J, I + stepx, J + stepy);
                 break;
             case WALL4:
                 CSprite::Show(wall4, I, J, 8, 8);
@@ -153,7 +150,7 @@ void Display()
                 CSprite::Show(wall9, I, J, 8, 8);
                 break;
             case WALL10:
-                CSprite::Show(wall10, I, J, 8, 8);
+                CWall::Show(15, I, J, I + stepx, J + stepy);
                 break;
             default:
                 break;
@@ -394,6 +391,7 @@ int main(int argc, char* argv[])
     CMazeBuilder MazeBuilder;
     MazeBuilder.BuildMaze(maze_data);
     Maze = MazeBuilder.GetMaze();
+    Maze->SelectRoom(3, 1);
     monsters[1] = &Monster1;
     monsters[2] = &Monster2;
     monsters[3] = &Monster3;

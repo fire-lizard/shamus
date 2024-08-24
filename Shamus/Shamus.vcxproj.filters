@@ -41,12 +41,6 @@
     <ClInclude Include="newitems\wall1.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="newitems\wall2.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="newitems\wall3.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="newitems\wall4.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -65,7 +59,10 @@
     <ClInclude Include="newitems\wall9.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="newitems\wall10.h">
+    <ClInclude Include="objects.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sprites.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

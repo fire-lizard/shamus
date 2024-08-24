@@ -136,19 +136,18 @@
     <ClInclude Include="MazeBuilder.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="newitems\wall1.h" />
-    <ClInclude Include="newitems\wall10.h" />
-    <ClInclude Include="newitems\wall2.h" />
-    <ClInclude Include="newitems\wall3.h" />
     <ClInclude Include="newitems\wall4.h" />
     <ClInclude Include="newitems\wall5.h" />
     <ClInclude Include="newitems\wall6.h" />
     <ClInclude Include="newitems\wall7.h" />
     <ClInclude Include="newitems\wall8.h" />
     <ClInclude Include="newitems\wall9.h" />
+    <ClInclude Include="objects.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="Shamus.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="sprites.h" />
     <ClInclude Include="Wall.h" />
   </ItemGroup>
   <ItemGroup>
