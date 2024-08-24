@@ -16,7 +16,6 @@ public:
 
 	virtual bool Move(signed char& nx, signed char& ny, unsigned char value) = 0;
 	void GetCoords(signed char& X, signed char& Y) const;
-	static void Show(const unsigned int* array, double x, double y, int w, int h);
 	static void Show(const unsigned char* array, double x, double y, int w, int h);
 };
 

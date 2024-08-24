@@ -137,11 +137,6 @@
     <ClInclude Include="Monster.h" />
     <ClInclude Include="newitems\wall1.h" />
     <ClInclude Include="newitems\wall4.h" />
-    <ClInclude Include="newitems\wall5.h" />
-    <ClInclude Include="newitems\wall6.h" />
-    <ClInclude Include="newitems\wall7.h" />
-    <ClInclude Include="newitems\wall8.h" />
-    <ClInclude Include="newitems\wall9.h" />
     <ClInclude Include="objects.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Room.h" />

@@ -6,11 +6,6 @@
 #include "objects.h"
 #include "newitems/wall1.h"
 #include "newitems/wall4.h"
-#include "newitems/wall5.h"
-#include "newitems/wall6.h"
-#include "newitems/wall7.h"
-#include "newitems/wall8.h"
-#include "newitems/wall9.h"
 
 #define SCREEN_WIDTH    640
 #define SCREEN_HEIGHT   480
@@ -135,19 +130,19 @@ void Display()
                 CSprite::Show(wall4, I, J, 8, 8);
                 break;
             case WALL5:
-                CSprite::Show(wall5, I, J, 8, 8);
+                CWall::Show(10, I, J, I + stepx, J + stepy);
                 break;
             case WALL6:
-                CSprite::Show(wall6, I, J, 8, 8);
+                CWall::Show(11, I, J, I + stepx, J + stepy);
                 break;
             case WALL7:
-                CSprite::Show(wall7, I, J, 8, 8);
+                CWall::Show(12, I, J, I + stepx, J + stepy);
                 break;
             case WALL8:
-                CSprite::Show(wall8, I, J, 8, 8);
+                CWall::Show(13, I, J, I + stepx, J + stepy);
                 break;
             case WALL9:
-                CSprite::Show(wall9, I, J, 8, 8);
+                CWall::Show(14, I, J, I + stepx, J + stepy);
                 break;
             case WALL10:
                 CWall::Show(15, I, J, I + stepx, J + stepy);
