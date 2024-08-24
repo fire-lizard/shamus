@@ -205,6 +205,23 @@ void Display()
     SDL_GL_SwapWindow(window); //Поменять местами буфера
 }
 //---------------------------------------------------------------------------
+
+void set_window_title(int x, int y)
+{
+    char buffer[12];
+    char xstr[3];
+    char ystr[3];
+    _itoa_s(Player.rx, xstr, 10);
+    _itoa_s(Player.ry, ystr, 10);
+    strcpy_s(buffer, "Room ");
+    strcat_s(buffer, xstr);
+    strcat_s(buffer, ":");
+    strcat_s(buffer, ystr);
+
+    SDL_SetWindowTitle(window, buffer);
+}
+
+//---------------------------------------------------------------------------
 //Функция обработки нажатий клавиш
 void Keyboard(SDL_Keycode keycode)
 {
@@ -235,6 +252,7 @@ void Keyboard(SDL_Keycode keycode)
             Player.ry = 9;
         }
         Maze->SelectRoom(Player.rx, Player.ry);
+        set_window_title(Player.rx, Player.ry);
         X[0] = 25;
         Y[0] = 10;
         Player.Move(X[0], Y[0], 0);
@@ -275,10 +293,12 @@ void Keyboard(SDL_Keycode keycode)
     if (Player.room_changed)
     {
         Maze->SelectRoom(Player.rx, Player.ry);
+        set_window_title(Player.rx, Player.ry);
         counter = 0;
         X[1] = XCOUNT - 10;Y[1] = 2;
         X[2] = 8;Y[2] = YCOUNT - 2;
         X[3] = XCOUNT - 10;Y[3] = YCOUNT - 2;
+        X[4] = 8;Y[4] = 2;
         for (unsigned char index = 1;index <= MONSTER_COUNT;index++)
         {
 	        constexpr unsigned char temp = 0;
@@ -383,7 +403,6 @@ int main(int argc, char* argv[])
     CMazeBuilder MazeBuilder;
     MazeBuilder.BuildMaze(maze_data);
     Maze = MazeBuilder.GetMaze();
-    Maze->SelectRoom(3, 1);
     monsters[1] = &Monster1;
     monsters[2] = &Monster2;
     monsters[3] = &Monster3;
@@ -398,12 +417,15 @@ int main(int argc, char* argv[])
         monsters[index]->Move(X[index], Y[index], temp);
     }
     Ghost.Move(X[MONSTER_COUNT + 1], Y[MONSTER_COUNT + 1], temp);
-    for (unsigned short index = 0;index < 400;index++)
+    for (unsigned short index = 0;index < 576;index++)
     {
-        //shadow1[index] += 0xBF000000;
-        //shadow2[index] += 0xBF000000;
-        //shadow3[index] += 0xBF000000;
-        //shadow4[index] += 0xBF000000;
+        if ((index + 1) % 4 == 0)
+        {
+            shadow1[index] += 0xBF;
+            shadow2[index] += 0xBF;
+            shadow3[index] += 0xBF;
+            shadow4[index] += 0xBF;
+        }
     }
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0)
     {
