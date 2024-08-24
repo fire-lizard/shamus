@@ -208,17 +208,8 @@ void Display()
 
 void set_window_title(int x, int y)
 {
-    char buffer[12];
-    char xstr[3];
-    char ystr[3];
-    _itoa_s(Player.rx, xstr, 10);
-    _itoa_s(Player.ry, ystr, 10);
-    strcpy_s(buffer, "Room ");
-    strcat_s(buffer, xstr);
-    strcat_s(buffer, ":");
-    strcat_s(buffer, ystr);
-
-    SDL_SetWindowTitle(window, buffer);
+    string title = "Room " + to_string(x) + ":" + to_string(y);
+    SDL_SetWindowTitle(window, title.c_str());
 }
 
 //---------------------------------------------------------------------------

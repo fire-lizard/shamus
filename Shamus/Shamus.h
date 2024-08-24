@@ -13,6 +13,7 @@
 
 #include <map>
 #include <valarray>
+#include <string>
 #include <cstdio>
 #include <errno.h>
 #include <GL/gl.h>
