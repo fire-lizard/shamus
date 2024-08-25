@@ -38,12 +38,6 @@
     <ClInclude Include="Sprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="newitems\wall1.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="newitems\wall4.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="objects.h">
       <Filter>Header Files</Filter>
     </ClInclude>

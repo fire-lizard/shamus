@@ -131,6 +131,44 @@ void CWall::Wall6(double x1, double y1, double x2, double y2)
 
 void CWall::Back1(double x1, double y1, double x2, double y2)
 {
+    double xdistance = (x2 - x1) / 3;
+    double ydistance = (y2 - y1) / 3;
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    glBegin(GL_QUADS);
+        glColor3d(0.3, 1, 0.3);
+        glVertex2d(x1, y1);
+        glVertex2d(x1 + xdistance, y1);
+        glVertex2d(x1 + xdistance, y1 + ydistance);
+        glVertex2d(x1, y1 + ydistance);
+    glEnd();
+    glBegin(GL_QUADS);
+        glColor3d(0.3, 1, 0.3);
+        glVertex2d(x2 - xdistance, y1);
+        glVertex2d(x2, y1);
+        glVertex2d(x2, y1 + ydistance);
+        glVertex2d(x2 - xdistance, y1 + ydistance);
+    glEnd();
+    glBegin(GL_QUADS);
+        glColor3d(0.3, 1, 0.3);
+        glVertex2d(x1 + xdistance, y1 + ydistance);
+        glVertex2d(x1 + 2 * xdistance, y1 + ydistance);
+        glVertex2d(x1 + 2 * xdistance, y1 + 2 * ydistance);
+        glVertex2d(x1 + xdistance, y1 + 2 * ydistance);
+    glEnd();
+    glBegin(GL_QUADS);
+        glColor3d(0.3, 1, 0.3);
+        glVertex2d(x1, y2 - ydistance);
+        glVertex2d(x1 + xdistance, y2 - ydistance);
+        glVertex2d(x1 + xdistance, y2);
+        glVertex2d(x1, y2);
+    glEnd();
+    glBegin(GL_QUADS);
+        glColor3d(0.3, 1, 0.3);
+        glVertex2d(x2 - xdistance, y2 - ydistance);
+        glVertex2d(x2, y2 - ydistance);
+        glVertex2d(x2, y2);
+        glVertex2d(x2 - xdistance, y2);
+    glEnd();
 }
 
 void CWall::Back2(double x1, double y1, double x2, double y2)
@@ -179,6 +217,46 @@ void CWall::Back3(double x1, double y1, double x2, double y2)
 
 void CWall::Back4(double x1, double y1, double x2, double y2)
 {
+    double xdistance = (x2 - x1) / 6;
+    double ydistance = (y2 - y1) / 6;
+    double sxdistance = (x2 - x1) / 10;
+    double sydistance = (y2 - y1) / 10;
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    glBegin(GL_QUADS);
+        glColor3d(1, 1, 0.3);
+        glVertex2d(x1 + sxdistance, y1 + sydistance);
+        glVertex2d(x2 - sxdistance, y1 + sydistance);
+        glVertex2d(x2 - sxdistance, y2 - sydistance);
+        glVertex2d(x1 + sxdistance, y2 - sydistance);
+    glEnd();
+    glBegin(GL_QUADS);
+        glColor3d(0, 0, 0);
+        glVertex2d(x1 + xdistance, y1 + ydistance);
+        glVertex2d(x1 + 2 * xdistance, y1 + ydistance);
+        glVertex2d(x1 + 2 * xdistance, y1 + 2 * ydistance);
+        glVertex2d(x1 + xdistance, y1 + 2 * ydistance);
+    glEnd();
+    glBegin(GL_QUADS);
+        glColor3d(0, 0, 0);
+        glVertex2d(x1 + xdistance, y2 - 2 * ydistance);
+        glVertex2d(x1 + 2 * xdistance, y2 - 2 * ydistance);
+        glVertex2d(x1 + 2 * xdistance, y2 - ydistance);
+        glVertex2d(x1 + xdistance, y2 - ydistance);
+    glEnd();
+    glBegin(GL_QUADS);
+        glColor3d(0, 0, 0);
+        glVertex2d(x2 - 2 * xdistance, y1 + ydistance);
+        glVertex2d(x2 - xdistance, y1 + ydistance);
+        glVertex2d(x2 - xdistance, y1 + 2 * ydistance);
+        glVertex2d(x2 - 2 * xdistance, y1 + 2 * ydistance);
+    glEnd();
+    glBegin(GL_QUADS);
+        glColor3d(0, 0, 0);
+        glVertex2d(x2 - 2 * xdistance, y2 - 2 * ydistance);
+        glVertex2d(x2 - xdistance, y2 - 2 * ydistance);
+        glVertex2d(x2 - xdistance, y2 - ydistance);
+        glVertex2d(x2 - 2 * xdistance, y2 - ydistance);
+    glEnd();
 }
 
 void CWall::Back5(double x1, double y1, double x2, double y2)

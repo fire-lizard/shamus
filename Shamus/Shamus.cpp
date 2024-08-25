@@ -4,8 +4,6 @@
 #include "Shamus.h"
 #include "sprites.h"
 #include "objects.h"
-#include "newitems/wall1.h"
-#include "newitems/wall4.h"
 
 #define SCREEN_WIDTH    640
 #define SCREEN_HEIGHT   480
@@ -118,7 +116,7 @@ void Display()
                 CWall::Show(4, I, J, I + stepx, J + stepy);
                 break;
             case WALL1:
-                CSprite::Show(wall1, I, J, 8, 8);
+                CWall::Show(6, I, J, I + stepx, J + stepy);
                 break;
             case WALL2:
                 CWall::Show(7, I, J, I + stepx, J + stepy);
@@ -127,7 +125,7 @@ void Display()
                 CWall::Show(8, I, J, I + stepx, J + stepy);
                 break;
             case WALL4:
-                CSprite::Show(wall4, I, J, 8, 8);
+                CWall::Show(9, I, J, I + stepx, J + stepy);
                 break;
             case WALL5:
                 CWall::Show(10, I, J, I + stepx, J + stepy);
