@@ -201,8 +201,43 @@ void set_window_title(int x, int y)
     string title = "Room " + to_string(x) + ":" + to_string(y);
     SDL_SetWindowTitle(window, title.c_str());
 }
-
 //---------------------------------------------------------------------------
+
+void go_to_level_start()
+{
+    X[0] = 25;
+    Y[0] = 10;
+    Player.Move(X[0], Y[0], 0);
+    if (Player.rx < 14 && Player.ry < 5)
+    {
+        Player.rx = 3;
+        Player.ry = 1;
+    }
+    else if (Player.rx < 23 && Player.ry < 7)
+    {
+        Player.rx = 16;
+        Player.ry = 2;
+    }
+    else if (Player.rx < 32 && Player.ry < 11)
+    {
+        Player.rx = 24;
+        Player.ry = 5;
+    }
+    else
+    {
+        Player.rx = 35;
+        Player.ry = 9;
+    }
+}
+//---------------------------------------------------------------------------
+
+void game_over()
+{
+    int result = SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Info", "Game Over", window);
+    exit(result);
+}
+//---------------------------------------------------------------------------
+
 //Функция обработки нажатий клавиш
 void Keyboard(SDL_Keycode keycode)
 {
@@ -267,8 +302,9 @@ void Keyboard(SDL_Keycode keycode)
     {
         if (X[0] == X[index] && Y[0] == Y[index])
         {
-            //Player.lives--;
-            if (Player.lives == 0) exit(EXIT_SUCCESS);
+            Player.lives--;
+            if (Player.lives == 0) game_over();
+            go_to_level_start();
         }
     }
     if (Player.room_changed)
@@ -308,11 +344,9 @@ unsigned Timer(unsigned interval, void* param)
         monsters[index]->Move(X[index], Y[index], Maze->RoomNo(Player.rx, Player.ry)->GetItem(X[index], Y[index]));
         if (X[0] == X[index] && Y[0] == Y[index])
         {
-            //Player.lives--;
-            if (Player.lives == 0)
-            {
-                exit(EXIT_SUCCESS);
-            }
+            Player.lives--;
+            if (Player.lives == 0) game_over();
+            go_to_level_start();
         }
     }
     counter++;
@@ -325,8 +359,9 @@ unsigned Timer(unsigned interval, void* param)
         Ghost.Move(X[MONSTER_COUNT + 1], Y[MONSTER_COUNT + 1], Maze->RoomNo(Player.rx, Player.ry)->GetItem(X[MONSTER_COUNT + 1], Y[MONSTER_COUNT + 1]));
         if (X[0] == X[MONSTER_COUNT + 1] && Y[0] == Y[MONSTER_COUNT + 1])
         {
-            //Player.lives--;
-            if (Player.lives == 0) exit(EXIT_SUCCESS);
+            Player.lives--;
+            if (Player.lives == 0) game_over();
+            go_to_level_start();
         }
     }
     return interval;
