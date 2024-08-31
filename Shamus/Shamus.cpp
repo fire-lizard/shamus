@@ -198,7 +198,7 @@ void Display()
 
 void set_window_title(int x, int y)
 {
-    string title = "Room " + to_string(x) + ":" + to_string(y);
+    string title = "Room " + to_string(x) + ":" + to_string(y) + "; Lives: " + to_string(Player.lives);
     SDL_SetWindowTitle(window, title.c_str());
 }
 //---------------------------------------------------------------------------
@@ -228,6 +228,7 @@ void go_to_level_start()
         Player.rx = 35;
         Player.ry = 9;
     }
+    set_window_title(Player.rx, Player.ry);
 }
 //---------------------------------------------------------------------------
 
