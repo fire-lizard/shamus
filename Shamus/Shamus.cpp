@@ -18,6 +18,9 @@ CGhost Ghost;
 unsigned char counter = 0; //счётчик секунд
 SDL_Window* window;
 SDL_GLContext context;
+SDL_KeyCode keys[18] = { SDLK_F1, SDLK_F2, SDLK_F3, SDLK_F4, SDLK_F5, SDLK_LEFT, SDLK_RIGHT, SDLK_UP, SDLK_DOWN,
+                         SDLK_KP_1, SDLK_KP_2, SDLK_KP_3, SDLK_KP_4, SDLK_KP_5, SDLK_KP_6, SDLK_KP_7, SDLK_KP_8, SDLK_KP_9 };
+Direction direction = STOP;
 
 //---------------------------------------------------------------------------
 //Функция рисования
@@ -196,6 +199,12 @@ void Display()
 }
 //---------------------------------------------------------------------------
 
+template<typename C, typename T>
+bool contains(C&& c, T e) {
+    return find(begin(c), end(c), e) != end(c);
+};
+//---------------------------------------------------------------------------
+
 void set_window_title(int x, int y)
 {
     string title = "Room " + to_string(x) + ":" + to_string(y) + "; Lives: " + to_string(Player.lives);
@@ -239,41 +248,8 @@ void game_over()
 }
 //---------------------------------------------------------------------------
 
-//Функция обработки нажатий клавиш
-void Keyboard(SDL_Keycode keycode)
+void player_moves()
 {
-    if (keycode == SDLK_LEFT) X[0]--;
-    if (keycode == SDLK_RIGHT) X[0]++;
-    if (keycode == SDLK_UP) Y[0]++;
-    if (keycode == SDLK_DOWN) Y[0]--;
-    if (keycode == SDLK_1 || keycode == SDLK_2 || keycode == SDLK_3 || keycode == SDLK_4)
-    {
-        if (keycode == SDLK_1)
-        {
-            Player.rx = 3;
-            Player.ry = 1;
-        }
-        if (keycode == SDLK_2)
-        {
-            Player.rx = 16;
-            Player.ry = 2;
-        }
-        if (keycode == SDLK_3)
-        {
-            Player.rx = 24;
-            Player.ry = 5;
-        }
-        if (keycode == SDLK_4)
-        {
-            Player.rx = 35;
-            Player.ry = 9;
-        }
-        Maze->SelectRoom(Player.rx, Player.ry);
-        set_window_title(Player.rx, Player.ry);
-        X[0] = 25;
-        Y[0] = 10;
-        Player.Move(X[0], Y[0], 0);
-    }
     auto item = Maze->RoomNo(Player.rx, Player.ry)->GetItem(X[0], Y[0]);
     if (Player.Move(X[0], Y[0], item))
     {
@@ -319,9 +295,53 @@ void Keyboard(SDL_Keycode keycode)
         X[4] = 8;Y[4] = 2;
         for (unsigned char index = 1;index <= MONSTER_COUNT;index++)
         {
-	        constexpr unsigned char temp = 0;
-	        monsters[index]->Move(X[index], Y[index], temp);
+            constexpr unsigned char temp = 0;
+            monsters[index]->Move(X[index], Y[index], temp);
         }
+    }
+}
+//---------------------------------------------------------------------------
+
+//Функция обработки нажатий клавиш
+void Keyboard(SDL_Keycode keycode)
+{
+    if (keycode == SDLK_LEFT || keycode == SDLK_KP_4) direction = LEFT;
+    if (keycode == SDLK_RIGHT || keycode == SDLK_KP_6) direction = RIGHT;
+    if (keycode == SDLK_UP || keycode == SDLK_KP_8) direction = UP;
+    if (keycode == SDLK_DOWN || keycode == SDLK_KP_2) direction = DOWN;
+    if (keycode == SDLK_KP_5) direction = STOP;
+    if (keycode == SDLK_F1 || keycode == SDLK_F2 || keycode == SDLK_F3 || keycode == SDLK_F4 || keycode == SDLK_F5)
+    {
+        if (keycode == SDLK_F1)
+        {
+            Player.rx = 3;
+            Player.ry = 1;
+        }
+        if (keycode == SDLK_F2)
+        {
+            Player.rx = 16;
+            Player.ry = 2;
+        }
+        if (keycode == SDLK_F3)
+        {
+            Player.rx = 24;
+            Player.ry = 5;
+        }
+        if (keycode == SDLK_F4)
+        {
+            Player.rx = 35;
+            Player.ry = 9;
+        }
+        if (keycode == SDLK_F5)
+        {
+            Player.rx = 41;
+            Player.ry = 11;
+        }
+        Maze->SelectRoom(Player.rx, Player.ry);
+        set_window_title(Player.rx, Player.ry);
+        X[0] = 25;
+        Y[0] = 10;
+        Player.Move(X[0], Y[0], 0);
     }
 }
 //---------------------------------------------------------------------------
@@ -339,6 +359,11 @@ void Reshape(int width, int height)
 //Функция обработки сообщений от таймера
 unsigned Timer(unsigned interval, void* param)
 {
+    if (direction == LEFT) X[0]--;
+    if (direction == RIGHT) X[0]++;
+    if (direction == UP) Y[0]++;
+    if (direction == DOWN) Y[0]--;
+    player_moves();
     for (unsigned char index = 1;index <= MONSTER_COUNT;index++)
     {
         Maze->Wave(X[index], Y[index], X[0], Y[0]);
@@ -470,7 +495,7 @@ int main(int argc, char* argv[])
         fprintf_s(stderr, "Context could not be created! SDL_Error: %s\n", SDL_GetError());
         return -1;
     }
-    const SDL_TimerID timer = SDL_AddTimer(1000, Timer, nullptr);
+    const SDL_TimerID timer = SDL_AddTimer(500, Timer, nullptr);
     SDL_Event event;
     Reshape(SCREEN_WIDTH, SCREEN_HEIGHT);
     bool done = false;
@@ -482,8 +507,7 @@ int main(int argc, char* argv[])
         if (event.key.state == SDL_PRESSED)
         {
             SDL_Keycode keycode = event.key.keysym.sym;
-            if (keycode == SDLK_LEFT || keycode == SDLK_RIGHT || keycode == SDLK_UP || keycode == SDLK_DOWN ||
-                keycode == SDLK_1 || keycode == SDLK_2 || keycode == SDLK_3 || keycode == SDLK_4)
+            if (contains(keys, keycode))
             {
                 Keyboard(keycode);
             }

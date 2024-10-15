@@ -14,6 +14,7 @@
 #include <map>
 #include <valarray>
 #include <string>
+#include <algorithm>
 #include <cstdio>
 #include <errno.h>
 #include <GL/gl.h>
@@ -30,3 +31,12 @@
 #include "Wall.h"
 
 using namespace std;
+
+enum Direction
+{
+    STOP,
+    LEFT,
+    RIGHT,
+    UP,
+    DOWN
+};
