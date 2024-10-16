@@ -5,8 +5,8 @@
 #include "sprites.h"
 #include "objects.h"
 
-#define SCREEN_WIDTH    640
-#define SCREEN_HEIGHT   480
+#define SCREEN_WIDTH    800
+#define SCREEN_HEIGHT   600
 
 map <unsigned char, CMonster*> monsters;
 signed char X[6] = { 25,XCOUNT - 10,8,XCOUNT - 10,8,XCOUNT - 1 }; //Координаты X движущихся объектов
@@ -20,7 +20,7 @@ SDL_Window* window;
 SDL_GLContext context;
 SDL_KeyCode keys[18] = { SDLK_F1, SDLK_F2, SDLK_F3, SDLK_F4, SDLK_F5, SDLK_LEFT, SDLK_RIGHT, SDLK_UP, SDLK_DOWN,
                          SDLK_KP_1, SDLK_KP_2, SDLK_KP_3, SDLK_KP_4, SDLK_KP_5, SDLK_KP_6, SDLK_KP_7, SDLK_KP_8, SDLK_KP_9 };
-Direction direction = STOP;
+Direction direction = CENTER;
 
 //---------------------------------------------------------------------------
 //Функция рисования
@@ -305,11 +305,15 @@ void player_moves()
 //Функция обработки нажатий клавиш
 void Keyboard(SDL_Keycode keycode)
 {
-    if (keycode == SDLK_LEFT || keycode == SDLK_KP_4) direction = LEFT;
-    if (keycode == SDLK_RIGHT || keycode == SDLK_KP_6) direction = RIGHT;
-    if (keycode == SDLK_UP || keycode == SDLK_KP_8) direction = UP;
-    if (keycode == SDLK_DOWN || keycode == SDLK_KP_2) direction = DOWN;
-    if (keycode == SDLK_KP_5) direction = STOP;
+    if (keycode == SDLK_LEFT || keycode == SDLK_KP_4) direction = WEST;
+    if (keycode == SDLK_RIGHT || keycode == SDLK_KP_6) direction = EAST;
+    if (keycode == SDLK_UP || keycode == SDLK_KP_8) direction = NORTH;
+    if (keycode == SDLK_DOWN || keycode == SDLK_KP_2) direction = SOUTH;
+    if (keycode == SDLK_KP_5) direction = CENTER;
+    if (keycode == SDLK_KP_7) direction = NORTHWEST;
+    if (keycode == SDLK_KP_9) direction = NORTHEAST;
+    if (keycode == SDLK_KP_1) direction = SOUTHWEST;
+    if (keycode == SDLK_KP_3) direction = SOUTHEAST;
     if (keycode == SDLK_F1 || keycode == SDLK_F2 || keycode == SDLK_F3 || keycode == SDLK_F4 || keycode == SDLK_F5)
     {
         if (keycode == SDLK_F1)
@@ -359,10 +363,70 @@ void Reshape(int width, int height)
 //Функция обработки сообщений от таймера
 unsigned Timer(unsigned interval, void* param)
 {
-    if (direction == LEFT) X[0]--;
-    if (direction == RIGHT) X[0]++;
-    if (direction == UP) Y[0]++;
-    if (direction == DOWN) Y[0]--;
+    if (direction == WEST) X[0]--;
+    if (direction == EAST) X[0]++;
+    if (direction == NORTH) Y[0]++;
+    if (direction == SOUTH) Y[0]--;
+    if (direction == NORTHWEST)
+    {
+        if (X[0] == 0)
+        {
+            X[0]--;
+        }
+        else if (Y[0] == YCOUNT - 1)
+        {
+            Y[0]++;
+        }
+        else
+        {
+            Y[0]++; X[0]--;
+        }
+    }
+    if (direction == NORTHEAST)
+    {
+        if (X[0] == XCOUNT - 1)
+        {
+            X[0]++;
+        }
+        else if (Y[0] == YCOUNT - 1)
+        {
+            Y[0]++;
+        }
+        else
+        {
+            Y[0]++; X[0]++;
+        }
+    }
+    if (direction == SOUTHWEST)
+    {
+        if (X[0] == 0)
+        {
+            X[0]--;
+        }
+        else if (Y[0] == 0)
+        {
+            Y[0]--;
+        }
+        else
+        {
+            Y[0]--; X[0]--;
+        }
+    }
+    if (direction == SOUTHEAST)
+    {
+        if (X[0] == XCOUNT - 1)
+        {
+            X[0]++;
+        }
+        else if (Y[0] == 0)
+        {
+            Y[0]--;
+        }
+        else
+        {
+            Y[0]--; X[0]++;
+        }
+    }
     player_moves();
     for (unsigned char index = 1;index <= MONSTER_COUNT;index++)
     {
@@ -483,7 +547,7 @@ int main(int argc, char* argv[])
     SDL_EventState(SDL_MOUSEMOTION, SDL_IGNORE);
     SDL_EventState(SDL_MOUSEBUTTONDOWN, SDL_IGNORE);
     SDL_EventState(SDL_MOUSEBUTTONUP, SDL_IGNORE);
-    window = SDL_CreateWindow("Shamus", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+    window = SDL_CreateWindow("Shamus", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL);// | SDL_WINDOW_RESIZABLE);
     if (!window)
     {
         fprintf_s(stderr, "Window could not be created! SDL_Error: %s\n", SDL_GetError());

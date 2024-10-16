@@ -34,9 +34,13 @@ using namespace std;
 
 enum Direction
 {
-    STOP,
-    LEFT,
-    RIGHT,
-    UP,
-    DOWN
+    CENTER,
+    WEST,
+    SOUTHWEST,
+    SOUTH,
+    SOUTHEAST,
+    EAST,
+    NORTHEAST,
+    NORTH,
+    NORTHWEST
 };
