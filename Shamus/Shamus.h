@@ -29,6 +29,7 @@
 #include "Monster.h"
 #include "Ghost.h"
 #include "Wall.h"
+#include "IniFile.h"
 
 using namespace std;
 

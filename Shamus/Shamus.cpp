@@ -10,7 +10,7 @@
 
 map <unsigned char, CMonster*> monsters;
 signed char X[6] = { 25,XCOUNT - 10,8,XCOUNT - 10,8,XCOUNT - 1 }; //Координаты X движущихся объектов
-signed char Y[6] = { 10,1,YCOUNT - 2,YCOUNT - 2,1,YCOUNT - 1 }; //Координаты Y движущихся объектов
+signed char Y[6] = { 10,1,YCOUNT - 2,YCOUNT - 2,1,YCOUNT - 1 };   //Координаты Y движущихся объектов
 CMaze* Maze;
 CPlayer Player;
 CMonster Monster1, Monster2, Monster3, Monster4;
@@ -478,6 +478,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 int main(int argc, char* argv[])
 #endif
 {
+    // Reading maze file
     unsigned char *maze_data = new unsigned char[MAX_ROOM_X * MAX_ROOM_Y * XCOUNT * YCOUNT];
     for (int index = 0; index < MAX_ROOM_X * MAX_ROOM_Y * XCOUNT * YCOUNT; index++)
     {
@@ -506,6 +507,9 @@ int main(int argc, char* argv[])
         delete[] maze_data;
         exit(err);
     }
+    // Reading ini file
+    IniFile ini("config.ini");
+    int speed = stoi(ini.get("game", "speed", "500"));
     CMazeBuilder MazeBuilder;
     MazeBuilder.BuildMaze(maze_data);
     Maze = MazeBuilder.GetMaze();
@@ -559,7 +563,7 @@ int main(int argc, char* argv[])
         fprintf_s(stderr, "Context could not be created! SDL_Error: %s\n", SDL_GetError());
         return -1;
     }
-    const SDL_TimerID timer = SDL_AddTimer(500, Timer, nullptr);
+    const SDL_TimerID timer = SDL_AddTimer(speed, Timer, nullptr);
     SDL_Event event;
     Reshape(SCREEN_WIDTH, SCREEN_HEIGHT);
     bool done = false;
