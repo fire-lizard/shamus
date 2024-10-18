@@ -360,7 +360,7 @@ void Reshape(int width, int height)
     glMatrixMode(GL_MODELVIEW);
 }
 //---------------------------------------------------------------------------
-//Функция обработки сообщений от таймера
+//Функция обработки сообщений от таймера (для игрока)
 unsigned Timer(unsigned interval, void* param)
 {
     if (direction == WEST) X[0]--;
@@ -428,6 +428,13 @@ unsigned Timer(unsigned interval, void* param)
         }
     }
     player_moves();
+    return interval;
+}
+//---------------------------------------------------------------------------
+
+//Функция обработки сообщений от таймера (для монстров)
+unsigned Timer2(unsigned interval, void* param)
+{
     for (unsigned char index = 1;index <= MONSTER_COUNT;index++)
     {
         Maze->Wave(X[index], Y[index], X[0], Y[0]);
@@ -564,6 +571,7 @@ int main(int argc, char* argv[])
         return -1;
     }
     const SDL_TimerID timer = SDL_AddTimer(speed, Timer, nullptr);
+    const SDL_TimerID timer2 = SDL_AddTimer((int)(speed * 1.2), Timer2, nullptr);
     SDL_Event event;
     Reshape(SCREEN_WIDTH, SCREEN_HEIGHT);
     bool done = false;
@@ -587,6 +595,7 @@ int main(int argc, char* argv[])
         Display();
     }
     SDL_RemoveTimer(timer);
+    SDL_RemoveTimer(timer2);
     SDL_GL_DeleteContext(context);
     SDL_DestroyWindow(window);
     SDL_Quit();
