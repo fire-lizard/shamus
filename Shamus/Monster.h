@@ -15,6 +15,7 @@ class CMonster : public CSprite
 public:
     signed char *X, *Y;
     unsigned char number;
+	bool is_alive;
 
 	CMonster();
 	bool Move(signed char& nx, signed char& ny, unsigned char value) override;

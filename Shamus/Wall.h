@@ -28,6 +28,8 @@ class CWall
 	static void Back9(double x1, double y1, double x2, double y2);
 	static void Back10(double x1, double y1, double x2, double y2);
 public:
+	static void PlayerBullet(double x1, double y1, double x2, double y2);
+	static void MonsterBullet(double x1, double y1, double x2, double y2);
 	static void Show(unsigned char kind, double x1, double y1, double x2, double y2);
 };
 

@@ -18,9 +18,10 @@ CGhost Ghost;
 unsigned char counter = 0; //счётчик секунд
 SDL_Window* window;
 SDL_GLContext context;
-SDL_KeyCode keys[18] = { SDLK_F1, SDLK_F2, SDLK_F3, SDLK_F4, SDLK_F5, SDLK_LEFT, SDLK_RIGHT, SDLK_UP, SDLK_DOWN,
+SDL_KeyCode keys[19] = { SDLK_F1, SDLK_F2, SDLK_F3, SDLK_F4, SDLK_F5, SDLK_LEFT, SDLK_RIGHT, SDLK_UP, SDLK_DOWN, SDLK_SPACE,
                          SDLK_KP_1, SDLK_KP_2, SDLK_KP_3, SDLK_KP_4, SDLK_KP_5, SDLK_KP_6, SDLK_KP_7, SDLK_KP_8, SDLK_KP_9 };
 Direction direction = CENTER;
+Bullet bullet1(0, 0), bullet2(0, 0);
 
 //---------------------------------------------------------------------------
 //Функция рисования
@@ -194,6 +195,10 @@ void Display()
         glDisable(GL_BLEND);
         glDisable(GL_ALPHA);
     }
+    if (bullet1.is_fired)
+    {
+        CWall::PlayerBullet(bullet1.bx * stepx, bullet1.by * stepy, bullet1.bx * stepx + stepx, bullet1.by * stepy + stepy);
+    }
     glFlush(); //Очистка буфера команд OpenGL
     SDL_GL_SwapWindow(window); //Поменять местами буфера
 }
@@ -277,7 +282,7 @@ void player_moves()
     }
     for (unsigned char index = 1;index <= MONSTER_COUNT;index++)
     {
-        if (X[0] == X[index] && Y[0] == Y[index])
+        if (X[0] == X[index] && Y[0] == Y[index] && monsters[index]->is_alive)
         {
             Player.lives--;
             if (Player.lives == 0) game_over();
@@ -314,6 +319,13 @@ void Keyboard(SDL_Keycode keycode)
     if (keycode == SDLK_KP_9) direction = NORTHEAST;
     if (keycode == SDLK_KP_1) direction = SOUTHWEST;
     if (keycode == SDLK_KP_3) direction = SOUTHEAST;
+    if (keycode == SDLK_SPACE && !bullet1.is_fired)
+    {
+        bullet1.bx = X[0];
+        bullet1.by = Y[0];
+        bullet1.is_fired = true;
+        bullet1.direction = direction == CENTER ? EAST : direction;
+    }
     if (keycode == SDLK_F1 || keycode == SDLK_F2 || keycode == SDLK_F3 || keycode == SDLK_F4 || keycode == SDLK_F5)
     {
         if (keycode == SDLK_F1)
@@ -437,13 +449,16 @@ unsigned Timer2(unsigned interval, void* param)
 {
     for (unsigned char index = 1;index <= MONSTER_COUNT;index++)
     {
-        Maze->Wave(X[index], Y[index], X[0], Y[0]);
-        monsters[index]->Move(X[index], Y[index], Maze->RoomNo(Player.rx, Player.ry)->GetItem(X[index], Y[index]));
-        if (X[0] == X[index] && Y[0] == Y[index])
+        if (monsters[index]->is_alive)
         {
-            Player.lives--;
-            if (Player.lives == 0) game_over();
-            go_to_level_start();
+            Maze->Wave(X[index], Y[index], X[0], Y[0]);
+            monsters[index]->Move(X[index], Y[index], Maze->RoomNo(Player.rx, Player.ry)->GetItem(X[index], Y[index]));
+            if (X[0] == X[index] && Y[0] == Y[index] && monsters[index]->is_alive)
+            {
+                Player.lives--;
+                if (Player.lives == 0) game_over();
+                go_to_level_start();
+            }
         }
     }
     counter++;
@@ -460,6 +475,55 @@ unsigned Timer2(unsigned interval, void* param)
             if (Player.lives == 0) game_over();
             go_to_level_start();
         }
+    }
+    return interval;
+}
+//---------------------------------------------------------------------------
+
+//Функция обработки сообщений от таймера (для пуль игрока)
+unsigned Timer3(unsigned interval, void* param)
+{
+    if (bullet1.is_fired)
+    {
+        if (bullet1.direction == WEST) bullet1.bx--;
+        if (bullet1.direction == EAST) bullet1.bx++;
+        if (bullet1.direction == NORTH) bullet1.by++;
+        if (bullet1.direction == SOUTH) bullet1.by--;
+        if (bullet1.direction == NORTHWEST)
+        {
+            bullet1.by++; bullet1.bx--;
+        }
+        if (bullet1.direction == NORTHEAST)
+        {
+            bullet1.by++; bullet1.bx++;
+        }
+        if (bullet1.direction == SOUTHWEST)
+        {
+            bullet1.by--; bullet1.bx--;
+        }
+        if (bullet1.direction == SOUTHEAST)
+        {
+            bullet1.by--; bullet1.bx++;
+        }
+        if (bullet1.bx < 0 || bullet1.bx >= XCOUNT || bullet1.by < 0 || bullet1.by >= YCOUNT)
+        {
+            bullet1.is_fired = false;
+        }
+        else if (Maze->RoomNo(Player.rx, Player.ry)->GetItem(bullet1.bx, bullet1.by) > 0)
+        {
+            //bullet1.is_fired = false;
+        }
+    }
+    return interval;
+}
+//---------------------------------------------------------------------------
+
+//Функция обработки сообщений от таймера (для пуль монстров)
+unsigned Timer4(unsigned interval, void* param)
+{
+    if (bullet2.is_fired)
+    {
+        //
     }
     return interval;
 }
@@ -572,6 +636,8 @@ int main(int argc, char* argv[])
     }
     const SDL_TimerID timer = SDL_AddTimer(speed, Timer, nullptr);
     const SDL_TimerID timer2 = SDL_AddTimer((int)(speed * 1.2), Timer2, nullptr);
+    const SDL_TimerID timer3 = SDL_AddTimer((int)(speed * 0.1), Timer3, nullptr);
+    //const SDL_TimerID timer4 = SDL_AddTimer((int)(speed * 0.12), Timer4, nullptr);
     SDL_Event event;
     Reshape(SCREEN_WIDTH, SCREEN_HEIGHT);
     bool done = false;
@@ -596,6 +662,8 @@ int main(int argc, char* argv[])
     }
     SDL_RemoveTimer(timer);
     SDL_RemoveTimer(timer2);
+    SDL_RemoveTimer(timer3);
+    //SDL_RemoveTimer(timer4);
     SDL_GL_DeleteContext(context);
     SDL_DestroyWindow(window);
     SDL_Quit();

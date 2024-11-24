@@ -30,18 +30,6 @@
 #include "Ghost.h"
 #include "Wall.h"
 #include "IniFile.h"
+#include "Bullet.h"
 
 using namespace std;
-
-enum Direction
-{
-    CENTER,
-    WEST,
-    SOUTHWEST,
-    SOUTH,
-    SOUTHEAST,
-    EAST,
-    NORTHEAST,
-    NORTH,
-    NORTHWEST
-};

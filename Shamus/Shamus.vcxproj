@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="IniFile.h" />
     <ClInclude Include="Maze.h" />
@@ -145,6 +146,7 @@
     <ClInclude Include="Wall.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="IniFile.cpp" />
     <ClCompile Include="Maze.cpp" />

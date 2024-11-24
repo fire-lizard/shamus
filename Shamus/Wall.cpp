@@ -418,6 +418,34 @@ void CWall::Back10(double x1, double y1, double x2, double y2)
     glEnd();
 }
 
+void CWall::PlayerBullet(double x1, double y1, double x2, double y2)
+{
+    double xdistance = (x2 - x1) / 3;
+    double ydistance = (y2 - y1) / 3;
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    glBegin(GL_QUADS);
+    glColor3d(1, 1, 0);
+    glVertex2d(x1 + xdistance, y1 + ydistance);
+    glVertex2d(x2 - xdistance, y1 + ydistance);
+    glVertex2d(x2 - xdistance, y2 - ydistance);
+    glVertex2d(x1 + xdistance, y2 - ydistance);
+    glEnd();
+}
+
+void CWall::MonsterBullet(double x1, double y1, double x2, double y2)
+{
+    double xdistance = (x2 - x1) / 3;
+    double ydistance = (y2 - y1) / 3;
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    glBegin(GL_QUADS);
+    glColor3d(1, 0, 0);
+    glVertex2d(x1 + xdistance, y1 + ydistance);
+    glVertex2d(x2 - xdistance, y1 + ydistance);
+    glVertex2d(x2 - xdistance, y2 - ydistance);
+    glVertex2d(x1 + xdistance, y2 - ydistance);
+    glEnd();
+}
+
 void CWall::Show(unsigned char kind, double x1, double y1, double x2, double y2)
 {
     typedef void(*obj_func)(double x1, double y1, double x2, double y2);

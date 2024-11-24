@@ -13,6 +13,7 @@ CMonster::CMonster()
 {
     px = 0;
     py = 0;
+    is_alive = true;
 }
 
 bool CMonster::CheckMonsterMovement(unsigned char value, signed char x, signed char y) const
