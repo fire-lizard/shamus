@@ -13,6 +13,7 @@ CGhost::CGhost()
 {
     px = 0;
     py = 0;
+    is_frozen = false;
 }
 
 bool CGhost::Move(signed char& nx, signed char& ny, unsigned char value)

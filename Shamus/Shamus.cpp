@@ -180,10 +180,13 @@ void Display()
     CSprite::Show(sprites[0][i1], Player.px* stepx, Player.py* stepy, 24, 24);
     for (unsigned char index = 1;index <= MONSTER_COUNT;index++)
     {
-        unsigned char idx;
-        if (index < MONSTER_COUNT) idx = i2;
-        else idx = i1;
-        CSprite::Show(sprites[index][idx], monsters[index]->px * stepx, monsters[index]->py * stepy, 24, 24);
+        if (monsters[index]->is_alive)
+        {
+            unsigned char idx;
+            if (index < MONSTER_COUNT) idx = i2;
+            else idx = i1;
+            CSprite::Show(sprites[index][idx], monsters[index]->px * stepx, monsters[index]->py * stepy, 24, 24);
+        }
     }
     if (counter >= 60)
     {
@@ -191,7 +194,14 @@ void Display()
         glEnable(GL_BLEND);
         glAlphaFunc(GL_ALWAYS, 0);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_COLOR);
-        CSprite::Show(sprites[MONSTER_COUNT + 1][i1], Ghost.px * stepx, Ghost.py * stepy, 24, 24);
+        if (!Ghost.is_frozen)
+        {
+            CSprite::Show(sprites[MONSTER_COUNT + 1][i1], Ghost.px * stepx, Ghost.py * stepy, 24, 24);
+        }
+        else
+        {
+            CSprite::Show(sprites[MONSTER_COUNT + 1][0], Ghost.px* stepx, Ghost.py* stepy, 24, 24);
+        }
         glDisable(GL_BLEND);
         glDisable(GL_ALPHA);
     }
@@ -219,6 +229,7 @@ void set_window_title(int x, int y)
 
 void go_to_level_start()
 {
+    counter = 0;
     X[0] = 25;
     Y[0] = 10;
     Player.Move(X[0], Y[0], 0);
@@ -249,6 +260,13 @@ void go_to_level_start()
 void game_over()
 {
     int result = SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Info", "Game Over", window);
+    exit(result);
+}
+//---------------------------------------------------------------------------
+
+void game_win()
+{
+    int result = SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Info", "You won the game", window);
     exit(result);
 }
 //---------------------------------------------------------------------------
@@ -301,8 +319,11 @@ void player_moves()
         for (unsigned char index = 1;index <= MONSTER_COUNT;index++)
         {
             constexpr unsigned char temp = 0;
+            monsters[index]->is_alive = true;
             monsters[index]->Move(X[index], Y[index], temp);
+            bullet1.is_fired = false;
         }
+        Ghost.is_frozen = false;
     }
 }
 //---------------------------------------------------------------------------
@@ -464,17 +485,21 @@ unsigned Timer2(unsigned interval, void* param)
     counter++;
     if (counter >= 60)
     {
-        if (X[0] < X[MONSTER_COUNT + 1]) X[MONSTER_COUNT + 1]--;
-        if (X[0] > X[MONSTER_COUNT + 1]) X[MONSTER_COUNT + 1]++;
-        if (Y[0] > Y[MONSTER_COUNT + 1]) Y[MONSTER_COUNT + 1]++;
-        if (Y[0] < Y[MONSTER_COUNT + 1]) Y[MONSTER_COUNT + 1]--;
-        Ghost.Move(X[MONSTER_COUNT + 1], Y[MONSTER_COUNT + 1], Maze->RoomNo(Player.rx, Player.ry)->GetItem(X[MONSTER_COUNT + 1], Y[MONSTER_COUNT + 1]));
+        if (!Ghost.is_frozen)
+        {
+            if (X[0] < X[MONSTER_COUNT + 1]) X[MONSTER_COUNT + 1]--;
+            if (X[0] > X[MONSTER_COUNT + 1]) X[MONSTER_COUNT + 1]++;
+            if (Y[0] > Y[MONSTER_COUNT + 1]) Y[MONSTER_COUNT + 1]++;
+            if (Y[0] < Y[MONSTER_COUNT + 1]) Y[MONSTER_COUNT + 1]--;
+            Ghost.Move(X[MONSTER_COUNT + 1], Y[MONSTER_COUNT + 1], Maze->RoomNo(Player.rx, Player.ry)->GetItem(X[MONSTER_COUNT + 1], Y[MONSTER_COUNT + 1]));
+        }
         if (X[0] == X[MONSTER_COUNT + 1] && Y[0] == Y[MONSTER_COUNT + 1])
         {
             Player.lives--;
             if (Player.lives == 0) game_over();
             go_to_level_start();
         }
+        Ghost.is_frozen = false;
     }
     return interval;
 }
@@ -512,6 +537,26 @@ unsigned Timer3(unsigned interval, void* param)
         else if (Maze->RoomNo(Player.rx, Player.ry)->GetItem(bullet1.bx, bullet1.by) > 0)
         {
             //bullet1.is_fired = false;
+        }
+        for (int index = 1; index <= MONSTER_COUNT; index++)
+        {
+            if (bullet1.bx == X[index] && bullet1.by == Y[index])
+            {
+                monsters[index]->is_alive = false;
+                bullet1.is_fired = false;
+            }
+        }
+        if (bullet1.bx == X[5] && bullet1.by == Y[5])
+        {
+            if (Player.rx == 41 && Player.ry == 11)
+            {
+                game_win();
+            }
+            else
+            {
+                Ghost.is_frozen = true;
+                bullet1.is_fired = false;
+            }
         }
     }
     return interval;

@@ -12,6 +12,8 @@
 class CGhost : public CSprite  
 {
 public:
+	bool is_frozen;
+	
 	CGhost();
 	bool Move(signed char& nx, signed char& ny, unsigned char value) override;
 };
