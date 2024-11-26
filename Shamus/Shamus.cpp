@@ -21,7 +21,7 @@ SDL_GLContext context;
 SDL_KeyCode keys[19] = { SDLK_F1, SDLK_F2, SDLK_F3, SDLK_F4, SDLK_F5, SDLK_LEFT, SDLK_RIGHT, SDLK_UP, SDLK_DOWN, SDLK_SPACE,
                          SDLK_KP_1, SDLK_KP_2, SDLK_KP_3, SDLK_KP_4, SDLK_KP_5, SDLK_KP_6, SDLK_KP_7, SDLK_KP_8, SDLK_KP_9 };
 Direction direction = CENTER;
-Bullet bullet1(0, 0), bullet2(0, 0);
+Bullet bullet1(0, 0);
 
 //---------------------------------------------------------------------------
 //Функция рисования
@@ -188,7 +188,7 @@ void Display()
             CSprite::Show(sprites[index][idx], monsters[index]->px * stepx, monsters[index]->py * stepy, 24, 24);
         }
     }
-    if (counter >= 60)
+    if ((Player.rx == 41 && Player.ry == 11) || counter >= 60)
     {
         glEnable(GL_ALPHA_TEST);
         glEnable(GL_BLEND);
@@ -222,7 +222,7 @@ bool contains(C&& c, T e) {
 
 void set_window_title(int x, int y)
 {
-    string title = "Room " + to_string(x) + ":" + to_string(y) + "; Lives: " + to_string(Player.lives);
+	const string title = "Room " + to_string(x) + ":" + to_string(y) + "; Lives: " + to_string(Player.lives);
     SDL_SetWindowTitle(window, title.c_str());
 }
 //---------------------------------------------------------------------------
@@ -259,15 +259,13 @@ void go_to_level_start()
 
 void game_over()
 {
-    int result = SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Info", "Game Over", window);
-    exit(result);
+    exit(SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Info", "Game Over", window));
 }
 //---------------------------------------------------------------------------
 
 void game_win()
 {
-    int result = SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Info", "You won the game", window);
-    exit(result);
+    exit(SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Info", "You won the game", window));
 }
 //---------------------------------------------------------------------------
 
@@ -323,7 +321,6 @@ void player_moves()
             monsters[index]->Move(X[index], Y[index], temp);
             bullet1.is_fired = false;
         }
-        Ghost.is_frozen = false;
     }
 }
 //---------------------------------------------------------------------------
@@ -483,7 +480,7 @@ unsigned Timer2(unsigned interval, void* param)
         }
     }
     counter++;
-    if (counter >= 60)
+    if ((Player.rx == 41 && Player.ry == 11) || counter >= 60)
     {
         if (!Ghost.is_frozen)
         {
@@ -499,7 +496,6 @@ unsigned Timer2(unsigned interval, void* param)
             if (Player.lives == 0) game_over();
             go_to_level_start();
         }
-        Ghost.is_frozen = false;
     }
     return interval;
 }
@@ -563,12 +559,12 @@ unsigned Timer3(unsigned interval, void* param)
 }
 //---------------------------------------------------------------------------
 
-//Функция обработки сообщений от таймера (для пуль монстров)
+//Функция обработки сообщений от таймера (для заморозки Тени)
 unsigned Timer4(unsigned interval, void* param)
 {
-    if (bullet2.is_fired)
+    if (Ghost.is_frozen)
     {
-        //
+        Ghost.is_frozen = false;
     }
     return interval;
 }
@@ -624,8 +620,8 @@ int main(int argc, char* argv[])
         exit(err);
     }
     // Reading ini file
-    IniFile ini("config.ini");
-    int speed = stoi(ini.get("game", "speed", "500"));
+    const IniFile ini("config.ini");
+    const int speed = stoi(ini.get("game", "speed", "500"));
     CMazeBuilder MazeBuilder;
     MazeBuilder.BuildMaze(maze_data);
     Maze = MazeBuilder.GetMaze();
@@ -682,7 +678,7 @@ int main(int argc, char* argv[])
     const SDL_TimerID timer = SDL_AddTimer(speed, Timer, nullptr);
     const SDL_TimerID timer2 = SDL_AddTimer((int)(speed * 1.2), Timer2, nullptr);
     const SDL_TimerID timer3 = SDL_AddTimer((int)(speed * 0.1), Timer3, nullptr);
-    //const SDL_TimerID timer4 = SDL_AddTimer((int)(speed * 0.12), Timer4, nullptr);
+    const SDL_TimerID timer4 = SDL_AddTimer(1000, Timer4, nullptr);
     SDL_Event event;
     Reshape(SCREEN_WIDTH, SCREEN_HEIGHT);
     bool done = false;
@@ -708,7 +704,7 @@ int main(int argc, char* argv[])
     SDL_RemoveTimer(timer);
     SDL_RemoveTimer(timer2);
     SDL_RemoveTimer(timer3);
-    //SDL_RemoveTimer(timer4);
+    SDL_RemoveTimer(timer4);
     SDL_GL_DeleteContext(context);
     SDL_DestroyWindow(window);
     SDL_Quit();
