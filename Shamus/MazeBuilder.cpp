@@ -23,14 +23,14 @@ void CMazeBuilder::BuildMaze(const unsigned char *data)
 {
 	_currentMaze = new CMaze;
 	int idx = 0;
-	for (unsigned char index1 = 0;index1 < MAX_ROOM_X;index1++)
+	for (signed char index1 = 0;index1 < MAX_ROOM_X;index1++)
 	{
-		for (unsigned char index2 = 0;index2 < MAX_ROOM_Y;index2++)
+		for (signed char index2 = 0;index2 < MAX_ROOM_Y;index2++)
 		{
 			const auto room = new CRoom(XCOUNT, YCOUNT);
-			for (unsigned char i = 0;i < XCOUNT;i++)
+			for (signed char i = 0;i < XCOUNT;i++)
 			{
-				for (unsigned char j = 0;j < YCOUNT;j++)
+				for (signed char j = 0;j < YCOUNT;j++)
 				{
 					const unsigned char item = data[idx];
 					if (item > 0)

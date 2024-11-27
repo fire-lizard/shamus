@@ -22,5 +22,5 @@ private:
     void load(const string& filename);
 
     // Helper function to trim spaces from both sides of a string
-    string trim(const string& str) const;
+    static string trim(const string& str);
 };

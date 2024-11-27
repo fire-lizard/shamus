@@ -32,9 +32,9 @@ CMaze::~CMaze()
 
 void CMaze::SetPaths()
 {
-	for (unsigned char index1 = 0;index1 < XCOUNT + 2;index1++)
+	for (signed char index1 = 0;index1 < XCOUNT + 2;index1++)
    	{
-        for (unsigned char index2 = 0;index2 < YCOUNT + 2;index2++)
+        for (signed char index2 = 0;index2 < YCOUNT + 2;index2++)
         {
             if (index1 > 0 && index1 < XCOUNT + 1 && index2 > 0 && index2 < YCOUNT + 1)			
 			{
@@ -56,7 +56,7 @@ void CMaze::SetPaths()
     }
 }
 
-void CMaze::MinValue(signed char x1, signed char y1, signed char& x, signed char& y)
+void CMaze::MinValue(const signed char x1, const signed char y1, signed char& x, signed char& y) const
 {
    	valarray <unsigned char> v(4);
     v[0] = _pathFind[x1 - 1][y1];
@@ -95,9 +95,9 @@ void CMaze::GetPaths(signed char& x1, signed char& y1, signed char x2, signed ch
     constexpr unsigned char nk = 64;
     do
     {
-        for (unsigned char index1 = 1;index1 < XCOUNT + 1;index1++)
+        for (signed char index1 = 1;index1 < XCOUNT + 1;index1++)
         {
-            for (unsigned char index2 = 1;index2 < YCOUNT + 1;index2++)
+            for (signed char index2 = 1;index2 < YCOUNT + 1;index2++)
             {
        	        if (_pathFind[index1][index2] == ni)
                	{

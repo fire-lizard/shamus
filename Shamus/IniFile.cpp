@@ -6,9 +6,9 @@ IniFile::IniFile(const string& filename) {
 
 // Function to get the value of a key in a section
 string IniFile::get(const string& section, const string& key, const string& defaultValue) const {
-	auto sectionIter = data.find(section);
+	const auto sectionIter = data.find(section);
 	if (sectionIter != data.end()) {
-		auto keyIter = sectionIter->second.find(key);
+		const auto keyIter = sectionIter->second.find(key);
 		if (keyIter != sectionIter->second.end()) {
 			return keyIter->second;
 		}
@@ -39,10 +39,10 @@ void IniFile::load(const string& filename) {
 		}
 		else {
 			// Key-value line
-			size_t equalPos = line.find('=');
+			const size_t equalPos = line.find('=');
 			if (equalPos != string::npos) {
 				string key = trim(line.substr(0, equalPos));
-				string value = trim(line.substr(equalPos + 1));
+				const string value = trim(line.substr(equalPos + 1));
 				data[currentSection][key] = value;
 			}
 		}
@@ -52,9 +52,10 @@ void IniFile::load(const string& filename) {
 }
 
 // Helper function to trim spaces from both sides of a string
-string IniFile::trim(const string& str) const {
+string IniFile::trim(const string& str)
+{
 	const char* whitespace = " \t\n\r\f\v";
-	size_t start = str.find_first_not_of(whitespace);
-	size_t end = str.find_last_not_of(whitespace);
+	const size_t start = str.find_first_not_of(whitespace);
+	const size_t end = str.find_last_not_of(whitespace);
 	return start == string::npos ? "" : str.substr(start, end - start + 1);
 }

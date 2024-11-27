@@ -24,7 +24,7 @@ class CMaze
 	unsigned char _pathFind[XCOUNT + 2][YCOUNT + 2];
 
 	void SetPaths();
-	void MinValue(signed char x1, signed char y1, signed char& x, signed char& y);
+	void MinValue(signed char x1, signed char y1, signed char& x, signed char& y) const;
 	void GetPaths(signed char& x1, signed char& y1, signed char x2, signed char y2);
 public:
 	CMaze();

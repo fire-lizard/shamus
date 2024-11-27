@@ -131,8 +131,6 @@ bool CPlayer::CheckPlayerMovement(unsigned char& value)
             value = 0;
             break;
         case LEFT_ARROW:
-            movement = true;
-            break;
         case RIGHT_ARROW:
             movement = true;
             break;

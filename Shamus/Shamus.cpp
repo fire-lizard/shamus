@@ -22,6 +22,7 @@ SDL_KeyCode keys[19] = { SDLK_F1, SDLK_F2, SDLK_F3, SDLK_F4, SDLK_F5, SDLK_LEFT,
                          SDLK_KP_1, SDLK_KP_2, SDLK_KP_3, SDLK_KP_4, SDLK_KP_5, SDLK_KP_6, SDLK_KP_7, SDLK_KP_8, SDLK_KP_9 };
 Direction direction = CENTER;
 Bullet bullet1(0, 0);
+bool stopDisplay = false;
 
 //---------------------------------------------------------------------------
 //Функция рисования
@@ -38,9 +39,9 @@ void Display()
     unsigned char* ghost[4] = { shadow1, shadow2, shadow3, shadow4 };
     unsigned char** sprites[MONSTER_COUNT + 2] = { hero,spider,droid,soboloyd,goblin,ghost };
     //Рисование неподвижных объектов
-	for (unsigned char i = 0;i < XCOUNT;i++)
+	for (signed char i = 0;i < XCOUNT;i++)
     {
-        for (unsigned char j = 0;j < YCOUNT;j++)
+        for (signed char j = 0;j < YCOUNT;j++)
         {
 	        const double I = i * stepx;
 	        const double J = j * stepy;
@@ -257,27 +258,104 @@ void go_to_level_start()
 }
 //---------------------------------------------------------------------------
 
+void displayImageAndWaitForKey(const char* imagePath, bool centered = false)
+{
+    stopDisplay = true;
+
+	// Create a renderer
+    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    if (renderer == nullptr) {
+        printf("Renderer could not be created! SDL_Error: %s\n", SDL_GetError());
+        stopDisplay = false;
+        return;
+    }
+
+    // Load image
+    SDL_Surface* imageSurface = IMG_Load(imagePath);
+    if (imageSurface == nullptr) {
+        printf("Unable to load image %s! SDL_image Error: %s\n", imagePath, IMG_GetError());
+        SDL_DestroyRenderer(renderer);
+        stopDisplay = false;
+        return;
+    }
+
+    SDL_Texture* imageTexture = SDL_CreateTextureFromSurface(renderer, imageSurface);
+    SDL_FreeSurface(imageSurface); // Free the surface now that we have a texture
+
+    if (imageTexture == nullptr) {
+        printf("Unable to create texture! SDL_Error: %s\n", SDL_GetError());
+        SDL_DestroyRenderer(renderer);
+        stopDisplay = false;
+        return;
+    }
+
+    if (centered)
+    {
+        // Get the dimensions of the image
+        int imageWidth, imageHeight;
+        SDL_QueryTexture(imageTexture, nullptr, nullptr, &imageWidth, &imageHeight);
+
+        // Get the dimensions of the window
+        int windowWidth, windowHeight;
+        SDL_GetWindowSize(window, &windowWidth, &windowHeight);
+
+        // Calculate position to center the image
+        const int x = (windowWidth - imageWidth) / 2;
+        const int y = (windowHeight - imageHeight) / 2;
+
+        const SDL_Rect destRect = { x, y, imageWidth, imageHeight };
+        SDL_RenderCopy(renderer, imageTexture, nullptr, &destRect);
+    }
+    else
+    {
+        SDL_RenderClear(renderer);
+        SDL_RenderCopy(renderer, imageTexture, nullptr, nullptr);
+    }
+
+    // Display the image
+    SDL_RenderPresent(renderer);
+
+	// Wait for any key press
+    bool quit = false;
+    SDL_Event e;
+    while (!quit) {
+        while (SDL_PollEvent(&e) != 0) {
+            if (e.type == SDL_QUIT || e.type == SDL_KEYDOWN) {
+                quit = true;
+                stopDisplay = false;
+            }
+        }
+    }
+
+    // Clean up
+    SDL_DestroyTexture(imageTexture);
+    SDL_DestroyRenderer(renderer);
+}
+//---------------------------------------------------------------------------
+
 void game_over()
 {
-    exit(SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Info", "Game Over", window));
+    displayImageAndWaitForKey("gameover.png", true);
+    exit(0);
 }
 //---------------------------------------------------------------------------
 
 void game_win()
 {
-    exit(SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Info", "You won the game", window));
+    displayImageAndWaitForKey("finish.png");
+    exit(0);
 }
 //---------------------------------------------------------------------------
 
 void player_moves()
 {
-    auto item = Maze->RoomNo(Player.rx, Player.ry)->GetItem(X[0], Y[0]);
+	const auto item = Maze->RoomNo(Player.rx, Player.ry)->GetItem(X[0], Y[0]);
     if (Player.Move(X[0], Y[0], item))
     {
         if (item == BLUE_LOCK || item == BROWN_LOCK || item == CYAN_LOCK || item == GREEN_LOCK ||
             item == ORANGE_LOCK || item == PURPLE_LOCK || item == RED_LOCK)
         {
-            for (unsigned char index = 10; index <= 15; index++)
+            for (signed char index = 10; index <= 15; index++)
             {
                 Maze->RoomNo(Player.rx, Player.ry)->SetItem(0, index, 0);
                 Maze->RoomNo(Player.rx, Player.ry)->SetItem(XCOUNT - 1, index, 0);
@@ -534,7 +612,7 @@ unsigned Timer3(unsigned interval, void* param)
         {
             //bullet1.is_fired = false;
         }
-        for (int index = 1; index <= MONSTER_COUNT; index++)
+        for (unsigned char index = 1; index <= MONSTER_COUNT; index++)
         {
             if (bullet1.bx == X[index] && bullet1.by == Y[index])
             {
@@ -605,7 +683,7 @@ int main(int argc, char* argv[])
         delete[] maze_data;
         exit(err);
     }
-    size_t cnt = fread(maze_data, 1, MAX_ROOM_X * MAX_ROOM_Y * XCOUNT * YCOUNT, file);
+    const size_t cnt = fread(maze_data, 1, MAX_ROOM_X * MAX_ROOM_Y * XCOUNT * YCOUNT, file);
     if (cnt != MAX_ROOM_X * MAX_ROOM_Y * XCOUNT * YCOUNT)
     {
         printf("Invalid maze.dat file size\n");
@@ -676,11 +754,16 @@ int main(int argc, char* argv[])
         return -1;
     }
     const SDL_TimerID timer = SDL_AddTimer(speed, Timer, nullptr);
-    const SDL_TimerID timer2 = SDL_AddTimer((int)(speed * 1.2), Timer2, nullptr);
-    const SDL_TimerID timer3 = SDL_AddTimer((int)(speed * 0.1), Timer3, nullptr);
+    const SDL_TimerID timer2 = SDL_AddTimer(static_cast<int>(speed * 1.2), Timer2, nullptr);
+    const SDL_TimerID timer3 = SDL_AddTimer(static_cast<int>(speed * 0.1), Timer3, nullptr);
     const SDL_TimerID timer4 = SDL_AddTimer(1000, Timer4, nullptr);
     SDL_Event event;
     Reshape(SCREEN_WIDTH, SCREEN_HEIGHT);
+
+    displayImageAndWaitForKey("logotype.png");
+    displayImageAndWaitForKey("plot.png");
+    displayImageAndWaitForKey("begin.png");
+
     bool done = false;
     while (!done)
     {
@@ -689,7 +772,7 @@ int main(int argc, char* argv[])
         if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_RESIZED) Reshape(event.window.data1, event.window.data2);
         if (event.key.state == SDL_PRESSED)
         {
-            SDL_Keycode keycode = event.key.keysym.sym;
+	        const SDL_Keycode keycode = event.key.keysym.sym;
             if (contains(keys, keycode))
             {
                 Keyboard(keycode);
@@ -699,7 +782,10 @@ int main(int argc, char* argv[])
                 done = true;
             }
         }
-        Display();
+        if (!stopDisplay)
+        {
+            Display();
+        }
     }
     SDL_RemoveTimer(timer);
     SDL_RemoveTimer(timer2);

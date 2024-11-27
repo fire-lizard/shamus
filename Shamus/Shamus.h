@@ -3,6 +3,7 @@
 #pragma comment(lib, "opengl32.lib")
 #pragma comment(lib, "glu32.lib")
 #pragma comment(lib, "SDL2.lib")
+#pragma comment(lib, "SDL2_image.lib")
 
 #if defined _WIN32
 #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
@@ -16,10 +17,11 @@
 #include <string>
 #include <algorithm>
 #include <cstdio>
-#include <errno.h>
+#include <cerrno>
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <SDL.h>
+#include <SDL_image.h>
 
 #include "Room.h"
 #include "Maze.h"
