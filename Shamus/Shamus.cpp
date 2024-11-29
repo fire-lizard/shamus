@@ -5,9 +5,6 @@
 #include "sprites.h"
 #include "objects.h"
 
-#define SCREEN_WIDTH    800
-#define SCREEN_HEIGHT   600
-
 map <unsigned char, CMonster*> monsters;
 signed char X[6] = { 25,XCOUNT - 10,8,XCOUNT - 10,8,XCOUNT - 1 }; //Координаты X движущихся объектов
 signed char Y[6] = { 10,1,YCOUNT - 2,YCOUNT - 2,1,YCOUNT - 1 };   //Координаты Y движущихся объектов
@@ -392,12 +389,12 @@ void player_moves()
         X[2] = 8;Y[2] = YCOUNT - 2;
         X[3] = XCOUNT - 10;Y[3] = YCOUNT - 2;
         X[4] = 8;Y[4] = 2;
+        bullet1.is_fired = false;
         for (unsigned char index = 1;index <= MONSTER_COUNT;index++)
         {
             constexpr unsigned char temp = 0;
             monsters[index]->is_alive = true;
             monsters[index]->Move(X[index], Y[index], temp);
-            bullet1.is_fired = false;
         }
     }
 }
@@ -700,6 +697,8 @@ int main(int argc, char* argv[])
     // Reading ini file
     const IniFile ini("config.ini");
     const int speed = stoi(ini.get("game", "speed", "500"));
+	const int SCREEN_WIDTH = stoi(ini.get("game", "width", "1280"));
+    const int SCREEN_HEIGHT = stoi(ini.get("game", "height", "960"));
     CMazeBuilder MazeBuilder;
     MazeBuilder.BuildMaze(maze_data);
     Maze = MazeBuilder.GetMaze();
