@@ -626,6 +626,8 @@ unsigned Timer3(unsigned interval, void* param)
             if (bullet1.bx == X[index] && bullet1.by == Y[index] && monsters[index]->is_alive)
             {
                 monsters[index]->is_alive = false;
+                X[index] = 0;
+                Y[index] = 0;
                 bullet1.is_fired = false;
             }
         }
