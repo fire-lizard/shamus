@@ -385,10 +385,20 @@ void player_moves()
         Maze->SelectRoom(Player.rx, Player.ry);
         set_window_title(Player.rx, Player.ry);
         counter = 0;
-        X[1] = XCOUNT - 10;Y[1] = 2;
-        X[2] = 8;Y[2] = YCOUNT - 2;
-        X[3] = XCOUNT - 10;Y[3] = YCOUNT - 2;
-        X[4] = 8;Y[4] = 2;
+        if (Maze->RoomNo(Player.rx, Player.ry)->GetItem(10, 2) == 0)
+        {
+            X[1] = XCOUNT - 10;Y[1] = 2;
+            X[2] = 8;Y[2] = YCOUNT - 2;
+            X[3] = XCOUNT - 10;Y[3] = YCOUNT - 2;
+            X[4] = 8;Y[4] = 2;
+        }
+        else
+        {
+            X[1] = (XCOUNT / 2) - 3;Y[1] = (YCOUNT / 2) - 3;
+            X[2] = (XCOUNT / 2) + 3;Y[2] = (YCOUNT / 2) - 3;
+            X[3] = (XCOUNT / 2) - 3;Y[3] = (YCOUNT / 2) + 3;
+            X[4] = (XCOUNT / 2) + 3;Y[4] = (YCOUNT / 2) + 3;
+        }
         bullet1.is_fired = false;
         for (unsigned char index = 1;index <= MONSTER_COUNT;index++)
         {
