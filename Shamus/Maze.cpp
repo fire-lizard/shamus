@@ -2,7 +2,6 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#include "Shamus.h"
 #include "Maze.h"
 
 //////////////////////////////////////////////////////////////////////
@@ -58,12 +57,12 @@ void CMaze::SetPaths()
 
 void CMaze::MinValue(const signed char x1, const signed char y1, signed char& x, signed char& y) const
 {
-   	valarray <unsigned char> v(4);
+   	std::valarray <unsigned char> v(4);
     v[0] = _pathFind[x1 - 1][y1];
     v[1] = _pathFind[x1 + 1][y1];
     v[2] = _pathFind[x1][y1 - 1];
 	v[3] = _pathFind[x1][y1 + 1];
-    unsigned char b = min(min(v[0], v[1]), min(v[2], v[3]));
+    const unsigned char b = std::min(std::min(v[0], v[1]), std::min(v[2], v[3]));
 	if (b == v[0])
     {
         x = x1 - 1;

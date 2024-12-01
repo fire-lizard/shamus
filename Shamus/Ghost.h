@@ -9,6 +9,8 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
+#include "Sprite.h"
+
 class CGhost : public CSprite  
 {
 public:

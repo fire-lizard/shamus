@@ -9,6 +9,9 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
+#include <valarray>
+#include "Room.h"
+
 #define XCOUNT 40//Размер игрового поля по горизонтали
 #define YCOUNT 25//Размер игрового поля по вертикали
 #define MAX_ROOM_X 45//Количество комнат по горизонтали

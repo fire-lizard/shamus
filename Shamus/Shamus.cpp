@@ -21,6 +21,9 @@ Direction direction = CENTER;
 Bullet bullet1(0, 0);
 bool stopDisplay = false;
 bool gameStarted = false;
+bool gameOver;
+int SCREEN_WIDTH;
+int SCREEN_HEIGHT;
 
 //---------------------------------------------------------------------------
 //Функция рисования
@@ -208,6 +211,10 @@ void Display()
     {
         CWall::PlayerBullet(bullet1.bx * stepx, bullet1.by * stepy, bullet1.bx * stepx + stepx, bullet1.by * stepy + stepy);
     }
+    if (gameOver)
+    {
+        CSprite::Show(gameover, 0.5, 0.5, 152, 24);
+    }
     glFlush(); //Очистка буфера команд OpenGL
     SDL_GL_SwapWindow(window); //Поменять местами буфера
 }
@@ -319,7 +326,8 @@ void displayImageAndWaitForKey(const char* imagePath, bool centered = false)
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
             if (e.type == SDL_QUIT || e.type == SDL_KEYDOWN) {
-                quit = true;
+                if (e.key.keysym.sym == SDLK_ESCAPE) exit(0);
+            	quit = true;
                 stopDisplay = false;
             }
         }
@@ -333,8 +341,8 @@ void displayImageAndWaitForKey(const char* imagePath, bool centered = false)
 
 void game_over()
 {
-    displayImageAndWaitForKey("gameover.png", true);
-    exit(0);
+    gameStarted = false;
+    gameOver = true;
 }
 //---------------------------------------------------------------------------
 
@@ -395,10 +403,10 @@ void player_moves()
         }
         else
         {
-            X[1] = (XCOUNT / 2) - 3;Y[1] = (YCOUNT / 2) - 3;
-            X[2] = (XCOUNT / 2) + 3;Y[2] = (YCOUNT / 2) - 3;
-            X[3] = (XCOUNT / 2) - 3;Y[3] = (YCOUNT / 2) + 3;
-            X[4] = (XCOUNT / 2) + 3;Y[4] = (YCOUNT / 2) + 3;
+            X[1] = (XCOUNT / 2) - 2;Y[1] = (YCOUNT / 2) - 2;
+            X[2] = (XCOUNT / 2) + 2;Y[2] = (YCOUNT / 2) - 2;
+            X[3] = (XCOUNT / 2) - 2;Y[3] = (YCOUNT / 2) + 2;
+            X[4] = (XCOUNT / 2) + 2;Y[4] = (YCOUNT / 2) + 2;
         }
         bullet1.is_fired = false;
         for (unsigned char index = 1;index <= MONSTER_COUNT;index++)
@@ -430,32 +438,27 @@ void Keyboard(SDL_Keycode keycode)
         bullet1.is_fired = true;
         bullet1.direction = direction == CENTER ? EAST : direction;
     }
-    if (keycode == SDLK_F1 || keycode == SDLK_F2 || keycode == SDLK_F3 || keycode == SDLK_F4 || keycode == SDLK_F5)
+    if (keycode == SDLK_F2 || keycode == SDLK_F3 || keycode == SDLK_F4 || keycode == SDLK_F5)
     {
-        if (keycode == SDLK_F1)
+        if (keycode == SDLK_F2)
         {
             Player.rx = 3;
             Player.ry = 1;
         }
-        if (keycode == SDLK_F2)
+        if (keycode == SDLK_F3)
         {
             Player.rx = 16;
             Player.ry = 2;
         }
-        if (keycode == SDLK_F3)
+        if (keycode == SDLK_F4)
         {
             Player.rx = 24;
             Player.ry = 5;
         }
-        if (keycode == SDLK_F4)
+        if (keycode == SDLK_F5)
         {
             Player.rx = 35;
             Player.ry = 9;
-        }
-        if (keycode == SDLK_F5)
-        {
-            Player.rx = 41;
-            Player.ry = 11;
         }
         Maze->SelectRoom(Player.rx, Player.ry);
         set_window_title(Player.rx, Player.ry);
@@ -479,7 +482,8 @@ void Reshape(int width, int height)
 //Функция обработки сообщений от таймера (для игрока)
 unsigned Timer(unsigned interval, void* param)
 {
-    if (direction == WEST) X[0]--;
+    if (!gameStarted) return interval;
+	if (direction == WEST) X[0]--;
     if (direction == EAST) X[0]++;
     if (direction == NORTH) Y[0]++;
     if (direction == SOUTH) Y[0]--;
@@ -711,8 +715,8 @@ int main(int argc, char* argv[])
     // Reading ini file
     const IniFile ini("config.ini");
     const int speed = stoi(ini.get("game", "speed", "500"));
-	const int SCREEN_WIDTH = stoi(ini.get("game", "width", "1280"));
-    const int SCREEN_HEIGHT = stoi(ini.get("game", "height", "960"));
+	SCREEN_WIDTH = stoi(ini.get("game", "width", "1280"));
+    SCREEN_HEIGHT = stoi(ini.get("game", "height", "960"));
     CMazeBuilder MazeBuilder;
     MazeBuilder.BuildMaze(maze_data);
     Maze = MazeBuilder.GetMaze();
@@ -773,6 +777,8 @@ int main(int argc, char* argv[])
     SDL_Event event;
     Reshape(SCREEN_WIDTH, SCREEN_HEIGHT);
 
+	start:
+    gameOver = false;
     displayImageAndWaitForKey("logotype.png");
     displayImageAndWaitForKey("plot.png");
     displayImageAndWaitForKey("begin.png");
@@ -789,11 +795,27 @@ int main(int argc, char* argv[])
 	        const SDL_Keycode keycode = event.key.keysym.sym;
             if (contains(keys, keycode))
             {
-                Keyboard(keycode);
+                if (keycode == SDLK_F1)
+                {
+                    gameStarted = false;
+                    displayImageAndWaitForKey("begin.png");
+                    gameStarted = true;
+                }
+                else Keyboard(keycode);
             }
             else if (keycode == SDLK_ESCAPE)
             {
-                done = true;
+                //done = true;
+                Player.rx = 3;
+                Player.ry = 1;
+                Maze->SelectRoom(3, 1);
+                X[0] = 25; Y[0] = 10;
+            	X[1] = XCOUNT - 10;Y[1] = 2;
+                X[2] = 8;Y[2] = YCOUNT - 2;
+                X[3] = XCOUNT - 10;Y[3] = YCOUNT - 2;
+                X[4] = 8;Y[4] = 2;
+                counter = 0;
+            	goto start;
             }
         }
         if (!stopDisplay)

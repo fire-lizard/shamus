@@ -9,6 +9,8 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
+#include "Sprite.h"
+
 class CMonster : public CSprite  
 {
 	bool CheckMonsterMovement(unsigned char value, signed char x, signed char y) const;
