@@ -20,7 +20,7 @@ SDL_KeyCode keys[19] = { SDLK_F1, SDLK_F2, SDLK_F3, SDLK_F4, SDLK_F5, SDLK_LEFT,
 Direction direction = CENTER;
 Bullet bullet1(0, 0);
 bool stopDisplay = false;
-bool gameStarted = false;
+bool gamePaused = true;
 bool gameOver;
 int SCREEN_WIDTH;
 int SCREEN_HEIGHT;
@@ -341,7 +341,7 @@ void displayImageAndWaitForKey(const char* imagePath, bool centered = false)
 
 void game_over()
 {
-    gameStarted = false;
+    gamePaused = true;
     gameOver = true;
 }
 //---------------------------------------------------------------------------
@@ -482,7 +482,7 @@ void Reshape(int width, int height)
 //Функция обработки сообщений от таймера (для игрока)
 unsigned Timer(unsigned interval, void* param)
 {
-    if (!gameStarted) return interval;
+    if (gamePaused) return interval;
 	if (direction == WEST) X[0]--;
     if (direction == EAST) X[0]++;
     if (direction == NORTH) Y[0]++;
@@ -555,7 +555,7 @@ unsigned Timer(unsigned interval, void* param)
 //Функция обработки сообщений от таймера (для монстров)
 unsigned Timer2(unsigned interval, void* param)
 {
-    if (!gameStarted) return interval;
+    if (gamePaused) return interval;
 	for (unsigned char index = 1;index <= MONSTER_COUNT;index++)
     {
         if (monsters[index]->is_alive)
@@ -782,7 +782,7 @@ int main(int argc, char* argv[])
     displayImageAndWaitForKey("logotype.png");
     displayImageAndWaitForKey("plot.png");
     displayImageAndWaitForKey("begin.png");
-    gameStarted = true;
+    gamePaused = false;
 
     bool done = false;
     while (!done)
@@ -797,9 +797,9 @@ int main(int argc, char* argv[])
             {
                 if (keycode == SDLK_F1)
                 {
-                    gameStarted = false;
+                    gamePaused = true;
                     displayImageAndWaitForKey("begin.png");
-                    gameStarted = true;
+                    gamePaused = false;
                 }
                 else Keyboard(keycode);
             }
