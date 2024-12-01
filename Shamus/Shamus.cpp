@@ -20,6 +20,7 @@ SDL_KeyCode keys[19] = { SDLK_F1, SDLK_F2, SDLK_F3, SDLK_F4, SDLK_F5, SDLK_LEFT,
 Direction direction = CENTER;
 Bullet bullet1(0, 0);
 bool stopDisplay = false;
+bool gameStarted = false;
 
 //---------------------------------------------------------------------------
 //Функция рисования
@@ -550,7 +551,8 @@ unsigned Timer(unsigned interval, void* param)
 //Функция обработки сообщений от таймера (для монстров)
 unsigned Timer2(unsigned interval, void* param)
 {
-    for (unsigned char index = 1;index <= MONSTER_COUNT;index++)
+    if (!gameStarted) return interval;
+	for (unsigned char index = 1;index <= MONSTER_COUNT;index++)
     {
         if (monsters[index]->is_alive)
         {
@@ -621,7 +623,7 @@ unsigned Timer3(unsigned interval, void* param)
         }
         for (unsigned char index = 1; index <= MONSTER_COUNT; index++)
         {
-            if (bullet1.bx == X[index] && bullet1.by == Y[index])
+            if (bullet1.bx == X[index] && bullet1.by == Y[index] && monsters[index]->is_alive)
             {
                 monsters[index]->is_alive = false;
                 bullet1.is_fired = false;
@@ -772,6 +774,7 @@ int main(int argc, char* argv[])
     displayImageAndWaitForKey("logotype.png");
     displayImageAndWaitForKey("plot.png");
     displayImageAndWaitForKey("begin.png");
+    gameStarted = true;
 
     bool done = false;
     while (!done)
