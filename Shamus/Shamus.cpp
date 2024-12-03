@@ -777,10 +777,9 @@ int main(int argc, char* argv[])
     SDL_Event event;
     Reshape(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-	start:
-    gameOver = false;
     displayImageAndWaitForKey("logotype.png");
-    displayImageAndWaitForKey("plot.png");
+start:
+    gameOver = false;
     displayImageAndWaitForKey("begin.png");
     gamePaused = false;
 
@@ -798,7 +797,7 @@ int main(int argc, char* argv[])
                 if (keycode == SDLK_F1)
                 {
                     gamePaused = true;
-                    displayImageAndWaitForKey("begin.png");
+                    displayImageAndWaitForKey("plot.png");
                     gamePaused = false;
                 }
                 else Keyboard(keycode);
