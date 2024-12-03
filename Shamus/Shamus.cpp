@@ -263,6 +263,53 @@ void go_to_level_start()
 }
 //---------------------------------------------------------------------------
 
+void displayImageAndWaitForKey_aux(const char* imagePath, SDL_Renderer* renderer)
+{
+    stopDisplay = true;
+
+    // Load image
+    SDL_Surface* imageSurface = IMG_Load(imagePath);
+    if (imageSurface == nullptr) {
+        printf("Unable to load image %s! SDL_image Error: %s\n", imagePath, IMG_GetError());
+        SDL_DestroyRenderer(renderer);
+        stopDisplay = false;
+        return;
+    }
+
+    SDL_Texture* imageTexture = SDL_CreateTextureFromSurface(renderer, imageSurface);
+    SDL_FreeSurface(imageSurface); // Free the surface now that we have a texture
+
+    if (imageTexture == nullptr) {
+        printf("Unable to create texture! SDL_Error: %s\n", SDL_GetError());
+        SDL_DestroyRenderer(renderer);
+        stopDisplay = false;
+        return;
+    }
+
+	SDL_RenderClear(renderer);
+    SDL_RenderCopy(renderer, imageTexture, nullptr, nullptr);
+
+    // Display the image
+    SDL_RenderPresent(renderer);
+
+    // Wait for any key press
+    bool quit = false;
+    SDL_Event e;
+    while (!quit) {
+        while (SDL_PollEvent(&e) != 0) {
+            if (e.type == SDL_QUIT || e.type == SDL_KEYDOWN) {
+                quit = true;
+                stopDisplay = false;
+            }
+        }
+    }
+
+    // Clean up
+    SDL_DestroyTexture(imageTexture);
+    SDL_DestroyRenderer(renderer);
+}
+//---------------------------------------------------------------------------
+
 void displayImageAndWaitForKey(const char* imagePath, bool centered = false)
 {
     stopDisplay = true;
@@ -327,7 +374,8 @@ void displayImageAndWaitForKey(const char* imagePath, bool centered = false)
         while (SDL_PollEvent(&e) != 0) {
             if (e.type == SDL_QUIT || e.type == SDL_KEYDOWN) {
                 if (e.key.keysym.sym == SDLK_ESCAPE) exit(0);
-            	quit = true;
+                if (e.key.keysym.sym == SDLK_F1) displayImageAndWaitForKey_aux("plot.png", renderer);
+                quit = true;
                 stopDisplay = false;
             }
         }
@@ -794,13 +842,7 @@ start:
 	        const SDL_Keycode keycode = event.key.keysym.sym;
             if (contains(keys, keycode))
             {
-                if (keycode == SDLK_F1)
-                {
-                    gamePaused = true;
-                    displayImageAndWaitForKey("plot.png");
-                    gamePaused = false;
-                }
-                else Keyboard(keycode);
+                Keyboard(keycode);
             }
             else if (keycode == SDLK_ESCAPE)
             {
