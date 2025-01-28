@@ -22,6 +22,7 @@ CPlayer::CPlayer()
     orange_keys = 0;
     purple_keys = 0;
 	red_keys = 0;
+    score = 0;
     room_changed = false;
 }
 

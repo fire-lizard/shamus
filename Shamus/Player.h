@@ -59,6 +59,7 @@ public:
     unsigned char lives, blue_keys, brown_keys, cyan_keys, green_keys, orange_keys, purple_keys, red_keys;
 	signed char rx, ry;
 	bool room_changed;
+    int score;
 
 	CPlayer();
 	bool Move(signed char& nx, signed char& ny, unsigned char value) override;

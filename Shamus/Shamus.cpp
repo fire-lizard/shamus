@@ -22,7 +22,6 @@ bool gamePaused = true;
 bool gameOver;
 int SCREEN_WIDTH;
 int SCREEN_HEIGHT;
-int score = 0;
 
 //---------------------------------------------------------------------------
 //Функция рисования
@@ -229,7 +228,7 @@ bool contains(C&& c, T e) {
 
 void set_window_title(int x, int y)
 {
-	const string title = "Room " + to_string(x) + ":" + to_string(y) + "; Lives: " + to_string(Player.lives);
+	const string title = "Room " + to_string(x) + ":" + to_string(y) + "; Lives: " + to_string(Player.lives) + "; Score: " + to_string(Player.score);
     SDL_SetWindowTitle(window, title.c_str());
 }
 //---------------------------------------------------------------------------
@@ -682,7 +681,7 @@ unsigned Timer3(unsigned interval, void* param)
                 X[index] = 0;
                 Y[index] = 0;
                 bullet1.is_fired = false;
-                score++;
+                Player.score++;
             }
         }
         if (bullet1.bx == X[5] && bullet1.by == Y[5])
