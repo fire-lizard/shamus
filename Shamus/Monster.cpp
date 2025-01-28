@@ -23,7 +23,7 @@ bool CMonster::CheckMonsterMovement(unsigned char value, signed char x, signed c
 	}
     for (unsigned char index = 1;index < 5;index++)
     {
-        if (index != number)
+        if (index != number && X != nullptr && Y != nullptr)
         {
             if (x == X[index] && y == Y[index])
             {

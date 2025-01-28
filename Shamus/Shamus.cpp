@@ -5,12 +5,10 @@
 #include "sprites.h"
 #include "objects.h"
 
-map <unsigned char, CMonster*> monsters;
 signed char X[6] = { 25,XCOUNT - 10,8,XCOUNT - 10,8,XCOUNT - 1 }; //Координаты X движущихся объектов
 signed char Y[6] = { 10,1,YCOUNT - 2,YCOUNT - 2,1,YCOUNT - 1 };   //Координаты Y движущихся объектов
 CMaze* Maze;
 CPlayer Player;
-CMonster Monster1, Monster2, Monster3, Monster4;
 CGhost Ghost;
 unsigned char counter = 0; //счётчик секунд
 SDL_Window* window;
@@ -24,6 +22,7 @@ bool gamePaused = true;
 bool gameOver;
 int SCREEN_WIDTH;
 int SCREEN_HEIGHT;
+int score = 0;
 
 //---------------------------------------------------------------------------
 //Функция рисования
@@ -182,12 +181,14 @@ void Display()
     CSprite::Show(sprites[0][i1], Player.px* stepx, Player.py* stepy, 24, 24);
     for (unsigned char index = 1;index <= MONSTER_COUNT;index++)
     {
-        if (monsters[index]->is_alive)
+        if (Maze->RoomNo(Player.rx, Player.ry)->Monsters[index]->is_alive)
         {
             unsigned char idx;
             if (index < MONSTER_COUNT) idx = i2;
             else idx = i1;
-            CSprite::Show(sprites[index][idx], monsters[index]->px * stepx, monsters[index]->py * stepy, 24, 24);
+            CSprite::Show(sprites[index][idx],
+                Maze->RoomNo(Player.rx, Player.ry)->Monsters[index]->px * stepx,
+                Maze->RoomNo(Player.rx, Player.ry)->Monsters[index]->py * stepy, 24, 24);
         }
     }
     if ((Player.rx == 41 && Player.ry == 11) || counter >= 60)
@@ -430,7 +431,7 @@ void player_moves()
     }
     for (unsigned char index = 1;index <= MONSTER_COUNT;index++)
     {
-        if (X[0] == X[index] && Y[0] == Y[index] && monsters[index]->is_alive)
+        if (X[0] == X[index] && Y[0] == Y[index] && Maze->RoomNo(Player.rx, Player.ry)->Monsters[index]->is_alive)
         {
             Player.lives--;
             if (Player.lives == 0) game_over();
@@ -460,8 +461,8 @@ void player_moves()
         for (unsigned char index = 1;index <= MONSTER_COUNT;index++)
         {
             constexpr unsigned char temp = 0;
-            monsters[index]->is_alive = true;
-            monsters[index]->Move(X[index], Y[index], temp);
+            //Maze->RoomNo(Player.rx, Player.ry)->Monsters[index]->is_alive = true;
+            Maze->RoomNo(Player.rx, Player.ry)->Monsters[index]->Move(X[index], Y[index], temp);
         }
     }
 }
@@ -606,11 +607,11 @@ unsigned Timer2(unsigned interval, void* param)
     if (gamePaused) return interval;
 	for (unsigned char index = 1;index <= MONSTER_COUNT;index++)
     {
-        if (monsters[index]->is_alive)
+        if (Maze->RoomNo(Player.rx, Player.ry)->Monsters[index]->is_alive)
         {
             Maze->Wave(X[index], Y[index], X[0], Y[0]);
-            monsters[index]->Move(X[index], Y[index], Maze->RoomNo(Player.rx, Player.ry)->GetItem(X[index], Y[index]));
-            if (X[0] == X[index] && Y[0] == Y[index] && monsters[index]->is_alive)
+            Maze->RoomNo(Player.rx, Player.ry)->Monsters[index]->Move(X[index], Y[index], Maze->RoomNo(Player.rx, Player.ry)->GetItem(X[index], Y[index]));
+            if (X[0] == X[index] && Y[0] == Y[index] && Maze->RoomNo(Player.rx, Player.ry)->Monsters[index]->is_alive)
             {
                 Player.lives--;
                 if (Player.lives == 0) game_over();
@@ -675,12 +676,13 @@ unsigned Timer3(unsigned interval, void* param)
         }
         for (unsigned char index = 1; index <= MONSTER_COUNT; index++)
         {
-            if (bullet1.bx == X[index] && bullet1.by == Y[index] && monsters[index]->is_alive)
+            if (bullet1.bx == X[index] && bullet1.by == Y[index] && Maze->RoomNo(Player.rx, Player.ry)->Monsters[index]->is_alive)
             {
-                monsters[index]->is_alive = false;
+                Maze->RoomNo(Player.rx, Player.ry)->Monsters[index]->is_alive = false;
                 X[index] = 0;
                 Y[index] = 0;
                 bullet1.is_fired = false;
+                score++;
             }
         }
         if (bullet1.bx == X[5] && bullet1.by == Y[5])
@@ -769,18 +771,14 @@ int main(int argc, char* argv[])
     MazeBuilder.BuildMaze(maze_data);
     Maze = MazeBuilder.GetMaze();
     Maze->SelectRoom(3, 1);
-    monsters[1] = &Monster1;
-    monsters[2] = &Monster2;
-    monsters[3] = &Monster3;
-    monsters[4] = &Monster4;
     constexpr unsigned char temp = 0;
     Player.Move(X[0], Y[0], temp);
     for (unsigned char index = 1;index <= MONSTER_COUNT;index++)
     {
-        monsters[index]->X = &X[0];
-        monsters[index]->Y = &Y[0];
-        monsters[index]->number = index;
-        monsters[index]->Move(X[index], Y[index], temp);
+        Maze->RoomNo(Player.rx, Player.ry)->Monsters[index]->X = &X[0];
+        Maze->RoomNo(Player.rx, Player.ry)->Monsters[index]->Y = &Y[0];
+        Maze->RoomNo(Player.rx, Player.ry)->Monsters[index]->number = index;
+        Maze->RoomNo(Player.rx, Player.ry)->Monsters[index]->Move(X[index], Y[index], temp);
     }
     Ghost.Move(X[MONSTER_COUNT + 1], Y[MONSTER_COUNT + 1], temp);
     for (unsigned short index = 0;index < 576;index++)
