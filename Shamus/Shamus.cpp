@@ -682,6 +682,15 @@ unsigned Timer3(unsigned interval, void* param)
                 Y[index] = 0;
                 bullet1.is_fired = false;
                 Player.score++;
+                if (!Maze->RoomNo(Player.rx, Player.ry)->cleared &&
+                    Maze->RoomNo(Player.rx, Player.ry)->Monsters[1]->is_alive == false &&
+                    Maze->RoomNo(Player.rx, Player.ry)->Monsters[2]->is_alive == false &&
+                    Maze->RoomNo(Player.rx, Player.ry)->Monsters[3]->is_alive == false &&
+                    Maze->RoomNo(Player.rx, Player.ry)->Monsters[4]->is_alive == false)
+                {
+                    Maze->RoomNo(Player.rx, Player.ry)->cleared = true;
+                    Player.score += 10;
+                }
             }
         }
         if (bullet1.bx == X[5] && bullet1.by == Y[5])

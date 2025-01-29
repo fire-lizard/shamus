@@ -13,6 +13,7 @@ CRoom::CRoom(unsigned char width, unsigned char height)
 	_width = width;
 	_height = height;
 	_data = new unsigned char[width * height];
+	cleared = false;
 	Monsters[1] = &Monster1;
 	Monsters[2] = &Monster2;
 	Monsters[3] = &Monster3;

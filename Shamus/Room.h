@@ -24,6 +24,7 @@ public:
 	unsigned char GetItem(signed char x, signed char y) const;
 	void SetItem(signed char x, signed char y, unsigned char value) const;
 	std::map <unsigned char, CMonster*> Monsters;
+	bool cleared;
 };
 
 #endif // !defined(AFX_ROOM_H__0C65CA01_8040_11D9_815D_E811484BFB1C__INCLUDED_)
