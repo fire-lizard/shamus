@@ -29,6 +29,7 @@ CPlayer::CPlayer()
 bool CPlayer::CheckPlayerMovement(unsigned char& value)
 {
     bool movement = true;
+    bool randomBool;
     switch (value)
     {
         case LINE1:
@@ -128,6 +129,16 @@ bool CPlayer::CheckPlayerMovement(unsigned char& value)
             }
             break;
         case AWARD:
+            std::srand(static_cast<unsigned>(std::time(nullptr)));
+            randomBool = (std::rand() % 2) == 0;
+            if (randomBool)
+            {
+                lives++;
+            }
+            else
+            {
+                score += 100;
+            }
             value = 0;
             break;
         case LEFT_ARROW:
